@@ -34,4 +34,8 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
-root(ERROR, ['STDOUT'])
+logger('org.hibernate.type', WARN)
+logger('org.hibernate', WARN)
+logger('org.springframework', WARN)
+
+root(DEBUG, ['STDOUT'])
