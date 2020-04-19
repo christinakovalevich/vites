@@ -3,7 +3,7 @@ package enums.security
 import groovy.transform.CompileStatic
 
 @CompileStatic
-enum RoleTypes {
+enum RoleType {
     ROLE_ADMIN("ROLE_ADMIN"),
     ROLE_MANAGER("ROLE_MANAGER"),
     ROLE_MENTOR("ROLE_MENTOR"),
@@ -11,7 +11,7 @@ enum RoleTypes {
 
     private final String value
 
-    RoleTypes(String value) {
+    RoleType(String value) {
         this.value = value
     }
 
