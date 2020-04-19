@@ -13,7 +13,7 @@ class User implements Serializable {
     private static final long serialVersionUID = 1
 
     String userType
-    Serializable relationId
+    String relationId
 
     String username
     String password
@@ -31,7 +31,8 @@ class User implements Serializable {
     }
 
     static constraints = {
-        relationId nullable: true, unique: true
+        userType nullable: true, blank: false
+        relationId nullable: true, blank: false, unique: true
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
     }
