@@ -1,5 +1,6 @@
 package security
 
+
 import grails.compiler.GrailsCompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
@@ -11,6 +12,9 @@ class User implements Serializable {
 
     private static final long serialVersionUID = 1
 
+    String userType
+    Serializable relationId
+
     String username
     String password
     boolean enabled = true
@@ -18,11 +22,16 @@ class User implements Serializable {
     boolean accountLocked
     boolean passwordExpired
 
+    boolean invisible
+    Date dateCreated
+    Date lastUpdated
+
     Set<Role> getAuthorities() {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
 
     static constraints = {
+        relationId nullable: true, unique: true
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
     }

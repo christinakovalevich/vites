@@ -1,8 +1,7 @@
-package student
+package mentor
 
 import common.StudentMentorCommonProperties
 import course.Course
-import enums.student.EducationDegree
 import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.Resource
@@ -10,15 +9,14 @@ import technology.Technology
 
 @Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
-@Resource(uri = "/api/student")
-class Student extends StudentMentorCommonProperties {
+@Resource(uri = "/api/mentor")
+class Mentor extends StudentMentorCommonProperties {
 
-    EducationDegree educationDegree
-    String institutionName
-    String speciality
+    int experience
 
     static hasMany = [technologies: Technology, courses: Course]
 
     static constraints = {
+        experience min: 0, max: 99
     }
 }

@@ -3,7 +3,7 @@ package enums.security
 import groovy.transform.CompileStatic
 
 @CompileStatic
-enum UserTypes{
+enum UserType {
     ADMIN("ADMIN"),
     MANAGER("MANAGER"),
     MENTOR("MENTOR"),
@@ -11,7 +11,7 @@ enum UserTypes{
 
     private final String value
 
-    UserTypes(String value) {
+    UserType(String value) {
         this.value = value
     }
 
