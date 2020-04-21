@@ -1,0 +1,36 @@
+.tool-bar-item {
+    color: var(--main-dark-color);
+    font-weight: bold;
+    display: block;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: var(--main-border-radius-d);
+    transition-duration: var(--main-transition-durirtion);
+}
+
+.tool-bar-item:hover {
+    color: var(--main-color-7);
+    background-color: var(--main-color-1);
+    text-decoration: none;
+}
+
+.tool-bar-item svg {
+    margin-right: .5rem;
+}
+
+.tool-bar-item.active {
+    color: var(--main-white-color);
+    background-color: var(--main-color-6);
+}
+
+.tool-bar-item.active:hover {
+}
+
+.tool-bar-item.brand {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 0;
+    margin: 0;
+    background-color: var(--main-color-7);
+    color: white;
+}

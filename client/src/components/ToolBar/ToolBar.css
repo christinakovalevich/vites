@@ -1,0 +1,6 @@
+.vertical-menu {
+    position: fixed;
+    width: 300px;
+    height: 100vh;
+    background-color: var(--main-white-color);
+}
