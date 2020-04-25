@@ -5,6 +5,7 @@ import ToolBar from "../ToolBar/ToolBar";
 
 import "./App.css";
 import {faHome, faLaptopCode} from "@fortawesome/free-solid-svg-icons";
+import Panel from "../Panel/Panel";
 
 class App extends Component {
 
@@ -39,6 +40,7 @@ class App extends Component {
         return (
             <div className="App">
                 <ToolBar toolBarItems={toolBarItems}/>
+                <Panel title="Главная"/>
             </div>
         )
     }

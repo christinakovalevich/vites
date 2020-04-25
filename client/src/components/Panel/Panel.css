@@ -1,0 +1,14 @@
+.panel {
+    color: var(--main-dark-color);
+    margin-left: 300px;
+}
+
+.panel .panel-title {
+    padding: 1.5rem 5rem;
+    font-weight: 500;
+    font-size: 3rem;
+}
+
+.panel .panel-content {
+    padding: 0 2rem;
+}

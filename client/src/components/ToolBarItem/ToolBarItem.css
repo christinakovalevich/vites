@@ -3,7 +3,7 @@
     font-weight: bold;
     display: block;
     padding: 1rem;
-    margin: 1rem;
+    margin: 1.5rem 2rem;
     border-radius: var(--main-border-radius-d);
     transition-duration: var(--main-transition-durirtion);
 }
