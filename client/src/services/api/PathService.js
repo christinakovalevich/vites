@@ -34,19 +34,19 @@ class PathService {
                 name: "main",
             },
             "courses": {
-                path: "/courses",
+                path: "/courses/",
                 name: "courses",
             },
             "students": {
-                path: "/students",
+                path: "/students/",
                 name: "students",
             },
             "mentors": {
-                path: "/mentor",
+                path: "/mentors/",
                 name: "mentors",
             },
             "rating": {
-                path: "/rating",
+                path: "/rating/",
                 name: "rating",
             }
         }

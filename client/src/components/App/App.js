@@ -39,7 +39,7 @@ class App extends Component {
             .then(json => this.setState({serverInfo: json}))
             .catch(error => console.error('Error connecting to server: ' + error));
 
-        this._setToolBarActiveItem(PATHS_NAMES.main);
+        this._setToolBarActiveItem(window.location.pathname);
     }
 
     onToolBarItemClick = (pathName) => {
@@ -51,7 +51,7 @@ class App extends Component {
     }
 
     render() {
-        const {toolBarItems, serverInfo, clientInfo} = this.state;
+        const {toolBarItems} = this.state;
 
         return (
             <div className="App">

@@ -4,7 +4,7 @@ import classNames from "classnames"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import "./ToolBarItem.css"
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const ToolBarItem = ({id, href, label, faIcon, isActive, onClick}) => {
 
