@@ -4,7 +4,14 @@ import 'whatwg-fetch';
 import ToolBar from "../ToolBar/ToolBar";
 
 import "./App.css";
-import {faHome, faLaptopCode} from "@fortawesome/free-solid-svg-icons";
+import {
+    faChalkboardTeacher,
+    faHome,
+    faLaptopCode,
+    faTrophy,
+    faUserAstronaut,
+    faUserGraduate
+} from "@fortawesome/free-solid-svg-icons";
 import Panel from "../Panel/Panel";
 
 class App extends Component {
@@ -26,16 +33,9 @@ class App extends Component {
     }
 
     render() {
-        const {serverInfo, clientInfo, collapse} = this.state;
+        const {serverInfo, clientInfo} = this.state;
 
-        const toolBarItems = [
-            {id: '0', label: APP_NAME, href: '#', faIcon: faLaptopCode, classNames: ['brand']},
-            {id: '1', label: 'Главная', href: '/dashboard', faIcon: faHome, classNames: ['active']},
-            {id: '2', label: 'Link 1', href: '#', faIcon: null, classNames: []},
-            {id: '3', label: 'Link 2', href: '#', faIcon: null, classNames: []},
-            {id: '4', label: 'Link 3', href: '#', faIcon: null, classNames: []},
-            {id: '5', label: 'Link 4', href: '#', faIcon: null, classNames: []},
-        ]
+        const toolBarItems = _getToolBarItems();
 
         return (
             <div className="App">
@@ -47,3 +47,50 @@ class App extends Component {
 }
 
 export default App;
+
+const _getToolBarItems = () => {
+    return [
+        {
+            id: 'brand',
+            label: APP_NAME.toUpperCase(),
+            href: '#',
+            faIcon: faUserAstronaut,
+            isActive: false
+        },
+        {
+            id: 'dashboard',
+            label: 'Главная',
+            href: '/dashboard',
+            faIcon: faHome,
+            isActive: false
+        },
+        {
+            id: 'courses',
+            label: 'Курсы',
+            href: '/courses',
+            faIcon: faLaptopCode,
+            isActive: true
+        },
+        {
+            id: 'students',
+            label: 'Студенты',
+            href: '/students',
+            faIcon: faUserGraduate,
+            isActive: false
+        },
+        {
+            id: 'mentors',
+            label: 'Преподаватели',
+            href: '/mentors',
+            faIcon: faChalkboardTeacher,
+            isActive: false
+        },
+        {
+            id: 'rating',
+            label: 'Успеваемость',
+            href: '/rating',
+            faIcon: faTrophy,
+            isActive: false
+        },
+    ]
+}

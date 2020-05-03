@@ -1,16 +1,25 @@
 import React from "react";
 
-import {joinClassNames} from "../../utils";
+import classNames from "classnames"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import "./ToolBarItem.css"
 
-const ToolBarItem = ({href, label, faIcon, classNames = []}) => {
+const ToolBarItem = ({id, href, label, faIcon, isActive}) => {
+
+    const isBrandItem = (id) => {
+        return id === 'brand'
+    }
+
     return (
         <a href={href || '#'}
-           className={joinClassNames('tool-bar-item', ...classNames)}>
+           className={classNames('tool-bar-item', {
+                   'brand': isBrandItem(id),
+                   'active': isActive
+               }
+           )}>
             {
-                faIcon ? <FontAwesomeIcon icon={faIcon}/> : null
+                isActive || isBrandItem(id) ? <FontAwesomeIcon icon={faIcon}/> : null
             }
             {label}
         </a>

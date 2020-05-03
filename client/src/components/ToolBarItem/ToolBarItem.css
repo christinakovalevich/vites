@@ -12,6 +12,7 @@
     color: var(--main-color-7);
     background-color: var(--main-color-1);
     text-decoration: none;
+    font-size: 1.1rem;
 }
 
 .tool-bar-item svg {
@@ -19,8 +20,9 @@
 }
 
 .tool-bar-item.active {
-    color: var(--main-white-color);
-    background-color: var(--main-color-6);
+    color: var(--main-color-7);
+    font-weight: bolder;
+    background-color: var(--main-color-1);
 }
 
 .tool-bar-item.active:hover {
