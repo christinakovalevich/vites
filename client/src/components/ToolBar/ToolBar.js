@@ -3,11 +3,11 @@ import React from "react";
 import "./ToolBar.css"
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
 
-const ToolBar = ({toolBarItems = []}) => {
+const ToolBar = ({toolBarItems = [], onToolBarItemClick}) => {
 
     const transformToolBarItems = (toolBarItems) => {
         return toolBarItems.map(it => (
-            <ToolBarItem key={it.id} {...it}/>
+            <ToolBarItem key={it.id} {...it} onClick={onToolBarItemClick}/>
         ))
     }
 
