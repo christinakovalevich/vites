@@ -10,10 +10,10 @@
 
 @keyframes blinkingText {
     0% {
-        color: var(--danger);
+        color: var(--warning);
     }
     49% {
-        color: var(--danger);
+        color: var(--warning);
     }
     60% {
         color: transparent;
@@ -22,6 +22,6 @@
         color: transparent;
     }
     100% {
-        color: var(--danger);
+        color: var(--warning);
     }
 }

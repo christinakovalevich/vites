@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {APP_NAME, CLIENT_VERSION, REACT_VERSION, SERVER_URL} from '../../config/config';
+import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../ToolBar/ToolBar";
 
 import "./App.css";
@@ -9,7 +9,7 @@ import {
     faLaptopCode,
     faTrophy,
     faUserAstronaut,
-    faUserGraduate, faWifi
+    faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
 import Panel from "../Panel/Panel";
 import StudentsPanel from "../Student/StudentsPanel/StudentsPanel";
@@ -19,7 +19,6 @@ import MentorPanel from "../Mentor/MentorPanel/MentorPanel";
 import RatingPanel from "../Rating/RatingPanel/RatingPanel";
 import CoursesPanel from "../Course/CoursesPanel/CoursesPanel";
 import DashboardPage from "../Dashboard/DashboardPage";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ApiService from "../../services/api/ApiService";
 
 class App extends Component {

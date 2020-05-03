@@ -1,5 +1,4 @@
 import React from "react";
-import Panel from "../../Panel/Panel";
 
 const StudentsPanel = ({title}) => {
     return (
