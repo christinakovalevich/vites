@@ -1,0 +1,27 @@
+.connection-icon {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+.blinking {
+    animation: blinkingText 1.2s infinite;
+}
+
+@keyframes blinkingText {
+    0% {
+        color: var(--danger);
+    }
+    49% {
+        color: var(--danger);
+    }
+    60% {
+        color: transparent;
+    }
+    99% {
+        color: transparent;
+    }
+    100% {
+        color: var(--danger);
+    }
+}

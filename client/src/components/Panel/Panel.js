@@ -2,14 +2,12 @@ import React from "react";
 
 import "./Panel.css";
 
-const Panel = ({title = 'Panel'}) => {
+const Panel = ({children}) => {
     return (
         <div className="panel">
-            <div className="panel-title">
-                {title}
-            </div>
-            <div className="panel-content">
-            </div>
+            {
+                children
+            }
         </div>
     )
 }

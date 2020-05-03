@@ -1,0 +1,8 @@
+.tool-bar-item.brand {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 0;
+    margin: 0;
+    background-color: var(--main-color-7);
+    color: white;
+}

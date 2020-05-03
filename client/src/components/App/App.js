@@ -9,7 +9,7 @@ import {
     faLaptopCode,
     faTrophy,
     faUserAstronaut,
-    faUserGraduate
+    faUserGraduate, faWifi
 } from "@fortawesome/free-solid-svg-icons";
 import Panel from "../Panel/Panel";
 import StudentsPanel from "../Student/StudentsPanel/StudentsPanel";
@@ -18,9 +18,13 @@ import PathService, {PATHS_NAMES} from "../../services/api/PathService";
 import MentorPanel from "../Mentor/MentorPanel/MentorPanel";
 import RatingPanel from "../Rating/RatingPanel/RatingPanel";
 import CoursesPanel from "../Course/CoursesPanel/CoursesPanel";
+import DashboardPage from "../Dashboard/DashboardPage";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ApiService from "../../services/api/ApiService";
 
 class App extends Component {
 
+    apiService = new ApiService();
     pathService = new PathService();
 
     state = {
@@ -29,17 +33,14 @@ class App extends Component {
             version: CLIENT_VERSION,
             react: REACT_VERSION
         },
-
+        isConnectedToServer: false,
         toolBarItems: [],
     };
 
     componentDidMount() {
-        fetch(SERVER_URL + '/application')
-            .then(r => r.json())
-            .then(json => this.setState({serverInfo: json}))
-            .catch(error => console.error('Error connecting to server: ' + error));
-
+        this.testConnection();
         this._setToolBarActiveItem(window.location.pathname);
+        setInterval(this.testConnection, 5000)
     }
 
     onToolBarItemClick = (pathName) => {
@@ -50,35 +51,70 @@ class App extends Component {
         }
     }
 
+    testConnection = () => {
+        console.log('Test connection..')
+
+        const setConnected = (value) => {
+            this.setState({
+                isConnectedToServer: value
+            })
+        };
+
+        const onSuccess = data => {
+            setConnected(true);
+            console.log('data:', data);
+        };
+
+        const onError = error => {
+            if (error.message !== 'Failed to fetch') {
+                setConnected(true)
+            }
+
+            setConnected(false);
+            console.error('error:', error)
+        }
+
+        this.apiService.testConnection(onSuccess, onError);
+    }
+
     render() {
-        const {toolBarItems} = this.state;
+        const {toolBarItems, isConnectedToServer} = this.state;
 
         return (
             <div className="App">
                 <BrowserRouter>
                     <ToolBar toolBarItems={toolBarItems}
-                             onToolBarItemClick={this.onToolBarItemClick}/>
-                    <Switch>
-                        <Route path={this.pathService.main()} exact component={Panel}/>
+                             isConnected={isConnectedToServer}
+                             onToolBarItemClick={this.onToolBarItemClick}
+                             onConnectionIconClick={this.testConnection}
+                    />
 
-                        <Route
-                            path={this.pathService.courses()}
-                            render={() => <CoursesPanel title="Курсы"/>}
-                        />
+                    <Panel>
+                        <Switch>
+                            <Route path={this.pathService.main()}
+                                   exact
+                                   render={() => <DashboardPage title="Главная"/>}
+                            />
 
-                        <Route path={this.pathService.students()}
-                               render={() => <StudentsPanel title="Студенты"/>}
-                        />
+                            <Route
+                                path={this.pathService.courses()}
+                                render={() => <CoursesPanel title="Курсы"/>}
+                            />
 
-                        <Route path={this.pathService.mentors()}
-                               render={() => <MentorPanel title="Преподаватели"/>}
-                        />
+                            <Route path={this.pathService.students()}
+                                   render={() => <StudentsPanel title="Студенты"/>}
+                            />
 
-                        <Route path={this.pathService.rating()}
-                               render={() => <RatingPanel title="Успеваемость"/>}
-                        />
+                            <Route path={this.pathService.mentors()}
+                                   render={() => <MentorPanel title="Преподаватели"/>}
+                            />
 
-                    </Switch>
+                            <Route path={this.pathService.rating()}
+                                   render={() => <RatingPanel title="Успеваемость"/>}
+                            />
+
+                        </Switch>
+                    </Panel>
                 </BrowserRouter>
             </div>
         )
@@ -104,7 +140,7 @@ class App extends Component {
             {
                 id: 'brand',
                 label: APP_NAME.toUpperCase(),
-                href: '#',
+                href: this.pathService.main(),
                 faIcon: faUserAstronaut,
                 isActive: false
             },

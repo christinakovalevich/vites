@@ -9,10 +9,15 @@ export default class ApiService {
     };
 
     async _getResource(uri) {
-        const response = await fetch(uri, {
-            headers: headers()
-        });
-        return response.json()
+        try {
+            const response = await fetch(uri, {
+                headers: headers()
+            });
+
+            return response.json()
+        } catch (e) {
+            throw e
+        }
     };
 
     async _deleteResource(uri) {
@@ -22,9 +27,11 @@ export default class ApiService {
         })
     };
 
-    async _postResource(uri, data) {
-        return await fetch()
-    };
+    testConnection(onSuccess, onError) {
+        this._getResource(this._buildUri(SERVER_URL, 'testConnection'))
+            .then(onSuccess)
+            .catch(onError);
+    }
 
     fetchServerInfo() {
         return this._getResource(this._buildUri(SERVER_URL, '/api/application'))

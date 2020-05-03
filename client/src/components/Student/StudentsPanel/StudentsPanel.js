@@ -4,9 +4,7 @@ import Panel from "../../Panel/Panel";
 const StudentsPanel = ({title}) => {
     return (
         <div className="students-panel">
-            <Panel
-                title={title}
-            />
+            <h1>{title}</h1>
         </div>
     )
 };
