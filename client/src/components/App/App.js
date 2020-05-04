@@ -20,6 +20,7 @@ import RatingPanel from "../Rating/RatingPanel/RatingPanel";
 import CoursesPanel from "../Course/CoursesPanel/CoursesPanel";
 import DashboardPage from "../Dashboard/DashboardPage";
 import ApiService from "../../services/api/ApiService";
+import NotConnectedPage from "../NotConnectedPage/NotConnectedPage";
 
 class App extends Component {
 
@@ -39,7 +40,7 @@ class App extends Component {
     componentDidMount() {
         this.testConnection();
         this._setToolBarActiveItem(window.location.pathname);
-        setInterval(this.testConnection, 5000)
+        setInterval(this.testConnection, 60000)
     }
 
     onToolBarItemClick = (pathName) => {
@@ -79,6 +80,36 @@ class App extends Component {
     render() {
         const {toolBarItems, isConnectedToServer} = this.state;
 
+        const getContentForNotConnected = () => (
+            <NotConnectedPage title="Вы не подключены к серверу." onRefresh={this.testConnection}/>
+        )
+
+        const getContentForConnected = () => (
+            <Switch>
+                <Route path={this.pathService.main()}
+                       exact
+                       render={() => <DashboardPage title="Главная"/>}
+                />
+
+                <Route
+                    path={this.pathService.courses()}
+                    render={() => <CoursesPanel title="Курсы"/>}
+                />
+
+                <Route path={this.pathService.students()}
+                       render={() => <StudentsPanel title="Студенты"/>}
+                />
+
+                <Route path={this.pathService.mentors()}
+                       render={() => <MentorPanel title="Преподаватели"/>}
+                />
+
+                <Route path={this.pathService.rating()}
+                       render={() => <RatingPanel title="Успеваемость"/>}
+                />
+            </Switch>
+        )
+
         return (
             <div className="App">
                 <BrowserRouter>
@@ -89,30 +120,9 @@ class App extends Component {
                     />
 
                     <Panel>
-                        <Switch>
-                            <Route path={this.pathService.main()}
-                                   exact
-                                   render={() => <DashboardPage title="Главная"/>}
-                            />
-
-                            <Route
-                                path={this.pathService.courses()}
-                                render={() => <CoursesPanel title="Курсы"/>}
-                            />
-
-                            <Route path={this.pathService.students()}
-                                   render={() => <StudentsPanel title="Студенты"/>}
-                            />
-
-                            <Route path={this.pathService.mentors()}
-                                   render={() => <MentorPanel title="Преподаватели"/>}
-                            />
-
-                            <Route path={this.pathService.rating()}
-                                   render={() => <RatingPanel title="Успеваемость"/>}
-                            />
-
-                        </Switch>
+                        {
+                            isConnectedToServer ? getContentForConnected() : getContentForNotConnected()
+                        }
                     </Panel>
                 </BrowserRouter>
             </div>

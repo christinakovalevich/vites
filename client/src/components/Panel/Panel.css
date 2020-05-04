@@ -1,6 +1,6 @@
 .panel {
     color: var(--main-dark-color);
-    margin-left: 300px;
+    padding: 1px 1px 1px 300px;
 }
 
 .panel .panel-title {

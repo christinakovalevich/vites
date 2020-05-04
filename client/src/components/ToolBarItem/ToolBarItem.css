@@ -21,6 +21,5 @@
 
 .tool-bar-item.active {
     color: var(--main-color-7);
-    font-weight: bolder;
     background-color: var(--main-color-1);
 }

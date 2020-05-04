@@ -1,0 +1,6 @@
+.common-page {
+    padding: 1.5rem;
+    margin: 1.5rem;
+    background-color: var(--main-white-color);
+    border-radius: var(--main-border-radius-d);
+}

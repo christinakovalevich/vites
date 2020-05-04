@@ -1,0 +1,17 @@
+button.button {
+    border: none;
+    font-weight: bold;
+    padding: .755rem 1rem;
+    border-radius: var(--main-border-radius-d);
+    transition-duration: var(--main-transition-durirtion);
+    min-width: 200px;
+}
+
+button.button :hover {
+
+}
+
+button.button.default {
+    color: var(--main-color-7);
+    background-color: var(--main-color-1);
+}
