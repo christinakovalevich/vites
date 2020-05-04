@@ -21,6 +21,7 @@ import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import ApiService from "../../services/api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
+import Loader from "../Common/Loader/Loader";
 
 class App extends Component {
 
@@ -34,6 +35,8 @@ class App extends Component {
             react: REACT_VERSION
         },
         isConnectedToServer: false,
+        isAuthenticated: false,
+        showLoader: false,
         toolBarItems: [],
     };
 
@@ -54,9 +57,14 @@ class App extends Component {
     testConnection = () => {
         console.log('Test connection..')
 
+        this.setState({
+            showLoader: true
+        })
+
         const setConnected = (value) => {
             this.setState({
-                isConnectedToServer: value
+                isConnectedToServer: value,
+                showLoader: false,
             })
         };
 
@@ -78,10 +86,10 @@ class App extends Component {
     }
 
     render() {
-        const {toolBarItems, isConnectedToServer} = this.state;
+        const {toolBarItems, isConnectedToServer, showLoader} = this.state;
 
         const getContentForNotConnected = () => (
-            <NotConnectedPage title="Вы не подключены к серверу." onRefresh={this.testConnection}/>
+            <NotConnectedPage title="Вы не подключены к серверу" onRefresh={this.testConnection}/>
         )
 
         const getContentForConnected = () => (
@@ -118,8 +126,11 @@ class App extends Component {
                              onToolBarItemClick={this.onToolBarItemClick}
                              onConnectionIconClick={this.testConnection}
                     />
-
                     <Panel>
+                        {
+                            showLoader ? <Loader/> : null
+                        }
+
                         {
                             isConnectedToServer ? getContentForConnected() : getContentForNotConnected()
                         }

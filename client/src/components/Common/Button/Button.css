@@ -5,10 +5,11 @@ button.button {
     border-radius: var(--main-border-radius-d);
     transition-duration: var(--main-transition-durirtion);
     min-width: 200px;
+    outline: none !important;
 }
 
-button.button :hover {
-
+button.button:hover {
+    font-size: 1.1rem;
 }
 
 button.button.default {

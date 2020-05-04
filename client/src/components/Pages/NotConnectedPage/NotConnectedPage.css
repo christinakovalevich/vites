@@ -1,0 +1,16 @@
+.not-connected-page {
+
+}
+
+.not-connected-page .icon-container {
+    margin: 5rem;
+    text-align: center;
+}
+
+.not-connected-page .button-container {
+    text-align: center;
+}
+
+.not-connected-page .icon-container img {
+    width: 40%;
+}
