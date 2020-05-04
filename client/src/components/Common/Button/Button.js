@@ -1,4 +1,4 @@
-import {joinClassNames} from "../../../utils";
+import {joinClassNames} from "../../../utils/utils";
 import React from "react";
 
 import "./Button.css"
