@@ -31,23 +31,27 @@ class PathService {
         this._pathData = {
             "main": {
                 path: "/",
-                name: "main",
+                name: PATHS_NAMES.mainr,
             },
             "courses": {
                 path: "/courses/",
-                name: "courses",
+                name: PATHS_NAMES.courses,
             },
             "students": {
                 path: "/students/",
-                name: "students",
+                name: PATHS_NAMES.students,
             },
             "mentors": {
                 path: "/mentors/",
-                name: "mentors",
+                name: PATHS_NAMES.mentors,
             },
             "rating": {
                 path: "/rating/",
-                name: "rating",
+                name: PATHS_NAMES.rating,
+            },
+            "settings": {
+                path: "/settings",
+                name: PATHS_NAMES.settings
             }
         }
     }
@@ -72,6 +76,9 @@ class PathService {
         return this.getPathByName(PATHS_NAMES.rating)
     }
 
+    settings = () => {
+        return this.getPathByName(PATHS_NAMES.settings)
+    }
 }
 
 export default PathService
@@ -81,5 +88,6 @@ export const PATHS_NAMES = {
     courses: "courses",
     students: "students",
     mentors: "mentors",
-    rating: "rating"
+    rating: "rating",
+    settings: "settings"
 }

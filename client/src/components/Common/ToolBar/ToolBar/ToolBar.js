@@ -3,8 +3,9 @@ import React from "react";
 import "./ToolBar.css"
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
 import ToolBarBrandItem from "../ToolBarItem/ToolBarBrandItem";
+import ToolBarSettingsItem from "../ToolBarSettingsItem/ToolBarSettingsItem";
 
-const ToolBar = ({toolBarItems = [], onToolBarItemClick, isConnected, onConnectionIconClick}) => {
+const ToolBar = ({toolBarItems = [], onToolBarItemClick, isConnected, onConnectionIconClick, settingsHref}) => {
 
     const transformToolBarItems = (toolBarItems) => {
         return toolBarItems
@@ -27,6 +28,8 @@ const ToolBar = ({toolBarItems = [], onToolBarItemClick, isConnected, onConnecti
             {
                 transformToolBarItems(toolBarItems)
             }
+
+            <ToolBarSettingsItem href={settingsHref}/>
         </div>
     )
 }

@@ -134,6 +134,7 @@ class App extends Component {
             <div className="App">
                 <BrowserRouter>
                     <ToolBar toolBarItems={toolBarItems}
+                             settingsHref={this.pathService.settings()}
                              isConnected={isConnectedToServer}
                              onToolBarItemClick={this.onToolBarItemClick}
                              onConnectionIconClick={() => this.testConnection(500)}
