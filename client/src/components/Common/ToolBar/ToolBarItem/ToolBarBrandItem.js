@@ -4,7 +4,7 @@ import classNames from "classnames"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import "./ToolBarBrandItem.css"
-import ConnectionIcon from "../ConnectionIcon/ConnectionIcon";
+import ConnectionIcon from "../../ConnectionIcon/ConnectionIcon";
 
 const ToolBarBrandItem = ({label, faIcon, isConnected, onConnectionIconClick}) => {
 

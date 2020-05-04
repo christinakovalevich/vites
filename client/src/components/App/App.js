@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
-import ToolBar from "../ToolBar/ToolBar";
+import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 
 import "./App.css";
 import {
@@ -11,16 +11,16 @@ import {
     faUserAstronaut,
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
-import Panel from "../Panel/Panel";
-import StudentsPanel from "../Student/StudentsPanel/StudentsPanel";
+import Panel from "../Common/Panel/Panel";
+import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import PathService, {PATHS_NAMES} from "../../services/api/PathService";
-import MentorPanel from "../Mentor/MentorPanel/MentorPanel";
-import RatingPanel from "../Rating/RatingPanel/RatingPanel";
-import CoursesPanel from "../Course/CoursesPanel/CoursesPanel";
-import DashboardPage from "../Dashboard/DashboardPage";
+import MentorPage from "../Pages/MentorPage/MentorPage";
+import RatingPage from "../Pages/RatingPage/RatingPage";
+import CoursesPage from "../Pages/CoursesPage/CoursesPage";
+import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import ApiService from "../../services/api/ApiService";
-import NotConnectedPage from "../NotConnectedPage/NotConnectedPage";
+import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 
 class App extends Component {
 
@@ -93,19 +93,19 @@ class App extends Component {
 
                 <Route
                     path={this.pathService.courses()}
-                    render={() => <CoursesPanel title="Курсы"/>}
+                    render={() => <CoursesPage title="Курсы"/>}
                 />
 
                 <Route path={this.pathService.students()}
-                       render={() => <StudentsPanel title="Студенты"/>}
+                       render={() => <StudentsPage title="Студенты"/>}
                 />
 
                 <Route path={this.pathService.mentors()}
-                       render={() => <MentorPanel title="Преподаватели"/>}
+                       render={() => <MentorPage title="Преподаватели"/>}
                 />
 
                 <Route path={this.pathService.rating()}
-                       render={() => <RatingPanel title="Успеваемость"/>}
+                       render={() => <RatingPage title="Успеваемость"/>}
                 />
             </Switch>
         )

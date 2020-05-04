@@ -1,27 +1,27 @@
 import React, {Fragment} from "react";
-import Button from "../Common/Button/Button";
+import Button from "../../Common/Button/Button";
 
 import "./NotConnectedPage.css"
-import CommonPage from "../Common/CommonPage/CommonPage";
+import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {FontAwesomeIcon,} from "@fortawesome/react-fontawesome";
-import {faSync} from "@fortawesome/free-solid-svg-icons";
+import {faSyncAlt} from "@fortawesome/free-solid-svg-icons";
 
 const NotConnectedPage = ({title, onRefresh}) => {
 
     const reloadButtonText = (title) => (
         <Fragment>
-            <FontAwesomeIcon icon={faSync}/> {title}
+            <FontAwesomeIcon icon={faSyncAlt}/> {title}
         </Fragment>
     )
 
     return (
-        <div className="not-connected-page">
-            <CommonPage>
+        <div className="common-page">
+            <DefaultPage>
                 <div className="title">
                     <h1>{title}</h1>
                 </div>
                 <Button label={reloadButtonText("Перезагрузить")} onClick={onRefresh}/>
-            </CommonPage>
+            </DefaultPage>
         </div>
     )
 }
