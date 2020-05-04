@@ -1,6 +1,4 @@
 .toolBar-settings-item {
-    position: fixed;
-    bottom: 0;
     color: var(--main-dark-color);
     font-weight: bold;
     display: block;

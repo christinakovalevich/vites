@@ -107,13 +107,11 @@ class App extends Component {
         const getContentForConnected = () => (
             <Switch>
                 <Route path={this.pathService.main()}
-                       exact
                        render={() => <DashboardPage title="Главная"/>}
                 />
 
-                <Route
-                    path={this.pathService.courses()}
-                    render={() => <CoursesPage title="Курсы"/>}
+                <Route path={this.pathService.courses()}
+                       render={() => <CoursesPage title="Курсы"/>}
                 />
 
                 <Route path={this.pathService.students()}
@@ -178,7 +176,7 @@ class App extends Component {
                 isActive: false
             },
             {
-                id: PATHS_NAMES.main,
+                id: PATHS_NAMES.dashboard,
                 label: 'Главная',
                 href: this.pathService.main(),
                 faIcon: faHome,

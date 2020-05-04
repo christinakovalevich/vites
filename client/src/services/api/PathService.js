@@ -29,9 +29,9 @@ class PathService {
 
     _loadPathData = () => {
         this._pathData = {
-            "main": {
-                path: "/",
-                name: PATHS_NAMES.mainr,
+            "dashboard": {
+                path: "/dashboard",
+                name: PATHS_NAMES.dashboard,
             },
             "courses": {
                 path: "/courses/",
@@ -57,7 +57,7 @@ class PathService {
     }
 
     main = () => {
-        return this.getPathByName(PATHS_NAMES.main)
+        return this.getPathByName(PATHS_NAMES.dashboard)
     }
 
     courses = () => {
@@ -84,7 +84,7 @@ class PathService {
 export default PathService
 
 export const PATHS_NAMES = {
-    main: "main",
+    dashboard: "dashboard",
     courses: "courses",
     students: "students",
     mentors: "mentors",

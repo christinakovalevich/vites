@@ -7,3 +7,14 @@
     height: 100vh;
     background-color: var(--main-white-color);
 }
+
+.vertical-menu .bottom-container {
+    position: fixed;
+    bottom: 0;
+}
+
+.vertical-menu .bottom-container .app-info {
+    color: var(--main-l-grey-color);
+    font-size: .9rem;
+    margin-left: 1rem;
+}

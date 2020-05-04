@@ -9,7 +9,6 @@ button.button {
 }
 
 button.button:hover {
-    font-size: 1.1rem;
 }
 
 button.button.default {

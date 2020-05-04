@@ -28,8 +28,12 @@ const ToolBar = ({toolBarItems = [], onToolBarItemClick, isConnected, onConnecti
             {
                 transformToolBarItems(toolBarItems)
             }
-
-            <ToolBarSettingsItem href={settingsHref}/>
+            <div className="bottom-container">
+                <ToolBarSettingsItem href={settingsHref}/>
+                <div className="app-info">
+                    v. 1.0
+                </div>
+            </div>
         </div>
     )
 }
