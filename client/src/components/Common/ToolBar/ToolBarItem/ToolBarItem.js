@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./ToolBarItem.css"
 import {Link} from "react-router-dom";
 
-const ToolBarItem = ({href, label, faIcon, isActive, onClick}) => {
+const ToolBarItem = ({href, label, faIcon, isActive, onClick, forceShowIcon}) => {
 
     const getClassNames = () =>
         classNames('tool-bar-item', {
@@ -17,7 +17,7 @@ const ToolBarItem = ({href, label, faIcon, isActive, onClick}) => {
     return (
         <Link to={href} className={getClassNames()} onClick={() => onClick(href)}>
             {
-                isActive ? <FontAwesomeIcon icon={faIcon}/> : null
+                isActive || forceShowIcon ? <FontAwesomeIcon icon={faIcon}/> : null
             }
             {label}
 

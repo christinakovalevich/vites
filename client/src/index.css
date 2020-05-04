@@ -24,6 +24,8 @@
     --main-color-7: #4F5EA4;
 
     --main-transition-durirtion: .25s;
+
+    --toolBar-width: 300px;
 }
 
 body {

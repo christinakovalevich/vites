@@ -2,36 +2,36 @@ import React from "react";
 
 import "./ToolBar.css"
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
-import ToolBarBrandItem from "../ToolBarItem/ToolBarBrandItem";
-import ToolBarSettingsItem from "../ToolBarSettingsItem/ToolBarSettingsItem";
 
-const ToolBar = ({toolBarItems = [], onToolBarItemClick, isConnected, onConnectionIconClick, settingsHref}) => {
+const ToolBar = ({
+                     brandElement,
+                     topItems = [],
+                     bottomItems = [],
+                     onToolBarItemClick,
+                     appInfo
+                 }) => {
 
     const transformToolBarItems = (toolBarItems) => {
         return toolBarItems
-            .filter(it => it.id !== 'brand')
             .map(it => (
                 <ToolBarItem key={it.id} {...it} onClick={onToolBarItemClick}/>
             ))
     }
 
-    const transformToolBarBrandItem = () => {
-        const brandItem = toolBarItems.find(it => it.id === "brand")
-        return <ToolBarBrandItem {...brandItem} onConnectionIconClick={onConnectionIconClick} isConnected={isConnected}/>
-    }
-
     return (
         <div className="vertical-menu">
             {
-                transformToolBarBrandItem()
+                brandElement
             }
             {
-                transformToolBarItems(toolBarItems)
+                transformToolBarItems(topItems)
             }
             <div className="bottom-container">
-                <ToolBarSettingsItem href={settingsHref}/>
+                {
+                    transformToolBarItems(bottomItems)
+                }
                 <div className="app-info">
-                    v. 1.0
+                    v. {appInfo.version}
                 </div>
             </div>
         </div>

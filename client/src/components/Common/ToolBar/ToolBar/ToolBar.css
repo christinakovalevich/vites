@@ -3,7 +3,7 @@
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    width: 300px;
+    width: var(--toolBar-width);
     height: 100vh;
     background-color: var(--main-white-color);
 }
@@ -11,10 +11,13 @@
 .vertical-menu .bottom-container {
     position: fixed;
     bottom: 0;
+    width: var(--toolBar-width);
 }
 
 .vertical-menu .bottom-container .app-info {
-    color: var(--main-l-grey-color);
+    background: var(--main-color-6);
+    color: var(--main-white-color);
     font-size: .9rem;
-    margin-left: 1rem;
+    padding-left: 1rem;
+    width: 100%;
 }

@@ -5,10 +5,12 @@ import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import "./App.css";
 import {
     faChalkboardTeacher,
+    faCog,
     faHome,
     faLaptopCode,
     faTrophy,
     faUserAstronaut,
+    faUserCircle,
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
 import Panel from "../Common/Panel/Panel";
@@ -22,6 +24,7 @@ import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import ApiService from "../../services/api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 import Loader from "../Common/Loader/Loader";
+import ToolBarBrandItem from "../Common/ToolBar/ToolBarItem/ToolBarBrandItem";
 
 class App extends Component {
 
@@ -30,7 +33,7 @@ class App extends Component {
 
     state = {
         serverInfo: {},
-        clientInfo: {
+        appInfo: {
             version: CLIENT_VERSION,
             react: REACT_VERSION
         },
@@ -97,7 +100,7 @@ class App extends Component {
     }
 
     render() {
-        const {toolBarItems, isConnectedToServer, showLoader} = this.state;
+        const {toolBarItems, isConnectedToServer, showLoader, appInfo} = this.state;
 
         const getContentForNotConnected = () => (
             <NotConnectedPage title="Вы не подключены к серверу"
@@ -131,11 +134,13 @@ class App extends Component {
         return (
             <div className="App">
                 <BrowserRouter>
-                    <ToolBar toolBarItems={toolBarItems}
-                             settingsHref={this.pathService.settings()}
-                             isConnected={isConnectedToServer}
-                             onToolBarItemClick={this.onToolBarItemClick}
-                             onConnectionIconClick={() => this.testConnection(500)}
+                    <ToolBar
+                        brandElement={this._getBrandElement(this.brandItem, () => this.testConnection(500), isConnectedToServer)}
+                        topItems={toolBarItems}
+                        bottomItems={this._getBottomToolBarItems()}
+                        appInfo={appInfo}
+                        onToolBarItemClick={this.onToolBarItemClick}
+                        onConnectionIconClick={() => this.testConnection(500)}
                     />
                     <Panel>
                         {
@@ -153,7 +158,7 @@ class App extends Component {
 
     _setToolBarActiveItem = (currentPath) => {
         const currentPathName = this.pathService.getNameByPath(currentPath)
-        const toolBarItems = this._getToolBarItems();
+        const toolBarItems = this._getTopToolBarItems();
 
         const updatedToolBarItems =
             toolBarItems
@@ -166,15 +171,21 @@ class App extends Component {
         });
     }
 
-    _getToolBarItems = () => {
+    brandItem = {
+        id: 'brand',
+        label: APP_NAME.toUpperCase(),
+        href: this.pathService.main(),
+        faIcon: faUserAstronaut,
+        isActive: false
+    };
+
+    _getBrandElement = (brandItem, onConnectionIconClick, isConnected) => {
+        return <ToolBarBrandItem {...brandItem} onConnectionIconClick={onConnectionIconClick}
+                                 isConnected={isConnected}/>
+    }
+
+    _getTopToolBarItems = () => {
         return [
-            {
-                id: 'brand',
-                label: APP_NAME.toUpperCase(),
-                href: this.pathService.main(),
-                faIcon: faUserAstronaut,
-                isActive: false
-            },
             {
                 id: PATHS_NAMES.dashboard,
                 label: 'Главная',
@@ -208,6 +219,27 @@ class App extends Component {
                 label: 'Успеваемость',
                 href: this.pathService.rating(),
                 faIcon: faTrophy,
+                isActive: false
+            },
+        ]
+    }
+
+    _getBottomToolBarItems = () => {
+        return [
+            {
+                id: PATHS_NAMES.account,
+                label: 'Аккаунт',
+                href: this.pathService.account(),
+                faIcon: faUserCircle,
+                forceShowIcon: true,
+                isActive: false
+            },
+            {
+                id: PATHS_NAMES.settings,
+                label: 'Настройки',
+                href: this.pathService.settings(),
+                faIcon: faCog,
+                forceShowIcon: true,
                 isActive: false
             },
         ]

@@ -52,6 +52,10 @@ class PathService {
             "settings": {
                 path: "/settings",
                 name: PATHS_NAMES.settings
+            },
+            "account": {
+                path: "/account",
+                name: PATHS_NAMES.account
             }
         }
     }
@@ -79,6 +83,10 @@ class PathService {
     settings = () => {
         return this.getPathByName(PATHS_NAMES.settings)
     }
+
+    account = () => {
+        return this.getPathByName(PATHS_NAMES.account)
+    }
 }
 
 export default PathService
@@ -89,5 +97,6 @@ export const PATHS_NAMES = {
     students: "students",
     mentors: "mentors",
     rating: "rating",
-    settings: "settings"
+    settings: "settings",
+    account: "account",
 }
