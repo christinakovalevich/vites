@@ -43,7 +43,7 @@ class App extends Component {
     componentDidMount() {
         this.testConnection();
         this._setToolBarActiveItem(window.location.pathname);
-        setInterval(this.testConnection, 60000)
+        setInterval(this.testConnection, 300000)
     }
 
     onToolBarItemClick = (pathName) => {
@@ -54,42 +54,54 @@ class App extends Component {
         }
     }
 
-    testConnection = () => {
+    testConnection = (delay) => {
         console.log('Test connection..')
 
-        this.setState({
-            showLoader: true
-        })
+        const testConnectionInternal = () => {
+            const setConnected = (value) => {
+                this.setState({
+                    isConnectedToServer: value,
+                    showLoader: false,
+                })
+            };
 
-        const setConnected = (value) => {
-            this.setState({
-                isConnectedToServer: value,
-                showLoader: false,
-            })
-        };
+            const onSuccess = data => {
+                setConnected(true);
+                console.log('data:', data);
+            };
 
-        const onSuccess = data => {
-            setConnected(true);
-            console.log('data:', data);
-        };
+            const onError = error => {
+                if (error.message !== 'Failed to fetch') {
+                    setConnected(true)
+                }
 
-        const onError = error => {
-            if (error.message !== 'Failed to fetch') {
-                setConnected(true)
+                setConnected(false);
+                console.error('error:', error)
             }
 
-            setConnected(false);
-            console.error('error:', error)
+            this.apiService.testConnection(onSuccess, onError);
         }
 
-        this.apiService.testConnection(onSuccess, onError);
+        if (delay) {
+            this.setState({
+                showLoader: true
+            })
+
+            setTimeout(() => {
+                testConnectionInternal()
+            }, delay);
+
+        } else {
+            testConnectionInternal()
+        }
     }
 
     render() {
         const {toolBarItems, isConnectedToServer, showLoader} = this.state;
 
         const getContentForNotConnected = () => (
-            <NotConnectedPage title="Вы не подключены к серверу" onRefresh={this.testConnection}/>
+            <NotConnectedPage title="Вы не подключены к серверу"
+                              onRefresh={() => this.testConnection(500)}/>
         )
 
         const getContentForConnected = () => (
@@ -124,7 +136,7 @@ class App extends Component {
                     <ToolBar toolBarItems={toolBarItems}
                              isConnected={isConnectedToServer}
                              onToolBarItemClick={this.onToolBarItemClick}
-                             onConnectionIconClick={this.testConnection}
+                             onConnectionIconClick={() => this.testConnection(500)}
                     />
                     <Panel>
                         {
