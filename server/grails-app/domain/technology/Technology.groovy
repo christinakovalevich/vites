@@ -1,10 +1,9 @@
 package technology
 
+import course.Course
 import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.Resource
-import mentor.Mentor
-import student.Student
 
 @Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
@@ -16,8 +15,8 @@ class Technology {
     int popularity
     int demand
 
-    static hasMany = [students: Student, menthors: Mentor]
-    static belongsTo = [Student, Mentor]
+    static hasMany = [courses: Course]
+    static belongsTo = Course
 
     static constraints = {
         name size: 0..25

@@ -16,13 +16,18 @@ class Course extends CommonProperties {
     String name
     Date startDate
     Date endDate
-    Technology technology
 
     int difficulty
     int popularity
     int demand
 
-    static hasMany = [mentors: Mentor, students: Student]
+    int totalStudentsCount
+
+    int getAvailablePlaces() {
+        return totalStudentsCount - students.size()
+    }
+
+    static hasMany = [mentors: Mentor, students: Student, technologies: Technology]
 
     static belongsTo = [Mentor, Student]
 
@@ -31,5 +36,6 @@ class Course extends CommonProperties {
         difficulty min: 1, max: 10
         popularity min: 0, max: 10
         demand min: 0, max: 10
+        totalStudentsCount min: 0
     }
 }
