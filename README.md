@@ -1,6 +1,6 @@
 # VITES
 
-##Running the Application:
+## Running the Application:
 1. You can either start up the server and client apps separately:
     ```
     ./gradlew server:bootRun
