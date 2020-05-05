@@ -27,7 +27,7 @@ export default class ApiService {
         })
     };
 
-    testConnection(onSuccess, onError) {
+    _testConnection(onSuccess, onError) {
         this._getResource(this._buildUri(SERVER_URL, 'testConnection'))
             .then(onSuccess)
             .catch(onError);
@@ -40,5 +40,38 @@ export default class ApiService {
     hasErrors(data) {
         return !!(data.error && data.message);
     };
+
+    testConnection = (setConnected, showLoader, delay = 0) => {
+        console.log('Test connection..')
+
+        const testConnectionInternal = () => {
+            const onSuccess = data => {
+                setConnected(true);
+                console.log('data:', data);
+            };
+
+            const onError = error => {
+                if (error.message !== 'Failed to fetch') {
+                    setConnected(true)
+                }
+
+                setConnected(false);
+                console.error('error:', error)
+            }
+
+            this._testConnection(onSuccess, onError);
+        }
+
+        if (delay > 0) {
+            showLoader();
+
+            setTimeout(() => {
+                testConnectionInternal()
+            }, delay);
+
+        } else {
+            testConnectionInternal()
+        }
+    }
 
 };

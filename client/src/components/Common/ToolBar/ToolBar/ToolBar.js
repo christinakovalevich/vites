@@ -1,28 +1,21 @@
 import React from "react";
 
+import PropTypes from 'prop-types';
 import "./ToolBar.css"
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
+import ToolBarBrandItem from "../ToolBarItem/ToolBarBrandItem";
 
-const ToolBar = ({
-                     brandElement,
-                     topItems = [],
-                     bottomItems = [],
-                     onToolBarItemClick,
-                     appInfo
-                 }) => {
+const ToolBar = ({brandItemProps, topItems = [], bottomItems = [], appInfo}) => {
 
-    const transformToolBarItems = (toolBarItems) => {
-        return toolBarItems
-            .map(it => (
-                <ToolBarItem key={it.id} {...it} onClick={onToolBarItemClick}/>
-            ))
-    }
+    const transformToolBarItems = (toolBarItems) =>
+        toolBarItems.map(itemProps =>
+            <ToolBarItem key={itemProps.id} {...itemProps}/>
+        )
 
     return (
         <div className="vertical-menu">
-            {
-                brandElement
-            }
+
+            <ToolBarBrandItem {...brandItemProps} />
             {
                 transformToolBarItems(topItems)
             }
@@ -36,6 +29,12 @@ const ToolBar = ({
             </div>
         </div>
     )
+}
+
+ToolBar.propTypes = {
+    brandItemProps: PropTypes.object,
+    topItems: PropTypes.arrayOf(PropTypes.object),
+    bottomItems: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default ToolBar;
