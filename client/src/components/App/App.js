@@ -26,6 +26,7 @@ class App extends Component {
     state = {
         serverInfo: {},
         appInfo: {
+            name: APP_NAME,
             version: CLIENT_VERSION,
             react: REACT_VERSION
         },
@@ -124,7 +125,7 @@ class App extends Component {
                 () =>
                     this.apiService.testConnection(this.setConnected, this.showLoader, 500),
                 isConnected,
-                APP_NAME.toUpperCase(),
+                appInfo.name.toUpperCase(),
             )
 
         return (

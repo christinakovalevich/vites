@@ -3,12 +3,11 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faWifi} from "@fortawesome/free-solid-svg-icons";
 import ReactTooltip from "react-tooltip";
-import classNames from "classnames"
+import classNames from "classnames";
 
 import "./ConnectionIcon.css"
 
 const ConnectionIcon = ({isConnected, onConnectionIconClick}) => {
-    const icon = isConnected ? faWifi : faWifi
     const title = `Вы${isConnected ? '' : ' не'} подключены к серверу.`
     const className = classNames('connection-icon', {
         'blinking': !isConnected
@@ -16,10 +15,9 @@ const ConnectionIcon = ({isConnected, onConnectionIconClick}) => {
 
     return (
         <div className={className}
-             data-tip={title}
              onClick={onConnectionIconClick}
-        >
-            <FontAwesomeIcon icon={icon}/>
+             data-tip={title}>
+            <FontAwesomeIcon icon={faWifi}/>
             <ReactTooltip/>
         </div>
     )
