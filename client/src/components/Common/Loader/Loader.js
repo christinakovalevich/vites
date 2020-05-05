@@ -1,15 +1,12 @@
 import React from "react";
 
 import "./Loader.css"
-import loaderIcon from "./loader-icon.svg"
+import loaderIcon from "./loader-icon-1.svg"
 
-const Loader = ({title = 'Загрузка..'}) => {
+const Loader = () => {
     return (
         <div className="loader">
             <img src={loaderIcon} alt="loading.."/>
-            <div className="title">
-                <span>{title}</span>
-            </div>
         </div>
     )
 };
