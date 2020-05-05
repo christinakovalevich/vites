@@ -1,5 +1,15 @@
 .course-card {
-    margin: 1rem;
-    padding: 2rem 5rem;
+    margin: 2rem 0;
+    padding: 2rem;
     border-radius: var(--main-border-radius-d);
+    background-color: var(--main-white-color);
+    transition-duration: var(--main-transition-durirtion);
+}
+
+.course-card:hover {
+    background-color: var(--main-color-5);
+}
+
+.course-card:last-child {
+    margin-bottom: 0;
 }

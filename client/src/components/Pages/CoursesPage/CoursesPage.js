@@ -16,7 +16,7 @@ const CoursesPage = ({title, getCourses}) => {
 
     const transformCourses = (courses) =>
         courses.map(it =>
-        <CourseCard key={it.id} {...it}/>)
+            <CourseCard key={it.id} {...it}/>)
 
     return (
         <div className="courses-page">
