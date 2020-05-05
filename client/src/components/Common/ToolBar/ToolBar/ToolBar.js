@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import "./ToolBar.css"
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
-import ToolBarBrandItem from "../ToolBarItem/ToolBarBrandItem";
+import ToolBarBrandItem from "../ToolBarBrandItem/ToolBarBrandItem";
 
 const ToolBar = ({brandItemProps, topItems = [], bottomItems = [], appInfo}) => {
 
