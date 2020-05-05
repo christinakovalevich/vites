@@ -1,0 +1,5 @@
+.course-card {
+    margin: 1rem;
+    padding: 2rem 5rem;
+    border-radius: var(--main-border-radius-d);
+}

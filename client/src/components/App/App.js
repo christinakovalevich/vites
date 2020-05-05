@@ -105,7 +105,10 @@ class App extends Component {
                        render={() => <DashboardPage title="Главная"/>}/>
 
                 <Route path={this.pathService.courses()}
-                       render={() => <CoursesPage title="Курсы"/>}/>
+                       render={() =>
+                           <CoursesPage title="Курсы"
+                                        getCourses={this.apiService.getCourses}
+                           />}/>
 
                 <Route path={this.pathService.students()}
                        render={() => <StudentsPage title="Студенты"/>}/>
