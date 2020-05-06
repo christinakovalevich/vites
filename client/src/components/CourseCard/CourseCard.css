@@ -18,3 +18,7 @@
 .course-card:last-child {
     margin-bottom: 0;
 }
+
+.course-card h4:hover {
+    color: var(--main-color-7);
+}

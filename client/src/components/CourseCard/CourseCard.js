@@ -1,12 +1,12 @@
 import React from "react";
-
-import "./CourseCard.css"
 import Stars from "../Common/Stars/Stars";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 import Button from "../Common/Button/Button";
 import {Col, Row} from "react-bootstrap";
 import {withRouter} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+
+import "./CourseCard.css"
 
 const CourseCard = ({
                         id,
@@ -21,10 +21,15 @@ const CourseCard = ({
                         isOwned,
                         history
                     }) => {
+
+    const showCourse = () => {
+        history.push(`${id}`)
+    }
+
     return (
         <div className="course-card shadow-m">
 
-            <div className="title">
+            <div className="title" onClick={showCourse}>
                 <h4>{name}</h4>
             </div>
 
@@ -64,7 +69,7 @@ const CourseCard = ({
                 </div>
             </div>
 
-            <Button label="Подробнее" onClick={() => history.push(`${id}`)}/>
+            <Button label="Подробнее" onClick={showCourse}/>
             <ReactTooltip/>
         </div>
     )

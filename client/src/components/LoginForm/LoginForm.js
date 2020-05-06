@@ -1,12 +1,12 @@
 import React from "react";
-
-import "./LoginForm.css"
 import DefaultPage from "../Common/DefaultPage/DefaultPage";
 import Form from "react-bootstrap/Form";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignInAlt} from "@fortawesome/free-solid-svg-icons";
 import {Col, Container, Row} from "react-bootstrap";
 import Button from "../Common/Button/Button";
+
+import "./LoginForm.css"
 
 const LoginForm = ({userDetails, error, inputChangeHandler, onSubmit}) => {
     return (

@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
-
 import PropTypes from "prop-types";
-
-import "./CoursesPage.css"
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
+
+import "./CoursesPage.css"
 
 const CoursesPage = ({title, getCourses}) => {
 
