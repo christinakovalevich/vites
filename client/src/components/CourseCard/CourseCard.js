@@ -6,7 +6,18 @@ import {faStar, faStarHalf} from "@fortawesome/free-solid-svg-icons";
 import {Col, Container, Row} from "reactstrap";
 import {Link} from "react-router-dom";
 
-const CourseCard = ({id, name, difficulty, popularity, studentsCount, totalPlacesCount, availablePlacesCount}) => {
+const CourseCard = ({
+                        id,
+                        name,
+                        difficulty,
+                        popularity,
+                        studentsCount,
+                        totalPlacesCount,
+                        availablePlacesCount,
+                        startDate,
+                        endDate,
+                        isOwned,
+                    }) => {
     return (
         <div className="course-card border">
             <Link to={`${id}`}>

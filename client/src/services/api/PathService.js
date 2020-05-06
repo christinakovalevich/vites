@@ -56,37 +56,37 @@ class PathService {
             "account": {
                 path: "/account",
                 name: PATHS_NAMES.account
+            },
+            "login": {
+                path: "/login",
+                name: PATHS_NAMES.login
             }
         }
     }
 
-    main = () => {
-        return this.getPathByName(PATHS_NAMES.dashboard)
-    }
+    main = () =>
+        this.getPathByName(PATHS_NAMES.dashboard)
 
-    courses = () => {
-        return this.getPathByName(PATHS_NAMES.courses)
-    }
+    courses = () =>
+        this.getPathByName(PATHS_NAMES.courses)
 
-    students = () => {
-        return this.getPathByName(PATHS_NAMES.students)
-    }
+    students = () =>
+        this.getPathByName(PATHS_NAMES.students)
 
-    mentors = () => {
-        return this.getPathByName(PATHS_NAMES.mentors)
-    }
+    mentors = () =>
+        this.getPathByName(PATHS_NAMES.mentors)
 
-    rating = () => {
-        return this.getPathByName(PATHS_NAMES.rating)
-    }
+    rating = () =>
+        this.getPathByName(PATHS_NAMES.rating)
 
-    settings = () => {
-        return this.getPathByName(PATHS_NAMES.settings)
-    }
+    settings = () =>
+        this.getPathByName(PATHS_NAMES.settings)
 
-    account = () => {
-        return this.getPathByName(PATHS_NAMES.account)
-    }
+    account = () =>
+        this.getPathByName(PATHS_NAMES.account)
+
+    login = () =>
+        this.getPathByName(PATHS_NAMES.login)
 }
 
 export default PathService
@@ -99,4 +99,5 @@ export const PATHS_NAMES = {
     rating: "rating",
     settings: "settings",
     account: "account",
+    login: "login",
 }

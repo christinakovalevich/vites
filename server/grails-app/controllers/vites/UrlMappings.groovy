@@ -14,6 +14,6 @@ class UrlMappings {
         "500"(view: '/error')
         "404"(view: '/notFound')
 
-        "/testConnection"(controller: 'application', action: 'testConnection')
+        "/api/testConnection"(controller: 'application', action: 'testConnection')
     }
 }
