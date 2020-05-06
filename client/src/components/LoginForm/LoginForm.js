@@ -3,9 +3,10 @@ import React from "react";
 import "./LoginForm.css"
 import DefaultPage from "../Common/DefaultPage/DefaultPage";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignInAlt} from "@fortawesome/free-solid-svg-icons";
+import {Col, Container, Row} from "react-bootstrap";
+import Button from "../Common/Button/Button";
 
 const LoginForm = ({userDetails, error, inputChangeHandler, onSubmit}) => {
     return (
@@ -18,36 +19,43 @@ const LoginForm = ({userDetails, error, inputChangeHandler, onSubmit}) => {
                     </h1>
                 </div>
 
-                <Form onSubmit={onSubmit}>
-                    <Form.Group controlId="username">
-                        <Form.Label>Имя пользователя:</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="username"
-                            autoComplete="on"
-                            value={userDetails.username}
-                            onChange={inputChangeHandler}
-                            placeholder="Введите имя пользователя"/>
-                        <Form.Text className="text-muted">
-                            Ваши данные под надёжной защитой.
-                        </Form.Text>
-                    </Form.Group>
+                <Container>
+                    <Row>
+                        <Col/>
+                        <Col lg={6}>
+                            <Form onSubmit={onSubmit}>
+                                <Form.Group controlId="username">
+                                    <Form.Label>Имя пользователя:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="username"
+                                        autoComplete="on"
+                                        value={userDetails.username}
+                                        onChange={inputChangeHandler}
+                                        placeholder="Введите имя пользователя"/>
+                                </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Пароль:</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            autoComplete="on"
-                            value={userDetails.password}
-                            onChange={inputChangeHandler}
-                            placeholder="Введите пароль"/>
-                    </Form.Group>
+                                <Form.Group controlId="formBasicPassword">
+                                    <Form.Label>Пароль:</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        name="password"
+                                        autoComplete="on"
+                                        value={userDetails.password}
+                                        onChange={inputChangeHandler}
+                                        placeholder="Введите пароль"/>
+                                    <Form.Text className="text-muted">
+                                        Ваши данные находятся под надёжной защитой.
+                                    </Form.Text>
+                                </Form.Group>
 
-                    <Button variant="primary" type="submit">
-                        Войти
-                    </Button>
-                </Form>
+                                <Button label="Войти" submit/>
+
+                            </Form>
+                        </Col>
+                        <Col/>
+                    </Row>
+                </Container>
             </div>
         </DefaultPage>
     )
