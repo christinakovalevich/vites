@@ -4,8 +4,8 @@ import Auth from "../../components/security/auth";
 
 export default class ApiService {
 
-    _buildUri(serverUrl, path) {
-        return `${SERVER_URL}${path}`
+    buildUri(path, serverUrl = SERVER_URL) {
+        return `${serverUrl}${path}`
     };
 
     async _getResource(uri) {
@@ -21,13 +21,13 @@ export default class ApiService {
     };
 
     _testConnection(onSuccess, onError) {
-        return fetch(this._buildUri(SERVER_URL, '/api/testConnection'), {
+        return fetch(this.buildUri('/api/testConnection'), {
             headers: headers()
         });
     }
 
     fetchServerInfo() {
-        return this._getResource(this._buildUri(SERVER_URL, '/api/application'))
+        return this._getResource(this.buildUri('/api/application'))
     };
 
     hasErrors(data) {
@@ -65,12 +65,12 @@ export default class ApiService {
         }
     }
 
-    checkAuthentication = (onSuccess, onError) => {
+    checkAuthentication = (setAuthenticated) => {
         (async () => {
-            if (await Auth.loggedIn()) {
-                onSuccess();
+            if (await Auth.isLoggedIn()) {
+                setAuthenticated(true);
             } else {
-                onError();
+                setAuthenticated(false);
             }
         })();
     }

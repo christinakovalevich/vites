@@ -46,12 +46,10 @@ class App extends Component {
     };
 
     componentDidMount() {
-        this.apiService.testConnection(this.setConnected, this.showLoader);
         this.setToolBarActiveItem(window.location.pathname);
-        this.apiService.checkAuthentication(
-            () => this.setState({isAuthenticated: true}),
-            () => this.setState({isAuthenticated: false})
-        )
+        this.apiService.testConnection(this.setConnected, this.showLoader);
+        this.apiService.checkAuthentication(this.setAuthenticated);
+
         setInterval(() =>
             this.apiService.testConnection(this.setConnected, this.showLoader), 300000);
     }
@@ -68,12 +66,18 @@ class App extends Component {
         })
     };
 
-    setConnected = (value) => {
+    setConnected = (isConnected) => {
         this.hideLoader();
         this.setState({
-            isConnected: value,
+            isConnected
         })
     };
+
+    setAuthenticated = (isAuthenticated) => {
+        this.setState({
+            isAuthenticated
+        })
+    }
 
     onToolBarItemClick = (pathName) => {
         if (this.pathService.isPathExists(pathName)) {

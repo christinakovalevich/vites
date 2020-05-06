@@ -2,8 +2,10 @@ import {SERVER_URL} from "../../config/config";
 import {headers} from "../../services/api/Headers";
 import {checkResponseStatus} from "../handlers/responseHandlers";
 import * as qs from "qs";
+import ApiService from "../../services/api/ApiService";
 
 export default {
+
     logIn(auth) {
         localStorage.auth = JSON.stringify(auth);
     },
@@ -32,17 +34,20 @@ export default {
             })
     },
 
-    loggedIn() {
-        return localStorage.auth && fetch(
-            `${SERVER_URL}/api/testConnection`,
-            {headers: headers()})
-            .then(checkResponseStatus)
-            .then(() => {
-                return true
-            })
-            .catch(this.refreshToken)
-            .catch(() => {
-                return false
-            });
+    isLoggedIn() {
+        console.log('Check is logged in..')
+        return localStorage.auth &&
+            fetch(new ApiService().buildUri('/api/course'),
+                {headers: headers()})
+                .then(checkResponseStatus)
+                .then(() => {
+                    console.log('Logged in.')
+                    return true
+                })
+                .catch(this.refreshToken)
+                .catch(() => {
+                    console.warn('Not logged in.')
+                    return false
+                });
     }
 };
