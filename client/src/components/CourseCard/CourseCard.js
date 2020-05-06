@@ -54,7 +54,7 @@ const CourseCard = ({
                     </Col>
                 </Row>
 
-                <h6>Преподаватели:</h6>
+                <br/>
 
                 <div>
                     Всего мест: <span className="font-weight-bold">{totalPlacesCount}</span>
