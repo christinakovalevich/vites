@@ -48,13 +48,10 @@ class App extends Component {
     componentDidMount() {
         this.apiService.testConnection(this.setConnected, this.showLoader);
         this.setToolBarActiveItem(window.location.pathname);
-        (async () => {
-            if (await Auth.loggedIn()) {
-                this.setState({isAuthenticated: true})
-            } else {
-                this.setState({isAuthenticated: false});
-            }
-        })();
+        this.apiService.checkAuthentication(
+            () => this.setState({isAuthenticated: true}),
+            () => this.setState({isAuthenticated: false})
+        )
         setInterval(() =>
             this.apiService.testConnection(this.setConnected, this.showLoader), 300000);
     }

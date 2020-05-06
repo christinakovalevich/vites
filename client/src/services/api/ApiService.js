@@ -1,11 +1,11 @@
 import {SERVER_URL} from "../../config/config";
 import {headers} from "./Headers";
-import {methods} from "./Methods";
+import Auth from "../../components/security/auth";
 
 export default class ApiService {
 
     _buildUri(serverUrl, path) {
-        return `${SERVER_URL}/${path}`
+        return `${SERVER_URL}${path}`
     };
 
     async _getResource(uri) {
@@ -21,9 +21,9 @@ export default class ApiService {
     };
 
     _testConnection(onSuccess, onError) {
-        this._getResource(this._buildUri(SERVER_URL, 'testConnection'))
-            .then(onSuccess)
-            .catch(onError);
+        return fetch(this._buildUri(SERVER_URL, '/api/testConnection'), {
+            headers: headers()
+        });
     }
 
     fetchServerInfo() {
@@ -38,21 +38,19 @@ export default class ApiService {
         console.log('Test connection..')
 
         const testConnectionInternal = () => {
-            const onSuccess = data => {
+            const onSuccess = () => {
                 setConnected(true);
-                console.log('data:', data);
+                console.log('Connected to server.')
             };
 
             const onError = error => {
-                if (error.message !== 'Failed to fetch') {
-                    setConnected(true)
-                }
-
                 setConnected(false);
-                console.error('error:', error)
+                console.error('Not connected to server. Error:', error)
             }
 
-            this._testConnection(onSuccess, onError);
+            this._testConnection(onSuccess, onError)
+                .then(onSuccess)
+                .catch(onError);
         }
 
         if (delay > 0) {
@@ -65,6 +63,16 @@ export default class ApiService {
         } else {
             testConnectionInternal()
         }
+    }
+
+    checkAuthentication = (onSuccess, onError) => {
+        (async () => {
+            if (await Auth.loggedIn()) {
+                onSuccess();
+            } else {
+                onError();
+            }
+        })();
     }
 
     getCourses = () => {
