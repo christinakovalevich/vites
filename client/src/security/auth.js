@@ -1,8 +1,8 @@
-import {SERVER_URL} from "../../config/config";
-import {headers} from "../../services/api/Headers";
+import {SERVER_URL} from "../config/config";
+import {headers} from "../services/api/Headers";
 import {checkResponseStatus} from "../handlers/responseHandlers";
 import * as qs from "qs";
-import ApiService from "../../services/api/ApiService";
+import ApiService from "../services/api/ApiService";
 
 export default {
 

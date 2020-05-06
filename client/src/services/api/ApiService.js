@@ -1,6 +1,6 @@
 import {SERVER_URL} from "../../config/config";
 import {headers} from "./Headers";
-import Auth from "../../components/security/auth";
+import Auth from "../../security/auth";
 
 export default class ApiService {
 

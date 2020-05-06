@@ -18,9 +18,9 @@ import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import LoginForm from "../LoginForm/LoginForm";
-import Auth from "../security/auth";
-import {checkResponseStatus, loginResponseHandler} from "../handlers/responseHandlers";
-import {defaultErrorHandler} from "../handlers/errorHandlers";
+import Auth from "../../security/auth";
+import {checkResponseStatus, loginResponseHandler} from "../../handlers/responseHandlers";
+import {defaultErrorHandler} from "../../handlers/errorHandlers";
 
 class App extends Component {
 
@@ -109,6 +109,7 @@ class App extends Component {
                 password: ''
             },
         });
+        this.redirectToDashBoard()
     };
 
     inputChangeHandler = (event) => {
@@ -140,14 +141,14 @@ class App extends Component {
         this.setState({isAuthenticated: true});
     };
 
-    //end::handler[]
-
-
-    //tag::logout[]
     logoutHandler = () => {
         Auth.logOut();
         this.reset();
     };
+
+    redirectToDashBoard = () => {
+        window.location.pathname = this.pathService.main()
+    }
 
     render() {
         const {toolBarTopItems, isConnected, isShowLoader, appInfo, isAuthenticated, userDetails} = this.state;
@@ -215,25 +216,10 @@ class App extends Component {
             )
         }
 
-        const bottomItems = this.toolBarService
-            .getBottomToolBarItems(this.onToolBarItemClick)
-        const toolBarBrandItemProps = this.toolBarService
-            .getToolBarBrandItemProps(
-                () =>
-                    this.apiService.testConnection(this.setConnected, this.showLoader, 500),
-                isConnected,
-                appInfo.name.toUpperCase(),
-            )
-
         return (
             <div className="App">
                 <BrowserRouter>
-                    <ToolBar
-                        brandItemProps={toolBarBrandItemProps}
-                        topItems={toolBarTopItems}
-                        bottomItems={bottomItems}
-                        appInfo={appInfo}
-                    />
+                    <ToolBar {...this.getToolBarProps(toolBarTopItems, isConnected, appInfo, isAuthenticated)}/>
                     <Panel>
                         {
                             isShowLoader ? <Loader/> : null
@@ -246,6 +232,29 @@ class App extends Component {
                 </BrowserRouter>
             </div>
         )
+    }
+
+    getToolBarProps = (topItems, isConnected, appInfo, isAuthenticated) => {
+        const bottomItems = this.toolBarService
+            .getBottomToolBarItems(this.onToolBarItemClick)
+        const brandItemProps = this.toolBarService
+            .getToolBarBrandItemProps(
+                () =>
+                    this.apiService.testConnection(this.setConnected, this.showLoader, 500),
+                isConnected,
+                appInfo.name.toUpperCase(),
+            )
+
+        const logOutItemProps = this.toolBarService.getToolBarLogOutItemProps(this.logoutHandler)
+
+        return {
+            brandItemProps,
+            logOutItemProps,
+            topItems,
+            bottomItems,
+            appInfo,
+            isAuthenticated,
+        }
     }
 }
 

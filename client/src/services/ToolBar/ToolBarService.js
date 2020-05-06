@@ -2,7 +2,7 @@ import {
     faChalkboardTeacher,
     faCog,
     faHome,
-    faLaptopCode,
+    faLaptopCode, faSignOutAlt,
     faTrophy,
     faUserAstronaut,
     faUserCircle,
@@ -18,13 +18,21 @@ export default class ToolBarService {
         return {
             id: 'brand',
             label: appName,
-            href: this.pathService.main(),
             faIcon: faUserAstronaut,
-            isActive: false,
             onConnectionIconClick: onConnectionIconClick,
             isConnected: isConnected,
         }
-    }
+    };
+
+    getToolBarLogOutItemProps = (onLogOut, label='Выйти') => {
+        return {
+            id: 'logOut',
+            label,
+            faIcon: faSignOutAlt,
+            onClick: onLogOut,
+            className: 'text-danger',
+        }
+    };
 
     getTopToolBarItems = (onToolBarItemClick) => {
         return [

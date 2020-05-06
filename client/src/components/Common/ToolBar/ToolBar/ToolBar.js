@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import "./ToolBar.css"
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
 import ToolBarBrandItem from "../ToolBarBrandItem/ToolBarBrandItem";
+import ToolBarLogOutItem from "../ToolBarLogOutItem/ToolBarLogOutItem";
 
-const ToolBar = ({brandItemProps, topItems = [], bottomItems = [], appInfo}) => {
+const ToolBar = ({brandItemProps, logOutItemProps, isAuthenticated, topItems = [], bottomItems = [], appInfo}) => {
 
     const transformToolBarItems = (toolBarItems) =>
         toolBarItems.map(itemProps =>
@@ -23,6 +24,9 @@ const ToolBar = ({brandItemProps, topItems = [], bottomItems = [], appInfo}) => 
                 {
                     transformToolBarItems(bottomItems)
                 }
+                {
+                    isAuthenticated ? <ToolBarLogOutItem {...logOutItemProps}/> : null
+                }
                 <div className="app-info">
                     v. {appInfo.version}
                 </div>
@@ -33,6 +37,7 @@ const ToolBar = ({brandItemProps, topItems = [], bottomItems = [], appInfo}) => 
 
 ToolBar.propTypes = {
     brandItemProps: PropTypes.object,
+    logOutItemProps: PropTypes.object,
     topItems: PropTypes.arrayOf(PropTypes.object),
     bottomItems: PropTypes.arrayOf(PropTypes.object),
 }

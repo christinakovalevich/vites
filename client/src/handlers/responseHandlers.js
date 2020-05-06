@@ -16,4 +16,6 @@ export const loginResponseHandler = (response, handler) => {
     if (handler) {
         handler.call();
     }
+
+    window.location.pathname = '/dashboard'
 };

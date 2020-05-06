@@ -1,0 +1,7 @@
+.tool-bar-log-out-item {
+    cursor: pointer;
+}
+
+.tool-bar-log-out-item:hover {
+    color: var(--danger);
+}
