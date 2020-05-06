@@ -3,7 +3,7 @@ import React from "react";
 
 import "./Button.css"
 
-const Button = ({variant = 'default', label = 'button', onClick, submit}) => {
+const Button = ({variant = 'default', label = 'button', onClick, submit, disabled}) => {
     const className = joinClassNames('button', variant)
     return (
         <button

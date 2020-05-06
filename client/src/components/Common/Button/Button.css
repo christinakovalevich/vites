@@ -9,6 +9,10 @@ button.button {
 }
 
 button.button:hover {
+    background-color: var(--main-white-color);
+    border-color: #142FBC !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(79, 94, 164, 0.4) !important;
 }
 
 button.button.default {

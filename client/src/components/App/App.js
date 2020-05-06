@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {APP_NAME, CLIENT_VERSION, REACT_VERSION, SERVER_URL} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
-import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import PathService from "../../services/api/PathService";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import DashboardPage from "../Pages/DashboardPage/DashboardPage";
@@ -79,7 +79,9 @@ class App extends Component {
 
     onToolBarItemClick = (pathName) => {
         if (this.pathService.isPathExists(pathName)) {
-            this.setToolBarActiveItem(pathName);
+            if (window.location.pathname !== pathName) {
+                this.setToolBarActiveItem(pathName);
+            }
         } else {
             console.error('Unknown path:', pathName);
         }
@@ -131,12 +133,8 @@ class App extends Component {
             },
             body: JSON.stringify(this.state.userDetails)
         }).then(checkResponseStatus)
-            .then(response => loginResponseHandler(response, this.customLoginHandler))
+            .then(response => loginResponseHandler(response, () => window.location.reload()))
             .catch(error => defaultErrorHandler(error));
-    };
-
-    customLoginHandler = () => {
-        this.setState({isAuthenticated: true});
     };
 
     logoutHandler = () => {
@@ -193,7 +191,7 @@ class App extends Component {
                     <PrivateRoute path={this.pathService.courses()}
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
-                        <CoursesPage title="Курсы"
+                        <CoursesPage title="Все курсы"
                                      getCourses={ApiService.getCourses}/>
                     </PrivateRoute>
 

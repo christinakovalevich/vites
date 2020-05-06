@@ -1,13 +1,18 @@
 .course-card {
     margin: 2rem 0;
     padding: 2rem;
-    border-radius: var(--main-border-radius-d);
-    background-color: var(--main-white-color);
     transition-duration: var(--main-transition-durirtion);
+    border-radius: var(--main-border-radius-d);
+    cursor: pointer;
 }
 
-.course-card:hover {
-    background-color: var(--main-color-5);
+.course-card .body {
+    margin-bottom: 2rem;
+}
+
+.course-card .dates {
+    color: var(--main-l-grey-color);
+    font-size: .9rem;
 }
 
 .course-card:last-child {

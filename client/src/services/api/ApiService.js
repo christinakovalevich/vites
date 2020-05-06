@@ -97,6 +97,8 @@ export default {
                 totalPlacesCount: 20,
                 availablePlacesCount: 10,
                 studentsCount: 10,
+                startDate: '18.04.2020',
+                endDate: '26.08.2020',
             },
 
             {
@@ -119,6 +121,8 @@ export default {
                 totalPlacesCount: 20,
                 availablePlacesCount: 3,
                 studentsCount: 17,
+                startDate: '12.03.2020',
+                endDate: '24.06.2020',
             },
 
             {
@@ -141,6 +145,8 @@ export default {
                 totalPlacesCount: 20,
                 availablePlacesCount: 10,
                 studentsCount: 5,
+                startDate: '14.06.2020',
+                endDate: '28.07.2020',
             },
 
             {
@@ -163,6 +169,8 @@ export default {
                 totalPlacesCount: 20,
                 availablePlacesCount: 5,
                 studentsCount: 15,
+                startDate: '15.02.2020',
+                endDate: '30.04.2020',
             },
 
             {
@@ -185,6 +193,8 @@ export default {
                 totalPlacesCount: 20,
                 availablePlacesCount: 10,
                 studentsCount: 5,
+                startDate: '01.01.2020',
+                endDate: '12.03.2030',
             },
         ]
     }

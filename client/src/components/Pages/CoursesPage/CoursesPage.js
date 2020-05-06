@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import "./CoursesPage.css"
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
+import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
 
 const CoursesPage = ({title, getCourses}) => {
@@ -14,9 +15,27 @@ const CoursesPage = ({title, getCourses}) => {
         setCourses(getCourses())
     }, [getCourses])
 
-    const transformCourses = (courses) =>
-        courses.map(it =>
-            <CourseCard key={it.id} {...it}/>)
+    const reshapeCourses = (courses) => {
+        let arr = [];
+        while (courses.length) {
+            arr.push(courses.splice(0, 3))
+        }
+        return arr;
+    }
+
+    const transformCourses = (courses) => {
+        return reshapeCourses(courses).map((row, i) => (
+            <Row key={i}>
+                {
+                    row.map((col, i) => (
+                        <Col key={i} lg={4}>
+                            <CourseCard key={col.id} {...col}/>
+                        </Col>
+                    ))
+                }
+            </Row>
+        ))
+    };
 
     return (
         <div className="courses-page">
