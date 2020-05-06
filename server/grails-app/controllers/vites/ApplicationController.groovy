@@ -15,6 +15,7 @@ class ApplicationController implements PluginManagerAware {
         [grailsApplication: grailsApplication, pluginManager: pluginManager]
     }
 
+    @Secured(['permitAll'])
     def testConnection() {
         render status: HttpStatus.OK
     }
