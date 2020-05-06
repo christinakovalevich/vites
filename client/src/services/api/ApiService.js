@@ -2,11 +2,11 @@ import {SERVER_URL} from "../../config/config";
 import {headers} from "./Headers";
 import Auth from "../../security/auth";
 
-export default class ApiService {
+export default {
 
     buildUri(path, serverUrl = SERVER_URL) {
         return `${serverUrl}${path}`
-    };
+    },
 
     async _getResource(uri) {
         try {
@@ -18,23 +18,23 @@ export default class ApiService {
         } catch (e) {
             throw e
         }
-    };
+    },
 
     _testConnection(onSuccess, onError) {
         return fetch(this.buildUri('/api/testConnection'), {
             headers: headers()
         });
-    }
+    },
 
     fetchServerInfo() {
         return this._getResource(this.buildUri('/api/application'))
-    };
+    },
 
     hasErrors(data) {
         return !!(data.error && data.message);
-    };
+    },
 
-    testConnection = (setConnected, showLoader, delay = 0) => {
+    testConnection(setConnected, showLoader, delay = 0) {
         console.log('Test connection..')
 
         const testConnectionInternal = () => {
@@ -63,9 +63,9 @@ export default class ApiService {
         } else {
             testConnectionInternal()
         }
-    }
+    },
 
-    checkAuthentication = (setAuthenticated) => {
+    checkAuthentication(setAuthenticated) {
         (async () => {
             if (await Auth.isLoggedIn()) {
                 setAuthenticated(true);
@@ -73,9 +73,9 @@ export default class ApiService {
                 setAuthenticated(false);
             }
         })();
-    }
+    },
 
-    getCourses = () => {
+    getCourses() {
         return [
             {
                 id: 0,

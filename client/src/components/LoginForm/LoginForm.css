@@ -1,0 +1,11 @@
+.login-form {
+    min-height: 70vh;
+}
+
+.login-form .title {
+    text-align: center;
+}
+
+.login-form .image-container img {
+    max-width: 20%;
+}

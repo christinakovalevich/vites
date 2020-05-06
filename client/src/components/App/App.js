@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {APP_NAME, CLIENT_VERSION, REACT_VERSION, SERVER_URL} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
-
 import Panel from "../Common/Panel/Panel";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
 import PathService from "../../services/api/PathService";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import DashboardPage from "../Pages/DashboardPage/DashboardPage";
@@ -11,8 +10,6 @@ import ApiService from "../../services/api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 import Loader from "../Common/Loader/Loader";
 import ToolBarService from "../../services/ToolBar/ToolBarService";
-
-import "./App.css";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
@@ -22,9 +19,10 @@ import Auth from "../../security/auth";
 import {checkResponseStatus, loginResponseHandler} from "../../handlers/responseHandlers";
 import {defaultErrorHandler} from "../../handlers/errorHandlers";
 
+import "./App.css";
+
 class App extends Component {
 
-    apiService = new ApiService();
     pathService = new PathService();
     toolBarService = new ToolBarService();
 
@@ -47,11 +45,11 @@ class App extends Component {
 
     componentDidMount() {
         this.setToolBarActiveItem(window.location.pathname);
-        this.apiService.testConnection(this.setConnected, this.showLoader);
-        this.apiService.checkAuthentication(this.setAuthenticated);
+        ApiService.testConnection(this.setConnected, this.showLoader);
+        ApiService.checkAuthentication(this.setAuthenticated);
 
         setInterval(() =>
-            this.apiService.testConnection(this.setConnected, this.showLoader), 300000);
+            ApiService.testConnection(this.setConnected, this.showLoader), 300000);
     }
 
     showLoader = () => {
@@ -142,7 +140,7 @@ class App extends Component {
     };
 
     logoutHandler = () => {
-        Auth.logOut();
+        Auth.removeToken();
         this.reset();
     };
 
@@ -156,7 +154,7 @@ class App extends Component {
         const getContentForNotConnected = () => (
             <NotConnectedPage
                 title="Вы не подключены к серверу"
-                onRefresh={() => this.apiService.testConnection(
+                onRefresh={() => ApiService.testConnection(
                     this.setConnected,
                     this.showLoader,
                     500
@@ -176,6 +174,9 @@ class App extends Component {
         const loginPathName = this.pathService.login()
 
         const getContentForConnected = () => {
+            if (!isAuthenticated) {
+                return <LoginForm {...getLoginFormProps()}/>
+            }
             return (
                 <Switch>
                     <Route path={this.pathService.login()}
@@ -183,6 +184,7 @@ class App extends Component {
                            render={() => <LoginForm {...getLoginFormProps()}/>}/>
 
                     <PrivateRoute path={this.pathService.main()}
+                                  exact
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <DashboardPage title="Главная"/>
@@ -192,7 +194,7 @@ class App extends Component {
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <CoursesPage title="Курсы"
-                                     getCourses={this.apiService.getCourses}/>
+                                     getCourses={ApiService.getCourses}/>
                     </PrivateRoute>
 
                     <PrivateRoute path={this.pathService.students()}
@@ -240,7 +242,7 @@ class App extends Component {
         const brandItemProps = this.toolBarService
             .getToolBarBrandItemProps(
                 () =>
-                    this.apiService.testConnection(this.setConnected, this.showLoader, 500),
+                    ApiService.testConnection(this.setConnected, this.showLoader, 500),
                 isConnected,
                 appInfo.name.toUpperCase(),
             )

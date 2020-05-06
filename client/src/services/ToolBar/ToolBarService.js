@@ -2,10 +2,10 @@ import {
     faChalkboardTeacher,
     faCog,
     faHome,
-    faLaptopCode, faSignOutAlt,
+    faLaptopCode,
+    faSignOutAlt,
     faTrophy,
     faUserAstronaut,
-    faUserCircle,
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
 import PathService, {PATHS_NAMES} from "../api/PathService";
@@ -24,7 +24,7 @@ export default class ToolBarService {
         }
     };
 
-    getToolBarLogOutItemProps = (onLogOut, label='Выйти') => {
+    getToolBarLogOutItemProps = (onLogOut, label = 'Выйти') => {
         return {
             id: 'logOut',
             label,
@@ -81,15 +81,15 @@ export default class ToolBarService {
 
     getBottomToolBarItems = (onToolBarItemClick) => {
         return [
-            {
-                id: PATHS_NAMES.account,
-                label: 'Аккаунт',
-                href: this.pathService.account(),
-                faIcon: faUserCircle,
-                forceShowIcon: true,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.account()),
-            },
+            // {
+            //     id: PATHS_NAMES.account,
+            //     label: 'Аккаунт',
+            //     href: this.pathService.account(),
+            //     faIcon: faUserCircle,
+            //     forceShowIcon: true,
+            //     isActive: false,
+            //     onClick: () => onToolBarItemClick(this.pathService.account()),
+            // },
             {
                 id: PATHS_NAMES.settings,
                 label: 'Настройки',

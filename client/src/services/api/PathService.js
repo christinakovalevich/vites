@@ -30,7 +30,7 @@ class PathService {
     _loadPathData = () => {
         this._pathData = {
             "dashboard": {
-                path: "/dashboard",
+                path: "/",
                 name: PATHS_NAMES.dashboard,
             },
             "courses": {
