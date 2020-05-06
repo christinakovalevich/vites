@@ -1,6 +1,6 @@
 import Auth from '../security/auth';
 
-export const checkResponseStatus = (response) => {
+export const checkResponseStatus = response => {
     if (response.status >= 200 && response.status < 300) {
         return response.json()
     } else {
@@ -10,10 +10,7 @@ export const checkResponseStatus = (response) => {
     }
 };
 
-export const loginResponseHandler = (response, handler) => {
+export const loginResponseHandler = response => {
     Auth.writeToken(response);
-
-    if (handler) {
-        handler.call();
-    }
+    window.location.reload()
 };

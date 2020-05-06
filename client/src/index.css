@@ -51,9 +51,9 @@ input:focus {
 }
 
 .shadow-m {
-    box-shadow: 0 5px 25px 0 rgba(0,0,0,0.05) !important;
+    box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
 .shadow-m:hover {
-    box-shadow: 0 15px 25px 0 rgba(0,0,0,0.1) !important;
+    box-shadow: 0 15px 25px 0 rgba(0, 0, 0, 0.1) !important;
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {APP_NAME, CLIENT_VERSION, REACT_VERSION, SERVER_URL} from '../../config/config';
+import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
@@ -16,8 +16,6 @@ import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import LoginForm from "../LoginForm/LoginForm";
 import Auth from "../../security/auth";
-import {checkResponseStatus, loginResponseHandler} from "../../handlers/responseHandlers";
-import {defaultErrorHandler} from "../../handlers/errorHandlers";
 
 import "./App.css";
 
@@ -102,16 +100,6 @@ class App extends Component {
         });
     }
 
-    reset = () => {
-        this.setState({
-            userDetails: {
-                username: '',
-                password: ''
-            },
-        });
-        this.redirectToDashBoard()
-    };
-
     inputChangeHandler = (event) => {
         let {userDetails} = this.state;
         const target = event.target;
@@ -121,25 +109,20 @@ class App extends Component {
         this.setState({userDetails});
     };
 
-    login = (e) => {
-        console.log('login');
+    loginHandler = (e) => {
         e.preventDefault();
-
-        fetch(`${SERVER_URL}/api/login`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.userDetails)
-        }).then(checkResponseStatus)
-            .then(response => loginResponseHandler(response, () => window.location.reload()))
-            .catch(error => defaultErrorHandler(error));
+        ApiService.login(this.state.userDetails);
     };
 
     logoutHandler = () => {
         Auth.removeToken();
-        this.reset();
+        this.setState({
+            userDetails: {
+                username: '',
+                password: ''
+            },
+        });
+        this.redirectToDashBoard()
     };
 
     redirectToDashBoard = () => {
@@ -162,7 +145,7 @@ class App extends Component {
 
         const getLoginFormProps = () => {
             return {
-                onSubmit: this.login,
+                onSubmit: this.loginHandler,
                 userDetails: userDetails,
                 error: null,
                 inputChangeHandler: this.inputChangeHandler

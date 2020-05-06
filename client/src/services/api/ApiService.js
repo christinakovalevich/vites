@@ -1,8 +1,23 @@
 import {SERVER_URL} from "../../config/config";
 import {headers} from "./Headers";
 import Auth from "../../security/auth";
+import {checkResponseStatus, loginResponseHandler} from "../../handlers/responseHandlers";
+import {defaultErrorHandler} from "../../handlers/errorHandlers";
 
 export default {
+
+    login(userDetails) {
+        fetch(this.buildUri('/api/login'), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userDetails)
+        }).then(checkResponseStatus)
+            .then(loginResponseHandler)
+            .catch(defaultErrorHandler);
+    },
 
     buildUri(path, serverUrl = SERVER_URL) {
         return `${serverUrl}${path}`
