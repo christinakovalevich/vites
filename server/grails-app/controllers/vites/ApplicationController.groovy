@@ -28,11 +28,4 @@ class ApplicationController implements PluginManagerAware {
     def checkIsAuthenticated() {
         render status: HttpStatus.OK
     }
-
-    @Secured(value = ['isAuthenticated()'])
-    def myCourses() {
-        def student = Student.findByUser(authenticatedUser as User)
-        def courses = courseService.listCoursesByStudent(student.id)
-        return courses
-    }
 }

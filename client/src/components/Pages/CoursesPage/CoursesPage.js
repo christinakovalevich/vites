@@ -11,18 +11,27 @@ import {Link} from "react-router-dom";
 const CoursesPage = ({title, getCourses}) => {
 
     const [hasError, setError] = useState(false);
+    const [hasLoaded, setLoaded] = useState(false);
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
         console.log('useEffect');
         getCourses()
-            .then(setCourses)
-            .catch(setError)
+            .then(courses => {
+                console.log(courses)
+                setCourses(courses);
+                setLoaded(true);
+            })
+            .catch(error => {
+                setError(true);
+                setLoaded(true);
+                console.error(error);
+            })
     }, [getCourses])
 
     const reshapeCourses = (courses) => {
         let arr = [];
-        
+
         if (Array.isArray(courses)) {
             let coursesCopy = [...courses]
             while (coursesCopy.length) {
@@ -61,7 +70,9 @@ const CoursesPage = ({title, getCourses}) => {
                 </div>
 
                 {
-                    !hasError || courses.length > 0 ? transformCourses(courses) : <Loader/>
+                    hasLoaded ?
+                        !hasError || courses.length > 0 ?
+                            transformCourses(courses) : null : <Loader/>
                 }
             </DefaultPage>
         </div>

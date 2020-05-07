@@ -29,8 +29,8 @@ class BootStrap {
         log.info 'Mentor count: ' + Mentor.count
         log.info 'Student count: ' + Student.count
 
-        Student.first().addToCourses(Course.first())
-        Mentor.first().addToCourses(Course.first())
+        log.info Student.first().courses.toString()
+        log.info Course.first().students.toString()
 
         log.info 'Available ' + Course.first().availablePlacesCount
     }
@@ -159,6 +159,7 @@ class BootStrap {
                 speciality: 'Software engineer')
 
         setDefaultFields(student)
+        student.addToCourses(Course.first())
         student.save(FAIL_ON_ERROR)
 
         log.debug 'Finish init student'
@@ -179,6 +180,7 @@ class BootStrap {
                 speciality: 'Software engineer')
 
         setDefaultFields(mentor)
+        mentor.addToCourses(Course.first())
         mentor.save(FAIL_ON_ERROR)
 
         log.debug 'Finish init mentor'
