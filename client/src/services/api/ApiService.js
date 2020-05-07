@@ -35,11 +35,13 @@ export default {
         }
     },
 
-    fetchCourses(success) {
-        _getResource(buildUri('/api/course'))
-            .then(success)
-            .catch(console.error)
+    fetchCourses() {
+        return _getResource(buildUri('/api/course'))
     },
+
+    fetchMyCourses() {
+        return _getResource(buildUri('/api/my-courses'))
+    }
 
 };
 

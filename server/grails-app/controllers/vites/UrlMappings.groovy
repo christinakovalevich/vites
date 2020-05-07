@@ -16,5 +16,7 @@ class UrlMappings {
 
         "/api/testConnection"(controller: 'application', action: 'testConnection')
         "/api/checkAuth"(controller: 'application', action: 'checkIsAuthenticated')
+
+        "/api/my-courses"(controller: 'application', action: 'myCourses')
     }
 }

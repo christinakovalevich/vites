@@ -37,6 +37,10 @@ class PathService {
                 path: "/courses/",
                 name: PATHS_NAMES.courses,
             },
+            "myCourses": {
+                path: "/my-courses/",
+                name: PATHS_NAMES.myCourses,
+            },
             "students": {
                 path: "/students/",
                 name: PATHS_NAMES.students,
@@ -70,6 +74,9 @@ class PathService {
     courses = () =>
         this.getPathByName(PATHS_NAMES.courses)
 
+    myCourses = () =>
+        this.getPathByName(PATHS_NAMES.myCourses)
+
     students = () =>
         this.getPathByName(PATHS_NAMES.students)
 
@@ -94,6 +101,7 @@ export default PathService
 export const PATHS_NAMES = {
     dashboard: "dashboard",
     courses: "courses",
+    myCourses: "myCourses",
     students: "students",
     mentors: "mentors",
     rating: "rating",

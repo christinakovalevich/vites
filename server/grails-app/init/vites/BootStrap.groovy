@@ -29,6 +29,9 @@ class BootStrap {
         log.info 'Mentor count: ' + Mentor.count
         log.info 'Student count: ' + Student.count
 
+        Student.first().addToCourses(Course.first())
+        Mentor.first().addToCourses(Course.first())
+
         log.info 'Available ' + Course.first().availablePlacesCount
     }
     def destroy = {

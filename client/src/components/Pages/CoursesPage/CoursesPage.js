@@ -6,20 +6,30 @@ import CourseCard from "../../CourseCard/CourseCard";
 
 import "./CoursesPage.css"
 import Loader from "../../Common/Loader/Loader";
+import {Link} from "react-router-dom";
 
 const CoursesPage = ({title, getCourses}) => {
 
+    const [hasError, setError] = useState(false);
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        getCourses(setCourses)
+        console.log('useEffect');
+        getCourses()
+            .then(setCourses)
+            .catch(setError)
     }, [getCourses])
 
     const reshapeCourses = (courses) => {
         let arr = [];
-        while (courses.length) {
-            arr.push(courses.splice(0, 3))
+        
+        if (Array.isArray(courses)) {
+            let coursesCopy = [...courses]
+            while (coursesCopy.length) {
+                arr.push(coursesCopy.splice(0, 3))
+            }
         }
+
         return arr;
     }
 
@@ -40,9 +50,18 @@ const CoursesPage = ({title, getCourses}) => {
     return (
         <div className="courses-page">
             <DefaultPage>
-                <h1>{title}</h1>
+
+                <div className="title">
+                    <h1>{title}</h1>
+                </div>
+
+                <div className="courses-toggle">
+                    <h6 className="d-inline">Показать: </h6>
+                    <Link to='/courses/'>Все курсы </Link> | <Link to='/my-courses'>Мои курсы </Link>
+                </div>
+
                 {
-                    courses ? transformCourses(courses) : <Loader/>
+                    !hasError || courses.length > 0 ? transformCourses(courses) : <Loader/>
                 }
             </DefaultPage>
         </div>

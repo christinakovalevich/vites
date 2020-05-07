@@ -46,8 +46,6 @@ class App extends Component {
         ApiService.testConnection(this.setConnected, this.showLoader);
         Auth.checkAuthentication(this.setAuthenticated);
 
-        ApiService.fetchCourses();
-
         setInterval(() =>
             ApiService.testConnection(this.setConnected, this.showLoader), 300000);
     }
@@ -176,8 +174,15 @@ class App extends Component {
                     <PrivateRoute path={this.pathService.courses()}
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
-                        <CoursesPage title="Все курсы"
+                        <CoursesPage title="Курсы и стажировки"
                                      getCourses={ApiService.fetchCourses}/>
+                    </PrivateRoute>
+
+                    <PrivateRoute path={this.pathService.myCourses()}
+                                  isAuthenticated={isAuthenticated}
+                                  loginPathname={loginPathName}>
+                        <CoursesPage title="Курсы и стажировки"
+                                     getCourses={ApiService.fetchMyCourses}/>
                     </PrivateRoute>
 
                     <PrivateRoute path={this.pathService.students()}
