@@ -23,6 +23,6 @@ class ApplicationController implements PluginManagerAware {
 
     @Secured(value = ['isAuthenticated()'])
     def checkIsAuthenticated() {
-        return [status: HttpStatus.OK] as JSON
+        render status: HttpStatus.OK
     }
 }
