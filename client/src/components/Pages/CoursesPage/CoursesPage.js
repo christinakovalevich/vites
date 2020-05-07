@@ -18,7 +18,6 @@ const CoursesPage = ({title, getCourses}) => {
         console.log('useEffect');
         getCourses()
             .then(courses => {
-                console.log(courses)
                 setCourses(courses);
                 setLoaded(true);
             })
@@ -68,7 +67,6 @@ const CoursesPage = ({title, getCourses}) => {
                     <h6 className="d-inline">Показать: </h6>
                     <Link to='/courses/'>Все курсы </Link> | <Link to='/my-courses'>Мои курсы </Link>
                 </div>
-
                 {
                     hasLoaded ?
                         !hasError || courses.length > 0 ?
