@@ -7,14 +7,13 @@ import CourseCard from "../../CourseCard/CourseCard";
 import Loader from "../../Common/Loader/Loader";
 import {Link} from "react-router-dom";
 
-const CoursesPage = ({title, getCourses}) => {
+const CoursesPage = ({title, getCourses, sort}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        console.log('useEffect');
         getCourses()
             .then(courses => {
                 setCourses(courses);
@@ -41,7 +40,7 @@ const CoursesPage = ({title, getCourses}) => {
     }
 
     const transformCourses = (courses) => {
-        return reshapeCourses(courses).map((row, i) => (
+        return reshapeCourses(sort(courses)).map((row, i) => (
             <Row key={i}>
                 {
                     row.map((col, i) => (
@@ -81,4 +80,5 @@ export default CoursesPage
 CoursesPage.propTypes = {
     title: PropTypes.string,
     getCourses: PropTypes.func,
+    sort: PropTypes.func,
 }

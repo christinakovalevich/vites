@@ -18,6 +18,7 @@ import LoginForm from "../LoginForm/LoginForm";
 import Auth from "../../security/auth";
 
 import "./App.css";
+import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 
 class App extends Component {
 
@@ -172,9 +173,11 @@ class App extends Component {
                     </PrivateRoute>
 
                     <PrivateRoute path={this.pathService.courses()}
+                                  exact
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <CoursesPage title="Курсы и стажировки"
+                                     sort={this.sortCoursesByDate}
                                      getCourses={ApiService.fetchCourses}/>
                     </PrivateRoute>
 
@@ -182,7 +185,15 @@ class App extends Component {
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <CoursesPage title="Курсы и стажировки"
+                                     sort={this.sortCoursesByDate}
                                      getCourses={ApiService.fetchMyCourses}/>
+                    </PrivateRoute>
+
+                    <PrivateRoute path={this.pathService.courses() + ':id'}
+                                  isAuthenticated={isAuthenticated}
+                                  loginPathname={loginPathName}>
+                        <CourseDetails title="Курс"
+                                       getCourse={ApiService.fetchCourse}/>
                     </PrivateRoute>
 
                     <PrivateRoute path={this.pathService.students()}
@@ -245,6 +256,10 @@ class App extends Component {
             appInfo,
             isAuthenticated,
         }
+    }
+
+    sortCoursesByDate = courses => {
+        return [...courses].sort((a, b) => (a.startDate > b.startDate) ? 1 : -1)
     }
 }
 

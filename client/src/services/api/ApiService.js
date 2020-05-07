@@ -41,6 +41,10 @@ export default {
 
     fetchMyCourses() {
         return _getResource(buildUri('/api/my-courses'))
+    },
+
+    fetchCourse(id) {
+        return _getResource(buildUri(`/api/course/${id}`))
     }
 
 };
