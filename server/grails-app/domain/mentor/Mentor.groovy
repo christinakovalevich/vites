@@ -1,6 +1,6 @@
 package mentor
 
-import common.StudentMentorCommonProperties
+
 import course.Course
 import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured
@@ -10,10 +10,24 @@ import security.User
 @Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
 @Resource(uri = "/api/mentor")
-class Mentor extends StudentMentorCommonProperties {
+class Mentor {
+
+    String name
+    String lastName
+    String fatherName
+
+    Date birthDate
+
+    float rating
 
     User user
     int experience
+
+    Date dateCreated
+    Date lastUpdated
+    User createdBy
+    User lastUpdatedBy
+    boolean disabled
 
     static hasMany = [courses: Course]
 

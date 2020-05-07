@@ -1,17 +1,17 @@
 package course
 
-import common.CommonProperties
+
 import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.Resource
 import mentor.Mentor
+import security.User
 import student.Student
-import technology.Technology
 
 @Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
 @Resource(uri = "/api/course")
-class Course extends CommonProperties {
+class Course {
 
     String name
     Date startDate
@@ -22,6 +22,12 @@ class Course extends CommonProperties {
 
     int totalPlacesCount
 
+    Date dateCreated
+    Date lastUpdated
+    User createdBy
+    User lastUpdatedBy
+    boolean disabled
+
     int getAvailablePlacesCount() {
         if (students) {
             return totalPlacesCount - students.size()
@@ -29,7 +35,7 @@ class Course extends CommonProperties {
         return totalPlacesCount
     }
 
-    static hasMany = [mentors: Mentor, students: Student, technologies: Technology]
+    static hasMany = [mentors: Mentor, students: Student]
 
     static belongsTo = [Mentor, Student]
 
