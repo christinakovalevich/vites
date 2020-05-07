@@ -150,9 +150,6 @@ grails:
             filters: JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter
         controllerAnnotations:
           staticRules:
-            - pattetn: /testConnection
-              access:
-                - permitAll
             - pattern: /
               access:
                 - permitAll
