@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
+import "./CoursesPage.css"
 import PropTypes from "prop-types";
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
-
-import "./CoursesPage.css"
 import Loader from "../../Common/Loader/Loader";
 import {Link} from "react-router-dom";
 

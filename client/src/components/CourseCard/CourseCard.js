@@ -68,7 +68,9 @@ const CourseCard = ({
                 </div>
             </div>
 
-            <Button label="Подробнее" onClick={showCourse}/>
+            <Button label="Подробнее"
+                    onClick={showCourse}
+                    className="w-100"/>
             <ReactTooltip/>
         </div>
     )

@@ -3,11 +3,10 @@ import React from "react";
 
 import "./Button.css"
 
-const Button = ({variant = 'default', label = 'button', onClick, submit, disabled}) => {
-    const className = joinClassNames('button', variant)
+const Button = ({label = 'button', onClick, submit, className}) => {
     return (
         <button
-            className={className}
+            className={joinClassNames('button', 'default', className)}
             onClick={onClick}
             type={submit ? 'submit' : 'button'}
         >{label}</button>

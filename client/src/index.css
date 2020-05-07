@@ -31,7 +31,6 @@
 body {
     font-family: 'Roboto', sans-serif !important;
     color: var(--main-dark-color);
-    /*font-family: "Poppins", "Roboto", "Noto", sans-serif;*/
 }
 
 input:focus {
