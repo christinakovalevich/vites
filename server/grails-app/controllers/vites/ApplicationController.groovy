@@ -1,5 +1,6 @@
 package vites
 
+import grails.converters.JSON
 import grails.core.GrailsApplication
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.GrailsPluginManager
@@ -15,8 +16,13 @@ class ApplicationController implements PluginManagerAware {
         [grailsApplication: grailsApplication, pluginManager: pluginManager]
     }
 
-    @Secured(['permitAll'])
+    @Secured(value = ['permitAll'])
     def testConnection() {
         render status: HttpStatus.OK
+    }
+
+    @Secured(value = ['isAuthenticated()'])
+    def checkIsAuthenticated() {
+        return [status: HttpStatus.OK] as JSON
     }
 }

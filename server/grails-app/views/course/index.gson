@@ -1,0 +1,7 @@
+import course.Course
+
+model {
+    List<Course> courseList
+}
+
+json tmpl.course(courseList)

@@ -1,0 +1,19 @@
+import course.Course
+
+model {
+    Course course
+}
+
+json {
+    id course.id
+    version course.version
+    name course.name
+
+    startDate course.startDate
+    endDate course.endDate
+
+    difficulty course.difficulty
+    popularity course.popularity
+    totalPlacesCount course.totalPlacesCount
+    availablePlacesCount course.availablePlacesCount
+}

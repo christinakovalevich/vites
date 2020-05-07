@@ -41,6 +41,6 @@ logger('org.springframework', INFO)
 logger('org.hibernate', INFO)
 logger('org.grails', INFO)
 logger('grails', INFO)
-logger('org.quartz', INFO)
+logger('io.micronaut', INFO)
 
 root(DEBUG, ['STDOUT'])

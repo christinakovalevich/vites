@@ -15,5 +15,6 @@ class UrlMappings {
         "404"(view: '/notFound')
 
         "/api/testConnection"(controller: 'application', action: 'testConnection')
+        "/api/checkAuth"(controller: 'application', action: 'checkIsAuthenticated')
     }
 }

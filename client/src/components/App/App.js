@@ -44,7 +44,9 @@ class App extends Component {
     componentDidMount() {
         this.setToolBarActiveItem(window.location.pathname);
         ApiService.testConnection(this.setConnected, this.showLoader);
-        ApiService.checkAuthentication(this.setAuthenticated);
+        Auth.checkAuthentication(this.setAuthenticated);
+
+        ApiService.fetchCourses();
 
         setInterval(() =>
             ApiService.testConnection(this.setConnected, this.showLoader), 300000);
@@ -111,7 +113,7 @@ class App extends Component {
 
     loginHandler = (e) => {
         e.preventDefault();
-        ApiService.login(this.state.userDetails);
+        Auth.login(this.state.userDetails);
     };
 
     logoutHandler = () => {
@@ -175,7 +177,7 @@ class App extends Component {
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <CoursesPage title="Все курсы"
-                                     getCourses={ApiService.getCourses}/>
+                                     getCourses={ApiService.fetchCourses}/>
                     </PrivateRoute>
 
                     <PrivateRoute path={this.pathService.students()}

@@ -5,13 +5,14 @@ import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
 
 import "./CoursesPage.css"
+import Loader from "../../Common/Loader/Loader";
 
 const CoursesPage = ({title, getCourses}) => {
 
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        setCourses(getCourses())
+        getCourses(setCourses)
     }, [getCourses])
 
     const reshapeCourses = (courses) => {
@@ -41,7 +42,7 @@ const CoursesPage = ({title, getCourses}) => {
             <DefaultPage>
                 <h1>{title}</h1>
                 {
-                    transformCourses(courses)
+                    courses ? transformCourses(courses) : <Loader/>
                 }
             </DefaultPage>
         </div>

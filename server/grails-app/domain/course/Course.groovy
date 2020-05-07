@@ -17,14 +17,16 @@ class Course extends CommonProperties {
     Date startDate
     Date endDate
 
-    int difficulty
-    int popularity
-    int demand
+    float difficulty
+    float popularity
 
-    int totalStudentsCount
+    int totalPlacesCount
 
-    int getAvailablePlaces() {
-        return totalStudentsCount - students.size()
+    int getAvailablePlacesCount() {
+        if (students) {
+            return totalPlacesCount - students.size()
+        }
+        return totalPlacesCount
     }
 
     static hasMany = [mentors: Mentor, students: Student, technologies: Technology]
@@ -33,9 +35,8 @@ class Course extends CommonProperties {
 
     static constraints = {
         name blank: false, size: 0..100
-        difficulty min: 1, max: 10
-        popularity min: 0, max: 10
-        demand min: 0, max: 10
-        totalStudentsCount min: 0
+        difficulty min: 0.0f, max: 5.0f
+        popularity min: 0.0f, max: 5.0f
+        totalPlacesCount min: 0
     }
 }

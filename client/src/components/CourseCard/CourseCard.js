@@ -7,18 +7,17 @@ import {withRouter} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
 import "./CourseCard.css"
+import {formatDate} from "../../utils/utils";
 
 const CourseCard = ({
                         id,
                         name,
                         difficulty,
                         popularity,
-                        studentsCount,
                         totalPlacesCount,
                         availablePlacesCount,
                         startDate,
                         endDate,
-                        isOwned,
                         history
                     }) => {
 
@@ -35,7 +34,7 @@ const CourseCard = ({
 
             <div className="dates"
                  data-tip={`${startDate} - ${endDate}`}>
-                {startDate} - {endDate}
+                {formatDate(startDate)} - {formatDate(endDate)}
             </div>
 
             <hr/>
