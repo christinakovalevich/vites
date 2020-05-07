@@ -1,6 +1,5 @@
 package vites
 
-import grails.converters.JSON
 import grails.core.GrailsApplication
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.GrailsPluginManager
