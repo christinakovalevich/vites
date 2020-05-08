@@ -4,9 +4,10 @@
 
 .courses-page .courses-toggle {
     text-align: right;
+    cursor: pointer;
 }
 
-.courses-page a {
+.courses-page .courses-toggle span {
     color: var(--main-color-7);
     transition-duration: var(--main-transition-durirtion);
 }

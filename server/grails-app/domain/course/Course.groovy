@@ -8,9 +8,9 @@ import mentor.Mentor
 import security.User
 import student.Student
 
-@Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
+//@Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
-@Resource(uri = "/api/course")
+//@Resource(uri = "/api/course")
 class Course {
 
     String name

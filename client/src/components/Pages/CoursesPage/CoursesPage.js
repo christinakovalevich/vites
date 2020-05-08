@@ -5,9 +5,9 @@ import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
 import Loader from "../../Common/Loader/Loader";
-import {Link} from "react-router-dom";
+import {coursesPageModes} from "../../../utils/CourseConstants";
 
-const CoursesPage = ({title, getCourses, sort}) => {
+const CoursesPage = ({title, getCourses, sort, onModeChange}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
@@ -63,7 +63,8 @@ const CoursesPage = ({title, getCourses, sort}) => {
 
                 <div className="courses-toggle">
                     <h6 className="d-inline">Показать: </h6>
-                    <Link to='/courses/'>Все курсы </Link> | <Link to='/my-courses'>Мои курсы </Link>
+                    <span onClick={() => onModeChange(coursesPageModes.ALL)}> Все курсы </span> |
+                    <span onClick={() => onModeChange(coursesPageModes.MY)}> Мои курсы </span>
                 </div>
                 {
                     hasLoaded ?

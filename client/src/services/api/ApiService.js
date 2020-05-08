@@ -40,7 +40,7 @@ export default {
     },
 
     fetchMyCourses() {
-        return _getResource(buildUri('/api/my-courses'))
+        return _getResource(buildUri('/api/myCourses'))
     },
 
     fetchCourse(id) {

@@ -19,6 +19,7 @@ import Auth from "../../security/auth";
 
 import "./App.css";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
+import {coursesPageModes, isCourseModeValid} from "../../utils/CourseConstants";
 
 class App extends Component {
 
@@ -40,6 +41,7 @@ class App extends Component {
             username: '',
             password: ''
         },
+        coursesPageMode: coursesPageModes.ALL,
     };
 
     componentDidMount() {
@@ -128,10 +130,41 @@ class App extends Component {
 
     redirectToDashBoard = () => {
         window.location.pathname = this.pathService.main()
+    };
+
+    onCoursesPageModeChange = (coursesPageMode) => {
+        if (isCourseModeValid(coursesPageMode)) {
+            this.setState({
+                coursesPageMode
+            })
+        } else {
+            console.error('Unknown coursesPageMode:', coursesPageMode)
+        }
+    };
+
+    getCoursesPageFetchFunction = coursesPageMode => {
+        if (isCourseModeValid(coursesPageMode)) {
+            switch (coursesPageMode) {
+                case coursesPageModes.ALL:
+                    return ApiService.fetchCourses
+                case coursesPageModes.MY:
+                    return ApiService.fetchMyCourses
+                default:
+                    return () => []
+            }
+        }
     }
 
     render() {
-        const {toolBarTopItems, isConnected, isShowLoader, appInfo, isAuthenticated, userDetails} = this.state;
+        const {
+            toolBarTopItems,
+            isConnected,
+            isShowLoader,
+            appInfo,
+            isAuthenticated,
+            userDetails,
+            coursesPageMode
+        } = this.state;
 
         const getContentForNotConnected = () => (
             <NotConnectedPage
@@ -178,15 +211,8 @@ class App extends Component {
                                   loginPathname={loginPathName}>
                         <CoursesPage title="Курсы и стажировки"
                                      sort={this.sortCoursesByDate}
-                                     getCourses={ApiService.fetchCourses}/>
-                    </PrivateRoute>
-
-                    <PrivateRoute path={this.pathService.myCourses()}
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
-                        <CoursesPage title="Курсы и стажировки"
-                                     sort={this.sortCoursesByDate}
-                                     getCourses={ApiService.fetchMyCourses}/>
+                                     onModeChange={this.onCoursesPageModeChange}
+                                     getCourses={this.getCoursesPageFetchFunction(coursesPageMode)}/>
                     </PrivateRoute>
 
                     <PrivateRoute path={this.pathService.courses() + ':id'}
