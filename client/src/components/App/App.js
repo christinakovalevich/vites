@@ -3,14 +3,13 @@ import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import PathService from "../../services/api/PathService";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import ApiService from "../../services/api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 import Loader from "../Common/Loader/Loader";
 import ToolBarService from "../../services/ToolBar/ToolBarService";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import RouteWrapper from "../RouteWrapper/RouteWrapper";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
@@ -20,10 +19,10 @@ import Auth from "../../security/auth";
 import "./App.css";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursePageService from "../../services/Course/CoursePageService";
+import PathService from "../../services/api/PathService";
 
 class App extends Component {
 
-    pathService = new PathService();
     toolBarService = new ToolBarService();
 
     state = {
@@ -36,7 +35,6 @@ class App extends Component {
         isConnected: false,
         isAuthenticated: false,
         isShowLoader: false,
-        toolBarTopItems: [],
         userDetails: {
             username: '',
             password: ''
@@ -45,7 +43,6 @@ class App extends Component {
     };
 
     componentDidMount() {
-        this.setToolBarActiveItem(window.location.pathname);
         ApiService.testConnection(this.setConnected, this.showLoader);
         Auth.checkAuthentication(this.setAuthenticated);
 
@@ -78,31 +75,6 @@ class App extends Component {
         })
     }
 
-    onToolBarItemClick = (pathName) => {
-        if (this.pathService.isPathExists(pathName)) {
-            if (window.location.pathname !== pathName) {
-                this.setToolBarActiveItem(pathName);
-            }
-        } else {
-            console.error('Unknown path:', pathName);
-        }
-    };
-
-    setToolBarActiveItem = (currentPath) => {
-        const currentPathName = this.pathService.getNameByPath(currentPath)
-        const toolBarItems = this.toolBarService.getTopToolBarItems(this.onToolBarItemClick);
-
-        const updatedToolBarItems =
-            toolBarItems
-                .map(it => it.id === currentPathName ?
-                    {...it, isActive: true} : {...it, isActive: false}
-                );
-
-        this.setState({
-            toolBarTopItems: updatedToolBarItems
-        });
-    }
-
     inputChangeHandler = (event) => {
         let {userDetails} = this.state;
         const target = event.target;
@@ -125,11 +97,7 @@ class App extends Component {
                 password: ''
             },
         });
-        this.redirectToDashBoard()
-    };
-
-    redirectToDashBoard = () => {
-        window.location.pathname = this.pathService.main()
+        window.location.pathname = PathService.home()
     };
 
     onCoursesPageModeChange = (coursesPageMode) => {
@@ -159,7 +127,6 @@ class App extends Component {
 
     render() {
         const {
-            toolBarTopItems,
             isConnected,
             isShowLoader,
             appInfo,
@@ -188,7 +155,7 @@ class App extends Component {
             }
         }
 
-        const loginPathName = this.pathService.login()
+        const loginPathName = '';
 
         const getContentForConnected = () => {
             if (!isAuthenticated) {
@@ -196,18 +163,18 @@ class App extends Component {
             }
             return (
                 <Switch>
-                    <Route path={this.pathService.login()}
+                    <Route path={'/login'}
                            exact
                            render={() => <LoginForm {...getLoginFormProps()}/>}/>
 
-                    <PrivateRoute path={this.pathService.main()}
+                    <RouteWrapper path={PathService.home()}
                                   exact
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <DashboardPage title="Главная"/>
-                    </PrivateRoute>
+                    </RouteWrapper>
 
-                    <PrivateRoute path={this.pathService.courses()}
+                    <RouteWrapper path={PathService.courses()}
                                   exact
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
@@ -222,32 +189,32 @@ class App extends Component {
                                      onModeChange={this.onCoursesPageModeChange}
                                      getLabelForMode={CoursePageService.getLabelForMode}
                                      getCourses={this.getCoursesPageFetchFunction(coursesPageMode)}/>
-                    </PrivateRoute>
+                    </RouteWrapper>
 
-                    <PrivateRoute path={this.pathService.courses() + ':id'}
+                    <RouteWrapper path={PathService.courses() + ':id'}
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <CourseDetails title="Курс"
                                        getCourse={ApiService.fetchCourse}/>
-                    </PrivateRoute>
+                    </RouteWrapper>
 
-                    <PrivateRoute path={this.pathService.students()}
+                    <RouteWrapper path={PathService.students()}
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <StudentsPage title="Студенты"/>
-                    </PrivateRoute>
+                    </RouteWrapper>
 
-                    <PrivateRoute path={this.pathService.mentors()}
+                    <RouteWrapper path={PathService.mentors()}
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <MentorPage title="Преподаватели"/>
-                    </PrivateRoute>
+                    </RouteWrapper>
 
-                    <PrivateRoute path={this.pathService.rating()}
+                    <RouteWrapper path={PathService.rating()}
                                   isAuthenticated={isAuthenticated}
                                   loginPathname={loginPathName}>
                         <RatingPage title="Успеваемость"/>
-                    </PrivateRoute>
+                    </RouteWrapper>
                 </Switch>
             )
         }
@@ -255,7 +222,7 @@ class App extends Component {
         return (
             <div className="App">
                 <BrowserRouter>
-                    <ToolBar {...this.getToolBarProps(toolBarTopItems, isConnected, appInfo, isAuthenticated)}/>
+                    <ToolBar {...this.getToolBarProps(isConnected, appInfo, isAuthenticated)}/>
                     <Panel>
                         {
                             isShowLoader ? <Loader/> : null
@@ -270,9 +237,9 @@ class App extends Component {
         )
     }
 
-    getToolBarProps = (topItems, isConnected, appInfo, isAuthenticated) => {
-        const bottomItems = this.toolBarService
-            .getBottomToolBarItems(this.onToolBarItemClick)
+    getToolBarProps = (isConnected, appInfo, isAuthenticated) => {
+        const topItems = this.toolBarService.getTopToolBarItems()
+        const bottomItems = this.toolBarService.getBottomToolBarItems()
         const brandItemProps = this.toolBarService
             .getToolBarBrandItemProps(
                 () =>

@@ -8,12 +8,9 @@ import {
     faUserAstronaut,
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
-import PathService, {PATHS_NAMES} from "../api/PathService";
+import PathService from "../api/PathService";
 
 export default class ToolBarService {
-
-    pathService = new PathService();
-
     getToolBarBrandItemProps = (onConnectionIconClick, isConnected, appName) => {
         return {
             id: 'brand',
@@ -26,7 +23,7 @@ export default class ToolBarService {
 
     getToolBarLogOutItemProps = (onLogOut, label = 'Выйти') => {
         return {
-            id: 'logOut',
+            id: 'logout',
             label,
             faIcon: faSignOutAlt,
             onClick: onLogOut,
@@ -34,70 +31,49 @@ export default class ToolBarService {
         }
     };
 
-    getTopToolBarItems = (onToolBarItemClick) => {
+    getTopToolBarItems = () => {
         return [
             {
-                id: PATHS_NAMES.dashboard,
+                id: 'home',
                 label: 'Главная',
-                href: this.pathService.main(),
+                href: PathService.home(),
                 faIcon: faHome,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.main())
             },
             {
-                id: PATHS_NAMES.courses,
+                id: 'courses',
                 label: 'Курсы',
-                href: this.pathService.courses(),
+                href: PathService.courses(),
                 faIcon: faLaptopCode,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.courses())
             },
             {
-                id: PATHS_NAMES.students,
+                id: 'students',
                 label: 'Студенты',
-                href: this.pathService.students(),
+                href: PathService.students(),
                 faIcon: faUserGraduate,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.students())
             },
             {
-                id: PATHS_NAMES.mentors,
+                id: 'mentors',
                 label: 'Преподаватели',
-                href: this.pathService.mentors(),
+                href: PathService.mentors(),
                 faIcon: faChalkboardTeacher,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.mentors())
             },
             {
-                id: PATHS_NAMES.rating,
+                id: 'rating',
                 label: 'Успеваемость',
-                href: this.pathService.rating(),
+                href: PathService.rating(),
                 faIcon: faTrophy,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.rating())
             },
         ]
     }
 
-    getBottomToolBarItems = (onToolBarItemClick) => {
+    getBottomToolBarItems = () => {
         return [
-            // {
-            //     id: PATHS_NAMES.account,
-            //     label: 'Аккаунт',
-            //     href: this.pathService.account(),
-            //     faIcon: faUserCircle,
-            //     forceShowIcon: true,
-            //     isActive: false,
-            //     onClick: () => onToolBarItemClick(this.pathService.account()),
-            // },
             {
-                id: PATHS_NAMES.settings,
+                id: 'settings',
                 label: 'Настройки',
-                href: this.pathService.settings(),
+                href: PathService.settings(),
                 faIcon: faCog,
                 forceShowIcon: true,
-                isActive: false,
-                onClick: () => onToolBarItemClick(this.pathService.settings()),
             },
         ]
     }

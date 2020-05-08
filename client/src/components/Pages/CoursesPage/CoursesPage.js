@@ -70,10 +70,10 @@ const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLa
                 <div className="courses-toggle">
                     <h6 className="d-inline">Показать: </h6>
                     <span className={getClassForModeToggle(modes.all())}
-                        onClick={() => onModeChange(modes.all())}> {getLabelForMode(modes.all())} </span>
+                          onClick={() => onModeChange(modes.all())}> {getLabelForMode(modes.all())} </span>
                     |
                     <span className={getClassForModeToggle(modes.my())}
-                        onClick={() => onModeChange(modes.my())}> {getLabelForMode(modes.my())} </span>
+                          onClick={() => onModeChange(modes.my())}> {getLabelForMode(modes.my())} </span>
                 </div>
                 {
                     hasLoaded ?

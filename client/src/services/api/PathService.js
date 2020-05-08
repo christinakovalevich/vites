@@ -1,111 +1,35 @@
-class PathService {
-
-    _pathData = {};
-
-    constructor() {
-        this._loadPathData();
-    }
-
-    isPathExists = (path) => {
-        return Object.values(this._pathData).some(it => it.path === path)
-    }
-
-    isNameExists = (name) => {
-        if (this._pathData.hasOwnProperty(name)) {
-            return true;
-        }
-
-        console.error('Unknown path name:', name)
-    }
-
-    getPathByName = (name) => {
-        return this.isNameExists(name) ? this._pathData[name].path : null
-    }
-
-    getNameByPath = (path) => {
-        return this.isPathExists(path) ?
-            Object.values(this._pathData).find(it => it.path === path).name : null;
-    }
-
-    _loadPathData = () => {
-        this._pathData = {
-            "dashboard": {
-                path: "/",
-                name: PATHS_NAMES.dashboard,
-            },
-            "courses": {
-                path: "/courses/",
-                name: PATHS_NAMES.courses,
-            },
-            "myCourses": {
-                path: "/my-courses/",
-                name: PATHS_NAMES.myCourses,
-            },
-            "students": {
-                path: "/students/",
-                name: PATHS_NAMES.students,
-            },
-            "mentors": {
-                path: "/mentors/",
-                name: PATHS_NAMES.mentors,
-            },
-            "rating": {
-                path: "/rating/",
-                name: PATHS_NAMES.rating,
-            },
-            "settings": {
-                path: "/settings",
-                name: PATHS_NAMES.settings
-            },
-            "account": {
-                path: "/account",
-                name: PATHS_NAMES.account
-            },
-            "login": {
-                path: "/login",
-                name: PATHS_NAMES.login
-            }
-        }
-    }
-
-    main = () =>
-        this.getPathByName(PATHS_NAMES.dashboard)
-
-    courses = () =>
-        this.getPathByName(PATHS_NAMES.courses)
-
-    myCourses = () =>
-        this.getPathByName(PATHS_NAMES.myCourses)
-
-    students = () =>
-        this.getPathByName(PATHS_NAMES.students)
-
-    mentors = () =>
-        this.getPathByName(PATHS_NAMES.mentors)
-
-    rating = () =>
-        this.getPathByName(PATHS_NAMES.rating)
-
-    settings = () =>
-        this.getPathByName(PATHS_NAMES.settings)
-
-    account = () =>
-        this.getPathByName(PATHS_NAMES.account)
-
-    login = () =>
-        this.getPathByName(PATHS_NAMES.login)
+const _PATH_DATA = {
+    HOME: {
+        path: "/",
+    },
+    COURSES: {
+        path: "/courses/",
+    },
+    STUDENTS: {
+        path: "/students/",
+    },
+    MENTORS: {
+        path: "/mentors/",
+    },
+    RATING: {
+        path: "/rating/",
+    },
+    SETTINGS: {
+        path: "/settings",
+    },
 }
 
-export default PathService
+const _isPathExists = path =>
+    Object.values(_PATH_DATA).some(it => it.path === path)
 
-export const PATHS_NAMES = {
-    dashboard: "dashboard",
-    courses: "courses",
-    myCourses: "myCourses",
-    students: "students",
-    mentors: "mentors",
-    rating: "rating",
-    settings: "settings",
-    account: "account",
-    login: "login",
+
+export default {
+    home: () => _PATH_DATA.HOME.path,
+    courses: () => _PATH_DATA.COURSES.path,
+    students: () => _PATH_DATA.STUDENTS.path,
+    mentors: () => _PATH_DATA.MENTORS.path,
+    rating: () => _PATH_DATA.RATING.path,
+    settings: () => _PATH_DATA.SETTINGS.path,
+
+    isPathExists: _isPathExists,
 }
