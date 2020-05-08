@@ -1,3 +1,17 @@
+const _isCourseModeValid = mode =>
+    Object.values(_MODES).some(it => it.value === mode);
+
+const _MODES = {
+    ALL: {
+        value: 'MODE_ALL',
+        label: 'Все курсы',
+    },
+    MY: {
+        value: 'MODE_MY',
+        label: 'Мои курсы',
+    },
+}
+
 export default {
     modeAll: () =>
         _MODES.ALL.value,
@@ -15,22 +29,8 @@ export default {
         }
     },
 
-    isModeValid: mode => _isCourseModeValid(mode),
+    isModeValid: _isCourseModeValid,
 
     isActiveMode: (activeMode, currentMode) => activeMode === currentMode,
 
 };
-
-const _isCourseModeValid = mode =>
-    Object.values(_MODES).some(it => it.value === mode);
-
-const _MODES = {
-    ALL: {
-        value: 'MODE_ALL',
-        label: 'Все курсы',
-    },
-    MY: {
-        value: 'MODE_MY',
-        label: 'Мои курсы',
-    },
-}
