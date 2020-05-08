@@ -5,9 +5,9 @@ import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
 import Loader from "../../Common/Loader/Loader";
-import {coursesPageModes} from "../../../utils/CourseConstants";
+import classNames from "classnames";
 
-const CoursesPage = ({title, getCourses, sort, onModeChange}) => {
+const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLabelForMode, modes}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
@@ -53,6 +53,12 @@ const CoursesPage = ({title, getCourses, sort, onModeChange}) => {
         ))
     };
 
+    const getClassForModeToggle = (modeValue) => {
+        return classNames({
+            'active': isActiveMode(modeValue)
+        })
+    }
+
     return (
         <div className="courses-page">
             <DefaultPage>
@@ -63,8 +69,11 @@ const CoursesPage = ({title, getCourses, sort, onModeChange}) => {
 
                 <div className="courses-toggle">
                     <h6 className="d-inline">Показать: </h6>
-                    <span onClick={() => onModeChange(coursesPageModes.ALL)}> Все курсы </span> |
-                    <span onClick={() => onModeChange(coursesPageModes.MY)}> Мои курсы </span>
+                    <span className={getClassForModeToggle(modes.all())}
+                        onClick={() => onModeChange(modes.all())}> {getLabelForMode(modes.all())} </span>
+                    |
+                    <span className={getClassForModeToggle(modes.my())}
+                        onClick={() => onModeChange(modes.my())}> {getLabelForMode(modes.my())} </span>
                 </div>
                 {
                     hasLoaded ?

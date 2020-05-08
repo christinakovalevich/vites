@@ -19,7 +19,7 @@ import Auth from "../../security/auth";
 
 import "./App.css";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
-import {coursesPageModes, isCourseModeValid} from "../../utils/CourseConstants";
+import CoursePageService from "../../services/Course/CoursePageService";
 
 class App extends Component {
 
@@ -41,7 +41,7 @@ class App extends Component {
             username: '',
             password: ''
         },
-        coursesPageMode: coursesPageModes.ALL,
+        coursesPageMode: CoursePageService.modeAll(),
     };
 
     componentDidMount() {
@@ -133,7 +133,7 @@ class App extends Component {
     };
 
     onCoursesPageModeChange = (coursesPageMode) => {
-        if (isCourseModeValid(coursesPageMode)) {
+        if (CoursePageService.isModeValid(coursesPageMode)) {
             this.setState({
                 coursesPageMode
             })
@@ -143,15 +143,17 @@ class App extends Component {
     };
 
     getCoursesPageFetchFunction = coursesPageMode => {
-        if (isCourseModeValid(coursesPageMode)) {
+        if (CoursePageService.isModeValid(coursesPageMode)) {
             switch (coursesPageMode) {
-                case coursesPageModes.ALL:
+                case CoursePageService.modeAll():
                     return ApiService.fetchCourses
-                case coursesPageModes.MY:
+                case CoursePageService.modeMy():
                     return ApiService.fetchMyCourses
                 default:
                     return () => []
             }
+        } else {
+            console.error('Unknown coursesPageMode:', coursesPageMode)
         }
     }
 
@@ -211,7 +213,14 @@ class App extends Component {
                                   loginPathname={loginPathName}>
                         <CoursesPage title="Курсы и стажировки"
                                      sort={this.sortCoursesByDate}
+                                     modes={{
+                                         all: CoursePageService.modeAll,
+                                         my: CoursePageService.modeMy,
+                                     }}
+                                     isActiveMode={currentMode =>
+                                         CoursePageService.isActiveMode(coursesPageMode, currentMode)}
                                      onModeChange={this.onCoursesPageModeChange}
+                                     getLabelForMode={CoursePageService.getLabelForMode}
                                      getCourses={this.getCoursesPageFetchFunction(coursesPageMode)}/>
                     </PrivateRoute>
 

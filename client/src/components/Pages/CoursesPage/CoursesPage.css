@@ -3,12 +3,14 @@
 }
 
 .courses-page .courses-toggle {
+    color: var(--main-m-grey-color);
     text-align: right;
     cursor: pointer;
 }
 
-.courses-page .courses-toggle span {
+.courses-page .courses-toggle .active {
     color: var(--main-color-7);
+    font-weight: bold;
     transition-duration: var(--main-transition-durirtion);
 }
 
