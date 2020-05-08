@@ -20,7 +20,7 @@ import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursePageService from "../../services/Course/CoursePageService";
 import PathService from "../../services/api/PathService";
 
-class App extends Component {
+export default class App extends Component {
 
     toolBarService = new ToolBarService();
 
@@ -246,5 +246,3 @@ class App extends Component {
         return [...courses].sort((a, b) => (a.startDate > b.startDate) ? 1 : -1)
     }
 }
-
-export default App;
