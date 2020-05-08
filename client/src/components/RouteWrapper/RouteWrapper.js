@@ -3,8 +3,7 @@ import {Route} from "react-router-dom";
 
 const RouteWrapper = ({children, ...rest}) => {
     return (
-        <Route {...rest}
-               render={() => children}/>
+        <Route {...rest} render={() => children}/>
     );
 };
 

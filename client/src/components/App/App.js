@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import "./App.css";
 import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
@@ -15,8 +16,6 @@ import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import LoginForm from "../LoginForm/LoginForm";
 import Auth from "../../security/auth";
-
-import "./App.css";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursePageService from "../../services/Course/CoursePageService";
 import PathService from "../../services/api/PathService";
@@ -26,7 +25,6 @@ class App extends Component {
     toolBarService = new ToolBarService();
 
     state = {
-        serverInfo: {},
         appInfo: {
             name: APP_NAME,
             version: CLIENT_VERSION,
@@ -39,7 +37,7 @@ class App extends Component {
             username: '',
             password: ''
         },
-        coursesPageMode: CoursePageService.modeAll(),
+        coursesPageMode: CoursePageService.modes.all(),
     };
 
     componentDidMount() {
@@ -66,7 +64,7 @@ class App extends Component {
         this.hideLoader();
         this.setState({
             isConnected
-        })
+        });
     };
 
     setAuthenticated = (isAuthenticated) => {
@@ -92,30 +90,30 @@ class App extends Component {
     logoutHandler = () => {
         Auth.removeToken();
         this.setState({
+            isAuthenticated: false,
             userDetails: {
                 username: '',
                 password: ''
             },
         });
-        window.location.pathname = PathService.home()
     };
 
     onCoursesPageModeChange = (coursesPageMode) => {
         if (CoursePageService.isModeValid(coursesPageMode)) {
             this.setState({
                 coursesPageMode
-            })
+            });
         } else {
-            console.error('Unknown coursesPageMode:', coursesPageMode)
+            console.error('Unknown coursesPageMode:', coursesPageMode);
         }
     };
 
     getCoursesPageFetchFunction = coursesPageMode => {
         if (CoursePageService.isModeValid(coursesPageMode)) {
             switch (coursesPageMode) {
-                case CoursePageService.modeAll():
+                case CoursePageService.modes.all():
                     return ApiService.fetchCourses
-                case CoursePageService.modeMy():
+                case CoursePageService.modes.my():
                     return ApiService.fetchMyCourses
                 default:
                     return () => []
@@ -123,7 +121,7 @@ class App extends Component {
         } else {
             console.error('Unknown coursesPageMode:', coursesPageMode)
         }
-    }
+    };
 
     render() {
         const {
@@ -144,7 +142,7 @@ class App extends Component {
                     500
                 )}
             />
-        )
+        );
 
         const getLoginFormProps = () => {
             return {
@@ -153,9 +151,7 @@ class App extends Component {
                 error: null,
                 inputChangeHandler: this.inputChangeHandler
             }
-        }
-
-        const loginPathName = '';
+        };
 
         const getContentForConnected = () => {
             if (!isAuthenticated) {
@@ -167,22 +163,16 @@ class App extends Component {
                            exact
                            render={() => <LoginForm {...getLoginFormProps()}/>}/>
 
-                    <RouteWrapper path={PathService.home()}
-                                  exact
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
+                    <RouteWrapper path={PathService.home()} exact>
                         <DashboardPage title="Главная"/>
                     </RouteWrapper>
 
-                    <RouteWrapper path={PathService.courses()}
-                                  exact
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
+                    <RouteWrapper path={PathService.courses()} exact>
                         <CoursesPage title="Курсы и стажировки"
                                      sort={this.sortCoursesByDate}
                                      modes={{
-                                         all: CoursePageService.modeAll,
-                                         my: CoursePageService.modeMy,
+                                         all: CoursePageService.modes.all,
+                                         my: CoursePageService.modes.my,
                                      }}
                                      isActiveMode={currentMode =>
                                          CoursePageService.isActiveMode(coursesPageMode, currentMode)}
@@ -191,33 +181,25 @@ class App extends Component {
                                      getCourses={this.getCoursesPageFetchFunction(coursesPageMode)}/>
                     </RouteWrapper>
 
-                    <RouteWrapper path={PathService.courses() + ':id'}
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
+                    <RouteWrapper path={PathService.courses() + ':id'}>
                         <CourseDetails title="Курс"
                                        getCourse={ApiService.fetchCourse}/>
                     </RouteWrapper>
 
-                    <RouteWrapper path={PathService.students()}
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
+                    <RouteWrapper path={PathService.students()}>
                         <StudentsPage title="Студенты"/>
                     </RouteWrapper>
 
-                    <RouteWrapper path={PathService.mentors()}
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
+                    <RouteWrapper path={PathService.mentors()}>
                         <MentorPage title="Преподаватели"/>
                     </RouteWrapper>
 
-                    <RouteWrapper path={PathService.rating()}
-                                  isAuthenticated={isAuthenticated}
-                                  loginPathname={loginPathName}>
+                    <RouteWrapper path={PathService.rating()}>
                         <RatingPage title="Успеваемость"/>
                     </RouteWrapper>
                 </Switch>
             )
-        }
+        };
 
         return (
             <div className="App">

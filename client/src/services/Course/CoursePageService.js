@@ -13,11 +13,12 @@ const _MODES = {
 }
 
 export default {
-    modeAll: () =>
-        _MODES.ALL.value,
-
-    modeMy: () =>
-        _MODES.MY.value,
+    modes: {
+        all: () =>
+            _MODES.ALL.value,
+        my: () =>
+            _MODES.MY.value,
+    },
 
     getLabelForMode: mode => {
         if (_isCourseModeValid(mode)) {
