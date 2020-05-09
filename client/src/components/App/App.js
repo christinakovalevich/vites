@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import "./App.css";
-import appIcon from "./app-icon-white-blue.png"
 import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
@@ -10,22 +9,18 @@ import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import ApiService from "../../services/Api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 import Loader from "../Common/Loader/Loader";
-import ToolBarService from "../../services/ToolBar/ToolBarService";
 import RouteWrapper from "../RouteWrapper/RouteWrapper";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import LoginForm from "../LoginForm/LoginForm";
-import Auth from "../../services/Auth/AuthService";
+import AuthService from "../../services/Auth/AuthService";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursePageService from "../../services/Course/CoursePageService";
 import PathService from "../../services/Path/PathService";
-import RoleService from "../../services/Role/RoleService";
+import AppService from "../../services/App/AppService";
 
 export default class App extends Component {
-
-    toolBarService = new ToolBarService();
-
     state = {
         appInfo: {
             name: APP_NAME,
@@ -35,17 +30,13 @@ export default class App extends Component {
         isConnected: false,
         isAuthenticated: false,
         isShowLoader: false,
-        userDetails: {
-            username: '',
-            password: '',
-            role: null,
-        },
+        userDetails: AppService.getInitialUserDetails(),
         coursesPageMode: CoursePageService.modes.all(),
     };
 
     componentDidMount() {
         ApiService.testConnection(this.setConnected, this.showLoader);
-        Auth.checkAuthentication(this.setAuthenticated, this.setRole);
+        AuthService.checkAuthentication(this.setAuthenticated, this.setRole);
 
         setInterval(() =>
             ApiService.testConnection(this.setConnected, this.showLoader), 300000);
@@ -65,15 +56,11 @@ export default class App extends Component {
 
     setConnected = (isConnected) => {
         this.hideLoader();
-        this.setState({
-            isConnected
-        });
+        this.setState({isConnected});
     };
 
     setAuthenticated = (isAuthenticated) => {
-        this.setState({
-            isAuthenticated
-        })
+        this.setState({isAuthenticated})
     }
 
     setRole = (role) => {
@@ -85,55 +72,32 @@ export default class App extends Component {
                 }
             }
         })
-    }
+    };
 
-    inputChangeHandler = (event) => {
-        let {userDetails} = this.state;
-        const target = event.target;
-
+    inputChangeHandler = ({target}) => {
+        const userDetails = {...this.state.userDetails};
         userDetails[target.name] = target.value;
-
         this.setState({userDetails});
     };
 
     loginHandler = (e) => {
         e.preventDefault();
-        Auth.login(this.state.userDetails);
+        AuthService.login(this.state.userDetails);
     };
 
     logoutHandler = () => {
-        Auth.removeToken();
+        AuthService.removeToken();
         this.setState({
             isAuthenticated: false,
-            userDetails: {
-                username: '',
-                password: ''
-            },
+            userDetails: AppService.getInitialUserDetails()
         });
     };
 
     onCoursesPageModeChange = (coursesPageMode) => {
         if (CoursePageService.isModeValid(coursesPageMode)) {
-            this.setState({
-                coursesPageMode
-            });
+            this.setState({coursesPageMode});
         } else {
             console.error('Unknown coursesPageMode:', coursesPageMode);
-        }
-    };
-
-    getCoursesPageFetchFunction = coursesPageMode => {
-        if (CoursePageService.isModeValid(coursesPageMode)) {
-            switch (coursesPageMode) {
-                case CoursePageService.modes.all():
-                    return ApiService.fetchCourses
-                case CoursePageService.modes.my():
-                    return ApiService.fetchMyCourses
-                default:
-                    return () => []
-            }
-        } else {
-            console.error('Unknown coursesPageMode:', coursesPageMode)
         }
     };
 
@@ -143,7 +107,8 @@ export default class App extends Component {
             isShowLoader,
             isAuthenticated,
             userDetails,
-            coursesPageMode
+            coursesPageMode,
+            appInfo
         } = this.state;
 
         const getContentForNotConnected = () => (
@@ -157,24 +122,24 @@ export default class App extends Component {
             />
         );
 
-        const getLoginFormProps = () => {
-            return {
-                onSubmit: this.loginHandler,
-                userDetails: userDetails,
-                error: null,
-                inputChangeHandler: this.inputChangeHandler
-            }
-        };
-
         const getContentForConnected = () => {
             if (!isAuthenticated) {
-                return <LoginForm {...getLoginFormProps()}/>
+                return <LoginForm {...AppService.getLoginFormProps(
+                    userDetails,
+                    this.loginHandler,
+                    this.inputChangeHandler
+                )}/>
             }
+
             return (
                 <Switch>
                     <Route path={'/login'}
                            exact
-                           render={() => <LoginForm {...getLoginFormProps()}/>}/>
+                           render={() => <LoginForm {...AppService.getLoginFormProps(
+                               userDetails,
+                               this.loginHandler,
+                               this.inputChangeHandler
+                           )}/>}/>
 
                     <RouteWrapper path={PathService.home()} exact>
                         <DashboardPage title="Главная"/>
@@ -182,7 +147,7 @@ export default class App extends Component {
 
                     <RouteWrapper path={PathService.courses()} exact>
                         <CoursesPage title="Курсы и стажировки"
-                                     sort={this.sortCoursesByDate}
+                                     sort={AppService.sortCoursesByDate}
                                      modes={{
                                          all: CoursePageService.modes.all,
                                          my: CoursePageService.modes.my,
@@ -191,7 +156,7 @@ export default class App extends Component {
                                          CoursePageService.isActiveMode(coursesPageMode, currentMode)}
                                      onModeChange={this.onCoursesPageModeChange}
                                      getLabelForMode={CoursePageService.getLabelForMode}
-                                     getCourses={this.getCoursesPageFetchFunction(coursesPageMode)}/>
+                                     getCourses={AppService.getCoursesPageFetchFunction(coursesPageMode)}/>
                     </RouteWrapper>
 
                     <RouteWrapper path={PathService.courses() + ':id'}>
@@ -217,7 +182,15 @@ export default class App extends Component {
         return (
             <div className="App">
                 <BrowserRouter>
-                    <ToolBar {...this.getToolBarProps()}/>
+                    <ToolBar {...AppService.getToolBarProps(
+                        isConnected,
+                        isAuthenticated,
+                        userDetails,
+                        appInfo,
+                        this.logoutHandler,
+                        this.setConnected,
+                        this.showLoader
+                    )}/>
                     <Panel>
                         {
                             isShowLoader ? <Loader/> : null
@@ -230,35 +203,5 @@ export default class App extends Component {
                 </BrowserRouter>
             </div>
         )
-    }
-
-    getToolBarProps = () => {
-        const {isConnected, appInfo, isAuthenticated, userDetails} = this.state;
-        const topItems = this.toolBarService.getTopToolBarItems()
-        const bottomItems = this.toolBarService.getBottomToolBarItems()
-        const logOutItemProps = this.toolBarService.getToolBarLogOutItemProps(this.logoutHandler)
-
-        return {
-            brandItemProps: {
-                appName: appInfo.name.toLowerCase(),
-                appIcon: appIcon,
-            },
-            logOutItemProps,
-            topItems,
-            bottomItems,
-            isAuthenticated,
-            statusBarProps: {
-                showReloadButton: !isConnected || userDetails.role === RoleService.admin(),
-                onConnectionReload: () =>
-                    ApiService.testConnection(this.setConnected, this.showLoader, 500),
-                appInfo,
-                icon: RoleService.getUserIcon(userDetails.role)
-            },
-            isPathActive: PathService.isPathActive
-        }
-    }
-
-    sortCoursesByDate = courses => {
-        return [...courses].sort((a, b) => (a.startDate > b.startDate) ? 1 : -1)
     }
 }
