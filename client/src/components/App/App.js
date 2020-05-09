@@ -204,7 +204,7 @@ export default class App extends Component {
         return (
             <div className="App">
                 <BrowserRouter>
-                    <ToolBar {...this.getToolBarProps(isConnected, appInfo, isAuthenticated)}/>
+                    <ToolBar {...this.getToolBarProps()}/>
                     <Panel>
                         {
                             isShowLoader ? <Loader/> : null
@@ -219,7 +219,8 @@ export default class App extends Component {
         )
     }
 
-    getToolBarProps = (isConnected, appInfo, isAuthenticated) => {
+    getToolBarProps = () => {
+        const {isConnected, appInfo, isAuthenticated} = this.state;
         const topItems = this.toolBarService.getTopToolBarItems()
         const bottomItems = this.toolBarService.getBottomToolBarItems()
         const brandItemProps = this.toolBarService
@@ -239,6 +240,7 @@ export default class App extends Component {
             bottomItems,
             appInfo,
             isAuthenticated,
+            isPathActive: PathService.isPathActive
         }
     }
 
