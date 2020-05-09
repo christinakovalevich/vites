@@ -35,5 +35,10 @@ class Student {
     static hasMany = [courses: Course]
 
     static constraints = {
+        name shared: "name"
+        lastName shared: "name"
+        fatherName shared: "name"
+        birthDate shared: "birthDate"
+        rating shared: "ratable"
     }
 }

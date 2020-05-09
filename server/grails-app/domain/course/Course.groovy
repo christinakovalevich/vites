@@ -1,16 +1,11 @@
 package course
 
 
-import grails.compiler.GrailsCompileStatic
-import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.Resource
 import mentor.Mentor
 import security.User
 import student.Student
 
-//@Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
-@GrailsCompileStatic
-//@Resource(uri = "/api/course")
+//@GrailsCompileStatic
 class Course {
 
     String name
@@ -40,9 +35,14 @@ class Course {
     static belongsTo = [Mentor, Student]
 
     static constraints = {
-        name blank: false, size: 0..100
-        difficulty min: 0.0f, max: 5.0f
-        popularity min: 0.0f, max: 5.0f
-        totalPlacesCount min: 0
+        name size: 0..100
+        endDate validator: { val, obj, errors ->
+            if (val < obj.startDate) {
+                errors.rejectValue('endDate', 'datePriorTo')
+            }
+        }
+        difficulty shared: "ratable"
+        popularity shared: "ratable"
+        totalPlacesCount min: 0, max: 250
     }
 }

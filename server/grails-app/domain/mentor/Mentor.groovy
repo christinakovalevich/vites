@@ -21,7 +21,7 @@ class Mentor {
     float rating
 
     User user
-    int experience
+    int experienceYears
 
     Date dateCreated
     Date lastUpdated
@@ -32,6 +32,11 @@ class Mentor {
     static hasMany = [courses: Course]
 
     static constraints = {
-        experience min: 0, max: 99
+        name shared: "name"
+        lastName shared: "name"
+        fatherName shared: "name"
+        birthDate shared: "birthDate"
+        rating shared: "ratable"
+        experienceYears min: 0, max: 99
     }
 }
