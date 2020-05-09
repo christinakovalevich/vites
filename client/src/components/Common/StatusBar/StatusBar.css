@@ -1,0 +1,21 @@
+.status-bar {
+    background: var(--main-color-6);
+    color: var(--main-white-color);
+    font-size: .9rem;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.status-bar div {
+    display: inline-block;
+    width: 50%;
+}
+
+.status-bar div.right {
+    text-align: right;
+}
+
+.status-bar div.right .connection-reload {
+    cursor: pointer;
+    margin-left: .5rem;
+}

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "./App.css";
+import appIcon from "./app-icon-white-blue.png"
 import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
@@ -19,6 +20,7 @@ import Auth from "../../services/Auth/AuthService";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursePageService from "../../services/Course/CoursePageService";
 import PathService from "../../services/Path/PathService";
+import RoleService from "../../services/Role/RoleService";
 
 export default class App extends Component {
 
@@ -231,26 +233,27 @@ export default class App extends Component {
     }
 
     getToolBarProps = () => {
-        const {isConnected, appInfo, isAuthenticated} = this.state;
+        const {isConnected, appInfo, isAuthenticated, userDetails} = this.state;
         const topItems = this.toolBarService.getTopToolBarItems()
         const bottomItems = this.toolBarService.getBottomToolBarItems()
-        const brandItemProps = this.toolBarService
-            .getToolBarBrandItemProps(
-                () =>
-                    ApiService.testConnection(this.setConnected, this.showLoader, 500),
-                isConnected,
-                appInfo.name.toUpperCase(),
-            )
-
         const logOutItemProps = this.toolBarService.getToolBarLogOutItemProps(this.logoutHandler)
 
         return {
-            brandItemProps,
+            brandItemProps: {
+                appName: appInfo.name.toLowerCase(),
+                appIcon: appIcon,
+            },
             logOutItemProps,
             topItems,
             bottomItems,
-            appInfo,
             isAuthenticated,
+            statusBarProps: {
+                showReloadButton: !isConnected || userDetails.role === RoleService.admin(),
+                onConnectionReload: () =>
+                    ApiService.testConnection(this.setConnected, this.showLoader, 500),
+                appInfo,
+                icon: RoleService.getUserIcon(userDetails.role)
+            },
             isPathActive: PathService.isPathActive
         }
     }

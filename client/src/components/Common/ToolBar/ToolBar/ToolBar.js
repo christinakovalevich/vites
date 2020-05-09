@@ -1,16 +1,16 @@
 import React from "react";
-
-import PropTypes from 'prop-types';
 import "./ToolBar.css"
+import PropTypes from 'prop-types';
 import ToolBarItem from "../ToolBarItem/ToolBarItem";
 import ToolBarBrandItem from "../ToolBarBrandItem/ToolBarBrandItem";
 import ToolBarLogOutItem from "../ToolBarLogOutItem/ToolBarLogOutItem";
 import {useLocation} from "react-router-dom";
+import StatusBar from "../../StatusBar/StatusBar";
 
 const ToolBar = ({
                      brandItemProps,
                      logOutItemProps,
-                     appInfo,
+                     statusBarProps,
                      topItems,
                      bottomItems,
                      isAuthenticated,
@@ -38,9 +38,7 @@ const ToolBar = ({
                 {
                     isAuthenticated ? <ToolBarLogOutItem {...logOutItemProps}/> : null
                 }
-                <div className="app-info">
-                    v. {appInfo.version}
-                </div>
+                <StatusBar {...statusBarProps}/>
             </div>
         </div>
     );

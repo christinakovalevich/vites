@@ -1,3 +1,5 @@
+import {faUser, faUserGraduate, faUserNinja, faUserSecret, faUserTie} from "@fortawesome/free-solid-svg-icons";
+
 export default {
     anonymous: () => _ROLES.anonymous,
     admin: () => _ROLES.admin,
@@ -6,7 +8,25 @@ export default {
     student: () => _ROLES.student,
 
     isRoleValid: role =>
-        Object.values(_ROLES).includes(role)
+        Object.values(_ROLES).includes(role),
+
+    getUserIcon(userRole) {
+        switch (userRole) {
+            case this.anonymous():
+                return faUser
+            case this.admin():
+                return faUserSecret
+            case this.manager():
+                return faUserTie
+            case this.mentor():
+                return faUserNinja
+            case this.student():
+                return faUserGraduate
+            default: {
+                return faUser
+            }
+        }
+    }
 }
 
 const _ROLES = {

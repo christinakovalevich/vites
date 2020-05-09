@@ -13,11 +13,3 @@
     bottom: 0;
     width: var(--toolBar-width);
 }
-
-.vertical-menu .bottom-container .app-info {
-    background: var(--main-color-6);
-    color: var(--main-white-color);
-    font-size: .9rem;
-    padding-left: 1rem;
-    width: 100%;
-}

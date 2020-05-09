@@ -1,35 +1,17 @@
 import React from "react";
+import "./ToolBarBrandItem.css";
+import classNames from "classnames";
 
-import classNames from "classnames"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-import "./ToolBarBrandItem.css"
-import ConnectionIcon from "../../ConnectionIcon/ConnectionIcon";
-
-const ToolBarBrandItem = ({label, faIcon, isConnected, onConnectionIconClick}) => {
+const ToolBarBrandItem = ({appName, appIcon}) => {
 
     const getClassNames = () =>
         classNames('tool-bar-item', 'brand')
 
     return (
-
         <div className={getClassNames()}>
-            <div className="d-inline-block w-75">
-                {
-                    <FontAwesomeIcon icon={faIcon}/>
-                }
-                {label}
-            </div>
-
-            <div className="text-right d-inline-block w-25">
-                <ConnectionIcon
-                    isConnected={isConnected}
-                    onConnectionIconClick={onConnectionIconClick}
-                />
-            </div>
-
+            <img src={appIcon} alt=""/> {appName}
         </div>
     )
-}
+};
 
 export default ToolBarBrandItem;

@@ -5,22 +5,11 @@ import {
     faLaptopCode,
     faSignOutAlt,
     faTrophy,
-    faUserAstronaut,
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
 import PathService from "../Path/PathService";
 
 export default class ToolBarService {
-    getToolBarBrandItemProps = (onConnectionIconClick, isConnected, appName) => {
-        return {
-            id: 'brand',
-            label: appName,
-            faIcon: faUserAstronaut,
-            onConnectionIconClick: onConnectionIconClick,
-            isConnected: isConnected,
-        }
-    };
-
     getToolBarLogOutItemProps = (onLogOut, label = 'Выйти') => {
         return {
             id: 'logout',
