@@ -9,7 +9,7 @@ const toolBarService = new ToolBarService();
 
 export default {
     getToolBarProps(isConnected, isAuthenticated, userDetails, appInfo, logoutHandler, setConnected, showLoader) {
-        const topItems = toolBarService.getTopToolBarItems()
+        const topItems = toolBarService.getTopToolBarItems(userDetails.role)
         const bottomItems = toolBarService.getBottomToolBarItems()
         const logOutItemProps = toolBarService.getToolBarLogOutItemProps(logoutHandler)
 

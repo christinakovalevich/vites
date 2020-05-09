@@ -8,6 +8,7 @@ import {
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
 import PathService from "../Path/PathService";
+import RoleService from "../Role/RoleService";
 
 export default class ToolBarService {
     getToolBarLogOutItemProps = (onLogOut, label = 'Выйти') => {
@@ -20,39 +21,82 @@ export default class ToolBarService {
         }
     };
 
-    getTopToolBarItems = () => {
-        return [
+    getTopToolBarItems = (role) => {
+        const ids = {
+            HOME: 'home',
+            COURSES: 'courses',
+            STUDENTS: 'students',
+            MENTORS: 'mentors',
+            RATING: 'rating',
+        }
+
+        const items = [
             {
-                id: 'home',
+                id: ids.HOME,
                 label: 'Главная',
                 href: PathService.home(),
                 faIcon: faHome,
             },
             {
-                id: 'courses',
+                id: ids.COURSES,
                 label: 'Курсы',
                 href: PathService.courses(),
                 faIcon: faLaptopCode,
             },
             {
-                id: 'students',
+                id: ids.STUDENTS,
                 label: 'Студенты',
                 href: PathService.students(),
                 faIcon: faUserGraduate,
             },
             {
-                id: 'mentors',
+                id: ids.MENTORS,
                 label: 'Преподаватели',
                 href: PathService.mentors(),
                 faIcon: faChalkboardTeacher,
             },
             {
-                id: 'rating',
+                id: ids.RATING,
                 label: 'Успеваемость',
                 href: PathService.rating(),
                 faIcon: faTrophy,
             },
-        ]
+        ];
+
+        switch (role) {
+            case RoleService.admin():
+                return this.filterItemsByIds(items,
+                    ids.HOME,
+                    ids.COURSES,
+                    ids.STUDENTS,
+                    ids.MENTORS,
+                    ids.RATING
+                )
+            case RoleService.manager():
+                return this.filterItemsByIds(items,
+                    ids.HOME,
+                    ids.COURSES,
+                    ids.STUDENTS,
+                    ids.MENTORS
+                )
+            case RoleService.mentor():
+                return this.filterItemsByIds(items,
+                    ids.HOME,
+                    ids.COURSES,
+                    ids.STUDENTS
+                )
+            case RoleService.student():
+                return this.filterItemsByIds(items,
+                    ids.HOME,
+                    ids.COURSES,
+                    ids.MENTORS,
+                    ids.RATING
+                )
+            case RoleService.anonymous():
+                return this.filterItemsByIds(items, ids.HOME)
+            default:
+                return []
+        }
     }
 
     getBottomToolBarItems = () => {
@@ -65,5 +109,9 @@ export default class ToolBarService {
                 forceShowIcon: true,
             },
         ]
+    }
+
+    filterItemsByIds = (items = [], ...ids) => {
+        return items.filter(it => ids.includes(it.id))
     }
 }

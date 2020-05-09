@@ -4,21 +4,22 @@ import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import CoursesPage from "../Pages/CoursesPage/CoursesPage";
-import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import ApiService from "../../services/Api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 import Loader from "../Common/Loader/Loader";
+import LoginForm from "../LoginForm/LoginForm";
+import AuthService from "../../services/Auth/AuthService";
+import CoursePageService from "../../services/Course/CoursePageService";
+import AppService from "../../services/App/AppService";
 import RouteWrapper from "../RouteWrapper/RouteWrapper";
+import PathService from "../../services/Path/PathService";
+import DashboardPage from "../Pages/DashboardPage/DashboardPage";
+import CoursesPage from "../Pages/CoursesPage/CoursesPage";
+import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
-import LoginForm from "../LoginForm/LoginForm";
-import AuthService from "../../services/Auth/AuthService";
-import CourseDetails from "../Pages/CourseDetails/CourseDetails";
-import CoursePageService from "../../services/Course/CoursePageService";
-import PathService from "../../services/Path/PathService";
-import AppService from "../../services/App/AppService";
+import {UserRoleContext} from "../../contexts/UserRoleContext"
 
 export default class App extends Component {
     state = {
@@ -39,7 +40,7 @@ export default class App extends Component {
         AuthService.checkAuthentication(this.setAuthenticated, this.setRole);
 
         setInterval(() =>
-            ApiService.testConnection(this.setConnected, this.showLoader), 300000);
+            ApiService.testConnection(this.setConnected, this.showLoader), 500);
     }
 
     showLoader = () => {
@@ -133,7 +134,8 @@ export default class App extends Component {
 
             return (
                 <Switch>
-                    <Route path={'/login'}
+                    <Route path={PathService.login()}
+                           roles={PathService.roles().login()}
                            exact
                            render={() => <LoginForm {...AppService.getLoginFormProps(
                                userDetails,
@@ -141,40 +143,52 @@ export default class App extends Component {
                                this.inputChangeHandler
                            )}/>}/>
 
-                    <RouteWrapper path={PathService.home()} exact>
-                        <DashboardPage title="Главная"/>
-                    </RouteWrapper>
+                    <UserRoleContext.Provider value={userDetails.role}>
+                        <RouteWrapper path={PathService.home()} exact
+                                      roles={PathService.roles().home()}>
+                            <DashboardPage title="Главная"/>
+                        </RouteWrapper>
 
-                    <RouteWrapper path={PathService.courses()} exact>
-                        <CoursesPage title="Курсы и стажировки"
-                                     sort={AppService.sortCoursesByDate}
-                                     modes={{
-                                         all: CoursePageService.modes.all,
-                                         my: CoursePageService.modes.my,
-                                     }}
-                                     isActiveMode={currentMode =>
-                                         CoursePageService.isActiveMode(coursesPageMode, currentMode)}
-                                     onModeChange={this.onCoursesPageModeChange}
-                                     getLabelForMode={CoursePageService.getLabelForMode}
-                                     getCourses={AppService.getCoursesPageFetchFunction(coursesPageMode)}/>
-                    </RouteWrapper>
+                        <RouteWrapper path={PathService.courses()} exact
+                                      roles={PathService.roles().courses()}>
+                            <CoursesPage title="Курсы и стажировки"
+                                         sort={AppService.sortCoursesByDate}
+                                         modes={{
+                                             all: CoursePageService.modes.all,
+                                             my: CoursePageService.modes.my,
+                                         }}
+                                         isActiveMode={currentMode =>
+                                             CoursePageService.isActiveMode(coursesPageMode, currentMode)}
+                                         onModeChange={this.onCoursesPageModeChange}
+                                         getLabelForMode={CoursePageService.getLabelForMode}
+                                         getCourses={AppService.getCoursesPageFetchFunction(coursesPageMode)}/>
+                        </RouteWrapper>
 
-                    <RouteWrapper path={PathService.courses() + ':id'}>
-                        <CourseDetails title="Курс"
-                                       getCourse={ApiService.fetchCourse}/>
-                    </RouteWrapper>
+                        <RouteWrapper path={PathService.course()}
+                                      roles={PathService.roles().course()}>
+                            <CourseDetails title="Курс"
+                                           getCourse={ApiService.fetchCourse}/>
+                        </RouteWrapper>
 
-                    <RouteWrapper path={PathService.students()}>
-                        <StudentsPage title="Студенты"/>
-                    </RouteWrapper>
+                        <RouteWrapper path={PathService.students()}
+                                      roles={PathService.roles().students()}>
+                            <StudentsPage title="Студенты"/>
+                        </RouteWrapper>
 
-                    <RouteWrapper path={PathService.mentors()}>
-                        <MentorPage title="Преподаватели"/>
-                    </RouteWrapper>
+                        <RouteWrapper path={PathService.mentors()}
+                                      roles={PathService.roles().mentors()}>
+                            <MentorPage title="Преподаватели"/>
+                        </RouteWrapper>
 
-                    <RouteWrapper path={PathService.rating()}>
-                        <RatingPage title="Успеваемость"/>
-                    </RouteWrapper>
+                        <RouteWrapper path={PathService.rating()}
+                                      roles={PathService.roles().rating()}>
+                            <RatingPage title="Успеваемость"/>
+                        </RouteWrapper>
+
+                        <RouteWrapper path={PathService.settings()}
+                                      roles={PathService.roles().settings()}>
+                        </RouteWrapper>
+                    </UserRoleContext.Provider>
                 </Switch>
             )
         };
