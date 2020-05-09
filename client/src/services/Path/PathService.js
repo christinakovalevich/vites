@@ -61,7 +61,6 @@ const _PATH_DATA = {
             RoleService.manager(),
             RoleService.mentor(),
             RoleService.student(),
-            RoleService.anonymous(),
         ],
     },
     LOGIN: {

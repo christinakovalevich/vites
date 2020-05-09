@@ -99,8 +99,8 @@ export default class ToolBarService {
         }
     }
 
-    getBottomToolBarItems = () => {
-        return [
+    getBottomToolBarItems = (role) => {
+        return role ? [
             {
                 id: 'settings',
                 label: 'Настройки',
@@ -108,7 +108,7 @@ export default class ToolBarService {
                 faIcon: faCog,
                 forceShowIcon: true,
             },
-        ]
+        ] : []
     }
 
     filterItemsByIds = (items = [], ...ids) => {
