@@ -1,9 +1,11 @@
 import {headers} from "../../utils/headers";
 import {checkResponseStatus, loginResponseHandler} from "../../handlers/responseHandlers";
 import * as qs from "qs";
-import {buildUri} from "../Api/ApiService";
+import ApiService, {buildUri} from "../Api/ApiService";
 import {defaultErrorHandler} from "../../handlers/errorHandlers";
 import RoleService from "../Role/RoleService";
+
+const {login: URI_LOGIN, refreshToken: URI_REFRESH_TOKEN} = ApiService.pathNames()
 
 export default {
 
@@ -20,9 +22,8 @@ export default {
         return null;
     },
 
-
     login(userDetails) {
-        fetch(buildUri('/api/login'), {
+        fetch(buildUri(URI_LOGIN), {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -47,7 +48,7 @@ export default {
     },
 
     refreshToken() {
-        return fetch(buildUri('/oauth/access_token'), {
+        return fetch(buildUri(URI_REFRESH_TOKEN), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

@@ -45,7 +45,14 @@ export default {
 
     fetchCourse(id) {
         return _getResource(buildUri(`/api/course/${id}`))
-    }
+    },
+
+    pathNames() {
+        return {
+            login: '/api/login',
+            refreshToken: '/oauth/access_token'
+        }
+    },
 
 };
 
