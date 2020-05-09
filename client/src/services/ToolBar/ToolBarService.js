@@ -8,7 +8,7 @@ import {
     faUserAstronaut,
     faUserGraduate
 } from "@fortawesome/free-solid-svg-icons";
-import PathService from "../api/PathService";
+import PathService from "../Path/PathService";
 
 export default class ToolBarService {
     getToolBarBrandItemProps = (onConnectionIconClick, isConnected, appName) => {

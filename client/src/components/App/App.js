@@ -6,7 +6,7 @@ import Panel from "../Common/Panel/Panel";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import DashboardPage from "../Pages/DashboardPage/DashboardPage";
-import ApiService from "../../services/api/ApiService";
+import ApiService from "../../services/Api/ApiService";
 import NotConnectedPage from "../Pages/NotConnectedPage/NotConnectedPage";
 import Loader from "../Common/Loader/Loader";
 import ToolBarService from "../../services/ToolBar/ToolBarService";
@@ -15,10 +15,10 @@ import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import LoginForm from "../LoginForm/LoginForm";
-import Auth from "../../security/auth";
+import Auth from "../../services/Auth/AuthService";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursePageService from "../../services/Course/CoursePageService";
-import PathService from "../../services/api/PathService";
+import PathService from "../../services/Path/PathService";
 
 export default class App extends Component {
 
@@ -35,14 +35,15 @@ export default class App extends Component {
         isShowLoader: false,
         userDetails: {
             username: '',
-            password: ''
+            password: '',
+            role: null,
         },
         coursesPageMode: CoursePageService.modes.all(),
     };
 
     componentDidMount() {
         ApiService.testConnection(this.setConnected, this.showLoader);
-        Auth.checkAuthentication(this.setAuthenticated);
+        Auth.checkAuthentication(this.setAuthenticated, this.setRole);
 
         setInterval(() =>
             ApiService.testConnection(this.setConnected, this.showLoader), 300000);
@@ -70,6 +71,17 @@ export default class App extends Component {
     setAuthenticated = (isAuthenticated) => {
         this.setState({
             isAuthenticated
+        })
+    }
+
+    setRole = (role) => {
+        this.setState(state => {
+            return {
+                userDetails: {
+                    ...state.userDetails,
+                    role
+                }
+            }
         })
     }
 
@@ -127,7 +139,6 @@ export default class App extends Component {
         const {
             isConnected,
             isShowLoader,
-            appInfo,
             isAuthenticated,
             userDetails,
             coursesPageMode

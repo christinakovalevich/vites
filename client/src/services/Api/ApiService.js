@@ -1,5 +1,5 @@
 import {SERVER_URL} from "../../config/config";
-import {headers} from "./Headers";
+import {headers} from "../../utils/headers";
 
 export default {
 

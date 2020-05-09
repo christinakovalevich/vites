@@ -1,10 +1,25 @@
-import {headers} from "../services/api/Headers";
-import {checkResponseStatus, loginResponseHandler} from "../handlers/responseHandlers";
+import {headers} from "../../utils/headers";
+import {checkResponseStatus, loginResponseHandler} from "../../handlers/responseHandlers";
 import * as qs from "qs";
-import {buildUri} from "../services/api/ApiService";
-import {defaultErrorHandler} from "../handlers/errorHandlers";
+import {buildUri} from "../Api/ApiService";
+import {defaultErrorHandler} from "../../handlers/errorHandlers";
+import RoleService from "../Role/RoleService";
 
 export default {
+
+    getRole() {
+        const authObject = JSON.parse(localStorage.auth);
+        const anonymousRole = RoleService.anonymous()
+        if (authObject && authObject.roles) {
+            const {roles} = authObject;
+            if (Array.isArray(roles) && roles.length > 0) {
+                return RoleService.isRoleValid(roles[0]) ? roles[0] : anonymousRole;
+            }
+        }
+
+        return null;
+    },
+
 
     login(userDetails) {
         fetch(buildUri('/api/login'), {
@@ -48,10 +63,15 @@ export default {
             })
     },
 
-    checkAuthentication(setAuthenticated) {
+    checkAuthentication(setAuthenticated, setRole) {
         if (this.checkIsTokenExists()) {
             this.checkAuthEndpoint()
-                .then(setAuthenticated)
+                .then(value => {
+                    setAuthenticated(value);
+                    if (value) {
+                        setRole(this.getRole())
+                    }
+                })
                 .catch(() => setAuthenticated(false))
         } else {
             setAuthenticated(false)
@@ -69,5 +89,5 @@ export default {
             await this.refreshToken()
             return false
         }
-    }
+    },
 };
