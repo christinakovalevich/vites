@@ -1,6 +1,5 @@
 package mentor
 
-
 import course.Course
 import grails.compiler.GrailsCompileStatic
 import grails.plugin.springsecurity.annotation.Secured

@@ -1,6 +1,5 @@
 package student
 
-
 import course.Course
 import enums.student.EducationDegree
 import grails.compiler.GrailsCompileStatic
