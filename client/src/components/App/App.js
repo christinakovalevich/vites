@@ -40,7 +40,7 @@ export default class App extends Component {
         AuthService.checkAuthentication(this.setAuthenticated, this.setRole);
 
         setInterval(() =>
-            ApiService.testConnection(this.setConnected, this.showLoader), 500);
+            ApiService.testConnection(this.setConnected, this.showLoader), 30000);
     }
 
     showLoader = () => {
