@@ -32,4 +32,9 @@ export default {
     settings: () => _PATH_DATA.SETTINGS.path,
 
     isPathExists: _isPathExists,
+
+    isPathActive: (targetPath, activePath, rootPath = '/') => {
+        const match = activePath.match(targetPath)
+        return match && (activePath === rootPath ? true : match[0] !== rootPath)
+    },
 }

@@ -1,11 +1,9 @@
 package course
 
-
 import mentor.Mentor
 import security.User
 import student.Student
 
-//@GrailsCompileStatic
 class Course {
 
     String name

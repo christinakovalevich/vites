@@ -7,18 +7,22 @@ import ToolBarBrandItem from "../ToolBarBrandItem/ToolBarBrandItem";
 import ToolBarLogOutItem from "../ToolBarLogOutItem/ToolBarLogOutItem";
 import {useLocation} from "react-router-dom";
 
-const ToolBar = ({brandItemProps, logOutItemProps, isAuthenticated, topItems, bottomItems, appInfo}) => {
+const ToolBar = ({
+                     brandItemProps,
+                     logOutItemProps,
+                     appInfo,
+                     topItems,
+                     bottomItems,
+                     isAuthenticated,
+                     isPathActive,
+                 }) => {
+
+    const activePath = useLocation().pathname;
 
     const transformToolBarItems = (toolBarItems) =>
         toolBarItems.map(itemProps =>
-            <ToolBarItem key={itemProps.id} {...itemProps} isActive={isActive(itemProps.href)}/>
-        )
-
-    const activePath = useLocation().pathname
-
-    const isActive = (href) => {
-        return activePath === href
-    }
+            <ToolBarItem key={itemProps.id} {...itemProps} isActive={isPathActive(itemProps.href, activePath)}/>
+        );
 
     return (
         <div className="vertical-menu">
@@ -39,8 +43,8 @@ const ToolBar = ({brandItemProps, logOutItemProps, isAuthenticated, topItems, bo
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 ToolBar.propTypes = {
     brandItemProps: PropTypes.object,
