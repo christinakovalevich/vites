@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import "./Stars.css"
 import {faStar, faStarHalf} from "@fortawesome/free-solid-svg-icons";
-import ReactTooltip from "react-tooltip";
+import TooltipWrapper from "../ToolTipWrapper/ToolTipWrapper";
 
 const Stars = ({value, showToolTip = true}) => {
 
@@ -39,7 +39,11 @@ const Stars = ({value, showToolTip = true}) => {
             if (value === 0) {
                 return <MutedStars toolTipLabel="Недостаточное кол-во оценок."/>
             } else {
-                return <span data-tip={value}>{buildStarsFromValue(roundHalf(value))}</span>
+                return (
+                    <TooltipWrapper id={''} label={value}>
+                        <span>{buildStarsFromValue(roundHalf(value))}</span>
+                    </TooltipWrapper>
+                )
             }
         } else {
             return <span className="text-danger">wrong value {value}.</span>
@@ -50,9 +54,6 @@ const Stars = ({value, showToolTip = true}) => {
         <div className="stars noselect">
             {
                 getElements()
-            }
-            {
-                showToolTip ? <ReactTooltip/> : null
             }
         </div>
     )
@@ -70,10 +71,12 @@ const MutedStars = ({toolTipLabel}) => {
         .map(it => <FontAwesomeIcon key={it} icon={faStar}/>)
 
     return (
-        <span className="muted" data-tip={toolTipLabel}>
-            {
-                elements
-            }
-        </span>
+        <TooltipWrapper label="Недостаточное количество оценок.">
+            <span className="muted">
+                {
+                    elements
+                }
+            </span>
+        </TooltipWrapper>
     )
 }

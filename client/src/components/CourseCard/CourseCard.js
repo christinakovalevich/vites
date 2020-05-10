@@ -4,10 +4,10 @@ import {faStar} from "@fortawesome/free-solid-svg-icons";
 import Button from "../Common/Button/Button";
 import {Col, Row} from "react-bootstrap";
 import {withRouter} from "react-router-dom";
-import ReactTooltip from "react-tooltip";
 
 import "./CourseCard.css"
 import {formatDate} from "../../utils/utils";
+import TooltipWrapper from "../Common/ToolTipWrapper/ToolTipWrapper";
 
 const CourseCard = ({
                         id,
@@ -32,9 +32,18 @@ const CourseCard = ({
                 <h4>{name}</h4>
             </div>
 
-            <div className="dates"
-                 data-tip={`${startDate} - ${endDate}`}>
-                {formatDate(startDate)} - {formatDate(endDate)}
+            <div className="dates">
+                <TooltipWrapper label={formatDate(startDate)}>
+                    <span>
+                        {formatDate(startDate)}
+                    </span>
+                </TooltipWrapper>
+                <span> - </span>
+                <TooltipWrapper label={formatDate(endDate)}>
+                    <span>
+                        {formatDate(endDate)}
+                    </span>
+                </TooltipWrapper>
             </div>
 
             <hr/>
@@ -71,7 +80,6 @@ const CourseCard = ({
             <Button label="Подробнее"
                     onClick={showCourse}
                     className="w-100"/>
-            <ReactTooltip/>
         </div>
     )
 };
