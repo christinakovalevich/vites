@@ -12,7 +12,7 @@ class StudentSpec extends Specification implements DomainUnitTest<Student> {
     }
 
     void "test something"() {
-        expect:"fix me"
-            true == false
+        expect: "fix me"
+        true == false
     }
 }

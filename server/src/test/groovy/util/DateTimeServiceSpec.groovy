@@ -3,7 +3,7 @@ package util
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class DateTimeServiceSpec extends Specification implements ServiceUnitTest<DateTimeService>{
+class DateTimeServiceSpec extends Specification implements ServiceUnitTest<DateTimeService> {
 
     def setup() {
     }
@@ -12,7 +12,7 @@ class DateTimeServiceSpec extends Specification implements ServiceUnitTest<DateT
     }
 
     void "test something"() {
-        expect:"fix me"
-            true == false
+        expect: "fix me"
+        true == false
     }
 }

@@ -12,7 +12,7 @@ class CourseControllerSpec extends Specification implements ControllerUnitTest<C
     }
 
     void "test something"() {
-        expect:"fix me"
+        expect: "fix me"
         true == false
     }
 }

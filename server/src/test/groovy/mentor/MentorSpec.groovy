@@ -12,7 +12,7 @@ class MentorSpec extends Specification implements DomainUnitTest<Mentor> {
     }
 
     void "test something"() {
-        expect:"fix me"
-            true == false
+        expect: "fix me"
+        true == false
     }
 }

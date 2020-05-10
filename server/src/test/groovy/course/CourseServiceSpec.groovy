@@ -3,7 +3,7 @@ package course
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class CourseServiceSpec extends Specification implements ServiceUnitTest<CourseService>{
+class CourseServiceSpec extends Specification implements ServiceUnitTest<CourseService> {
 
     def setup() {
     }
@@ -12,7 +12,7 @@ class CourseServiceSpec extends Specification implements ServiceUnitTest<CourseS
     }
 
     void "test something"() {
-        expect:"fix me"
-            true == false
+        expect: "fix me"
+        true == false
     }
 }

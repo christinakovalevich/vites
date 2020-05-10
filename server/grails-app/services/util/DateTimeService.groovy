@@ -1,7 +1,5 @@
 package util
 
-import grails.gorm.transactions.Transactional
-
 class DateTimeService {
 
     Date buildDateFrom(int year, int month, int dayOfMonth, int hourOfDay = 0, int minute = 0, int second = 0) {

@@ -12,7 +12,7 @@ class TechnologySpec extends Specification implements DomainUnitTest<Technology>
     }
 
     void "test something"() {
-        expect:"fix me"
-            true == false
+        expect: "fix me"
+        true == false
     }
 }
