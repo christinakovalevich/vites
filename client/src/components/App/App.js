@@ -166,8 +166,7 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.course()}
                                       roles={PathService.roles().course()}>
-                            <CourseDetails title="Курс"
-                                           getCourse={ApiService.fetchCourse}/>
+                            <CourseDetails getCourse={ApiService.fetchCourse}/>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.students()}

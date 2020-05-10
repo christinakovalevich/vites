@@ -1,3 +1,20 @@
 .course-details {
 
 }
+
+.course-details .short-info {
+    text-align: right;
+}
+
+.course-details .short-info .line {
+    margin-bottom: 1rem;
+}
+
+.course-details .short-info .label {
+   font-weight: bolder;
+}
+
+.course-details .short-info .value {
+    font-weight: normal;
+    color: var(--main-d-grey-color);
+}
