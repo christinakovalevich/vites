@@ -6,8 +6,6 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.GrailsPluginManager
 import grails.plugins.PluginManagerAware
 import org.springframework.http.HttpStatus
-import security.User
-import student.Student
 
 class ApplicationController implements PluginManagerAware {
 

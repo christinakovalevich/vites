@@ -1,92 +1,80 @@
-package course
-
+package rating
 
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
-import security.User
-import student.Student
 
 import static org.springframework.http.HttpStatus.*
 
 @Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
-class CourseController {
+class CourseRatingController {
 
-    CourseService courseService
+    CourseRatingService courseRatingService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def myCourses() {
-        def student = Student.findByUser(authenticatedUser as User)
-        respond student?.courses ?: []
-    }
-
     def index() {
-        respond courseService.list()
+        respond courseRatingService.list()
     }
 
     def show(Long id) {
-        respond courseService.get(id)
+        respond courseRatingService.get(id)
     }
 
     @Transactional
-    def save(Course course) {
-        if (course == null) {
-            notFound()
+    def save(CourseRating courseRating) {
+        if (courseRating == null) {
+            render status: NOT_FOUND
             return
         }
-        if (course.hasErrors()) {
+        if (courseRating.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond course.errors
+            respond courseRating.errors
             return
         }
 
         try {
-            courseService.save(course)
+            courseRatingService.save(courseRating)
         } catch (ValidationException e) {
-            respond course.errors
+            respond courseRating.errors
             return
         }
 
-        respond course, [status: CREATED, view: "show"]
+        respond courseRating, [status: CREATED, view: "show"]
     }
 
     @Transactional
-    def update(Course course) {
-        if (course == null) {
-            notFound()
+    def update(CourseRating courseRating) {
+        if (courseRating == null) {
+            render status: NOT_FOUND
             return
         }
-        if (course.hasErrors()) {
+        if (courseRating.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond course.errors
+            respond courseRating.errors
             return
         }
 
         try {
-            courseService.save(course)
+            courseRatingService.save(courseRating)
         } catch (ValidationException e) {
-            respond course.errors
+            respond courseRating.errors
             return
         }
 
-        respond course, [status: OK, view: "show"]
+        respond courseRating, [status: OK, view: "show"]
     }
 
     @Transactional
     def delete(Long id) {
         if (id == null) {
-            notFound()
+            render status: NOT_FOUND
             return
         }
 
-        courseService.delete(id)
+        courseRatingService.delete(id)
 
         render status: NO_CONTENT
-    }
-
-    private notFound() {
-        render status: NOT_FOUND
     }
 }
