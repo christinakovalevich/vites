@@ -1,7 +1,10 @@
 package course
 
 import grails.gorm.services.Service
+import grails.util.Holders
 import groovy.time.TimeCategory
+import rating.CourseRating
+import rating.CourseRatingService
 
 interface ICourseService {
     Course get(Serializable id)
@@ -27,6 +30,11 @@ abstract class CourseService implements ICourseService {
         use(TimeCategory) {
             return (course.endDate - course.startDate).days
         }
+    }
+
+    float getAverageRating(Course course) {
+        def courseRatingList = CourseRating.findAllByCourse(course)
+        return Holders.applicationContext.ratingUtilService.getAverageRating(courseRatingList)
     }
 
 }

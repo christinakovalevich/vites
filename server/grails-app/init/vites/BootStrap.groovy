@@ -1,12 +1,14 @@
 package vites
 
 import course.Course
+import course.CourseService
 import enums.security.RoleType
 import enums.security.UserType
 import enums.student.EducationDegree
 import grails.gorm.transactions.Transactional
 import mentor.Mentor
 import org.grails.datastore.gorm.GormEntity
+import rating.CourseRating
 import security.Role
 import security.User
 import security.UserRole
@@ -15,6 +17,7 @@ import student.Student
 class BootStrap {
 
     def dateTimeService
+    CourseService courseService
 
     private final static FAIL_ON_ERROR = [failOnError: true]
 
@@ -23,18 +26,37 @@ class BootStrap {
         initCourse()
         initMentor()
         initStudent()
+        initRatings()
 
         log.info 'Users count: ' + User.count
         log.info 'Courses count: ' + Course.count
         log.info 'Mentor count: ' + Mentor.count
         log.info 'Student count: ' + Student.count
 
-        log.info Student.first().courses.toString()
-        log.info Course.first().students.toString()
+        def firstStudent = Student.first()
+        def firstCourse = Course.first()
 
-        log.info 'Available ' + Course.first().availablePlacesCount
+        log.info firstStudent.courses.toString()
+        log.info firstCourse.students.toString()
+
+        log.info 'Available: ' + firstCourse.availablePlacesCount
+
+        log.info 'CourseRating: ' + courseService.getAverageRating(firstCourse)
+        log.info 'CourseRating: ' + courseService.getAverageRating(Course.last())
+
     }
     def destroy = {
+    }
+
+    @Transactional
+    private initRatings() {
+        def firstStudent = Student.first()
+        def firstCourse = Course.first()
+
+        setDefaultFields(new CourseRating(course: firstCourse, ratedBy: firstStudent, value: 4.4f))
+                .save(FAIL_ON_ERROR)
+        setDefaultFields(new CourseRating(course: firstCourse, ratedBy: firstStudent, value: 2.1f))
+                .save(FAIL_ON_ERROR)
     }
 
     @Transactional
@@ -186,16 +208,19 @@ class BootStrap {
         log.debug 'Finish init mentor'
     }
 
-    private setDefaultFields(GormEntity gormEntity, User user = User.findByUsername('admin')) {
+    private GormEntity setDefaultFields(GormEntity gormEntity, User user = User.findByUsername('admin')) {
         setCreatedBy(gormEntity, user)
         setLastUpdatedBy(gormEntity, user)
+        return gormEntity
     }
 
     private setCreatedBy(GormEntity gormEntity, User user = User.findByUsername('admin')) {
         gormEntity.createdBy = user
+        return gormEntity
     }
 
     private setLastUpdatedBy(GormEntity gormEntity, User user = User.findByUsername('admin')) {
         gormEntity.lastUpdatedBy = user
+        return gormEntity
     }
 }

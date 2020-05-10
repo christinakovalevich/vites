@@ -1,7 +1,9 @@
 import course.Course
+import course.CourseService
 
 model {
     List<Course> courseList
+    CourseService courseService
 }
 
-json tmpl.course(courseList)
+json tmpl.course(courseList, [courseService: courseService])

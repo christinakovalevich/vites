@@ -19,15 +19,21 @@ class CourseController {
 
     def myCourses() {
         def student = Student.findByUser(authenticatedUser as User)
-        respond student?.courses ?: []
+        def courseList = []
+
+        if (student) {
+            courseList.addAll(student.courses)
+        }
+
+        render(view: 'index', model: [courseList: courseList, courseService: courseService])
     }
 
     def index() {
-        respond courseService.list()
+        respond courseService.list(), model: [courseService: courseService]
     }
 
     def show(Long id) {
-        respond courseService.get(id)
+        respond courseService.get(id), model: [courseService: courseService]
     }
 
     @Transactional

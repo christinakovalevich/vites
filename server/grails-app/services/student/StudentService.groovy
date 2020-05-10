@@ -1,9 +1,10 @@
 package student
 
 import grails.gorm.services.Service
+import grails.util.Holders
+import rating.StudentRating
 
-@Service(Student)
-interface StudentService {
+interface IStudentService {
 
     Student get(Serializable id)
 
@@ -14,5 +15,15 @@ interface StudentService {
     void delete(Serializable id)
 
     Student save(Student student)
+
+}
+
+@Service(Student)
+abstract class StudentService implements IStudentService {
+
+    float getAverageRating(Student student) {
+        def studentRatingList = StudentRating.findAllByStudent(student)
+        return Holders.applicationContext.ratingUtilService.getAverageRating(studentRatingList)
+    }
 
 }
