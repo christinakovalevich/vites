@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import {Col, Row} from "react-bootstrap";
 import CourseCard from "../../CourseCard/CourseCard";
 
-const RowDataTransformer = ({dataArr}) => {
+const RowDataTransformer = ({dataArr = []}) => {
 
     const reshapeDataArr = (dataArr) => {
         let resultArr = [];

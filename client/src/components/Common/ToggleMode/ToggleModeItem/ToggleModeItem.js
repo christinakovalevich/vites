@@ -3,14 +3,14 @@ import "./ToggleModeItem.css"
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
-const ToggleModeItem = ({label, modeValue, isActiveMode, onClick}) => {
+const ToggleModeItem = ({label, isActiveMode, onClick}) => {
     const className = classNames('toggle-mode-item', {
-        'active': isActiveMode(modeValue)
+        'active': isActiveMode
     });
 
     return (
         <span className={className}
-              onClick={() => onClick(modeValue)}> {label} </span>
+              onClick={onClick}> {label} </span>
     )
 }
 
@@ -19,6 +19,6 @@ export default ToggleModeItem
 ToggleModeItem.propTypes = {
     label: PropTypes.string,
     modeValue: PropTypes.string,
-    isActiveMode: PropTypes.func,
+    isActiveMode: PropTypes.bool,
     onClick: PropTypes.func,
 }

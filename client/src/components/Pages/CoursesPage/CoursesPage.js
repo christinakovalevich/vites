@@ -51,4 +51,5 @@ CoursesPage.propTypes = {
     title: PropTypes.string,
     getCourses: PropTypes.func,
     sortCourses: PropTypes.func,
+    toggleModeContainerProps: PropTypes.object,
 }
