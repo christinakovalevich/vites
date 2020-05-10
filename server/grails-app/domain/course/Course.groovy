@@ -1,6 +1,7 @@
 package course
 
 import mentor.Mentor
+import rating.CourseRating
 import security.User
 import student.Student
 
@@ -28,7 +29,7 @@ class Course {
         return totalPlacesCount
     }
 
-    static hasMany = [mentors: Mentor, students: Student]
+    static hasMany = [mentors: Mentor, students: Student, ratings: CourseRating]
 
     static belongsTo = [Mentor, Student]
 

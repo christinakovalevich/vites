@@ -3,13 +3,10 @@ package student
 import course.Course
 import enums.student.EducationDegree
 import grails.compiler.GrailsCompileStatic
-import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.Resource
+import rating.StudentRating
 import security.User
 
-@Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
-@Resource(uri = "/api/student")
 class Student {
 
     String name
@@ -17,8 +14,6 @@ class Student {
     String fatherName
 
     Date birthDate
-
-    float rating
 
     User user
     EducationDegree educationDegree
@@ -31,13 +26,12 @@ class Student {
     User lastUpdatedBy
     boolean disabled
 
-    static hasMany = [courses: Course]
+    static hasMany = [courses: Course, ratings: StudentRating]
 
     static constraints = {
         name shared: "name"
         lastName shared: "name"
         fatherName shared: "name"
         birthDate shared: "birthDate"
-        rating shared: "ratable"
     }
 }

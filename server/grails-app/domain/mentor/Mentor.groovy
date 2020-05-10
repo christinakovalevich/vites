@@ -2,13 +2,10 @@ package mentor
 
 import course.Course
 import grails.compiler.GrailsCompileStatic
-import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.Resource
+import rating.MentorRating
 import security.User
 
-@Secured(["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MENTOR", "ROLE_STUDENT"])
 @GrailsCompileStatic
-@Resource(uri = "/api/mentor")
 class Mentor {
 
     String name
@@ -28,7 +25,7 @@ class Mentor {
     User lastUpdatedBy
     boolean disabled
 
-    static hasMany = [courses: Course]
+    static hasMany = [courses: Course, ratings: MentorRating]
 
     static constraints = {
         name shared: "name"
