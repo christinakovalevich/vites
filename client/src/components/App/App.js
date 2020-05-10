@@ -156,17 +156,19 @@ export default class App extends Component {
                                       roles={PathService.roles().courses()}>
                             <ShowToggleContext.Provider value={CoursePageService.isShowToggle(role)}>
                                 <CoursesPage title="Курсы и стажировки"
-                                             sortCourses={CoursePageService.sortCoursesByDate}
-                                             modes={{
-                                                 all: CoursePageService.modes.all,
-                                                 my: CoursePageService.modes.my,
-                                             }}
-                                             isActiveMode={currentMode =>
-                                                 CoursePageService.isActiveMode(coursesPageMode, currentMode)}
-                                             onModeChange={this.onCoursesPageModeChange}
-                                             getLabelForMode={CoursePageService.getLabelForMode}
                                              getCourses={AppService
-                                                 .getCoursesPageFetchFunction(coursesPageMode)}/>
+                                                 .getCoursesPageFetchFunction(coursesPageMode)}
+                                             sortCourses={CoursePageService.sortCoursesByDate}
+                                             toggleModeContainerProps={{
+                                                 modes: {
+                                                     all: CoursePageService.modes.all,
+                                                     my: CoursePageService.modes.my,
+                                                 },
+                                                 isActiveMode: (currentMode) => CoursePageService
+                                                     .isActiveMode(coursesPageMode, currentMode),
+                                                 onModeChange: this.onCoursesPageModeChange,
+                                                 getLabelForMode: CoursePageService.getLabelForMode,
+                                             }}/>
                             </ShowToggleContext.Provider>
                         </RouteWrapper>
 

@@ -6,7 +6,7 @@ import Loader from "../../Common/Loader/Loader";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
 import RowDataTransformer from "../../Common/RowDataContainer/RowDataTransformer";
 
-const CoursesPage = ({title, modes, getCourses, sortCourses, isActiveMode, onModeChange, getLabelForMode}) => {
+const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
@@ -33,10 +33,7 @@ const CoursesPage = ({title, modes, getCourses, sortCourses, isActiveMode, onMod
                     <h1>{title}</h1>
                 </div>
 
-                <ToggleModeContainer modes={modes}
-                                     isActiveMode={isActiveMode}
-                                     getLabelForMode={getLabelForMode}
-                                     onModeChange={onModeChange}/>
+                <ToggleModeContainer {...toggleModeContainerProps}/>
 
                 {
                     hasLoaded ?
