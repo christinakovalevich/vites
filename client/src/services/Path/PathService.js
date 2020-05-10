@@ -21,7 +21,7 @@ const _PATH_DATA = {
         ],
     },
     COURSE: {
-        path: "/course/:id",
+        path: "/courses/:id",
         roles: [
             RoleService.admin(),
             RoleService.manager(),

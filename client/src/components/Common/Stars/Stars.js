@@ -34,12 +34,22 @@ const Stars = ({value, showToolTip = true}) => {
 
     const roundHalf = value => Math.round(value * 2) / 2;
 
+    const getElements = () => {
+        if (isAppropriateValue(value)) {
+            if (value === 0) {
+                return <MutedStars toolTipLabel="Недостаточное кол-во оценок."/>
+            } else {
+                return <span data-tip={value}>{buildStarsFromValue(roundHalf(value))}</span>
+            }
+        } else {
+            return <span className="text-danger">wrong value {value}.</span>
+        }
+    }
+
     return (
         <div className="stars noselect">
             {
-                isAppropriateValue(value) ?
-                    <span data-tip={value}>{buildStarsFromValue(roundHalf(value))}</span> :
-                    <span className="text-danger">wrong value {value}.</span>
+                getElements()
             }
             {
                 showToolTip ? <ReactTooltip/> : null
@@ -53,4 +63,17 @@ export default Stars
 Stars.propTypes = {
     value: PropTypes.number,
     showToolTip: PropTypes.bool,
+};
+
+const MutedStars = ({toolTipLabel}) => {
+    const elements = [...Array(5).keys()]
+        .map(it => <FontAwesomeIcon key={it} icon={faStar}/>)
+
+    return (
+        <span className="muted" data-tip={toolTipLabel}>
+            {
+                elements
+            }
+        </span>
+    )
 }
