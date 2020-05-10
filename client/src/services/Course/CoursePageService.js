@@ -1,3 +1,5 @@
+import RoleService from "../Role/RoleService";
+
 const _isCourseModeValid = mode =>
     Object.values(_MODES).some(it => it.value === mode);
 
@@ -33,5 +35,7 @@ export default {
     isModeValid: _isCourseModeValid,
 
     isActiveMode: (activeMode, currentMode) => activeMode === currentMode,
+
+    isShowToggle: (userRole) => [RoleService.student(), RoleService.mentor()].includes(userRole)
 
 };

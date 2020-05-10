@@ -7,7 +7,7 @@ import CourseCard from "../../CourseCard/CourseCard";
 import Loader from "../../Common/Loader/Loader";
 import classNames from "classnames";
 
-const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLabelForMode, modes}) => {
+const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLabelForMode, modes, isShowToggle}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
@@ -59,14 +59,9 @@ const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLa
         })
     }
 
-    return (
-        <div className="courses-page">
-            <DefaultPage>
-
-                <div className="title">
-                    <h1>{title}</h1>
-                </div>
-
+    const getCourseToggle = () => {
+        if (isShowToggle) {
+            return (
                 <div className="courses-toggle">
                     <h6 className="d-inline">Показать: </h6>
                     <span className={getClassForModeToggle(modes.all())}
@@ -75,6 +70,21 @@ const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLa
                     <span className={getClassForModeToggle(modes.my())}
                           onClick={() => onModeChange(modes.my())}> {getLabelForMode(modes.my())} </span>
                 </div>
+            )
+        }
+        return null
+    }
+
+    return (
+        <div className="courses-page">
+            <DefaultPage>
+
+                <div className="title">
+                    <h1>{title}</h1>
+                </div>
+                {
+                    getCourseToggle()
+                }
                 {
                     hasLoaded ?
                         !hasError || courses.length > 0 ?

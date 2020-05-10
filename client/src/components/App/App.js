@@ -112,6 +112,8 @@ export default class App extends Component {
             appInfo
         } = this.state;
 
+        const {role} = userDetails;
+
         const getContentForNotConnected = () => (
             <NotConnectedPage
                 title="Вы не подключены к серверу"
@@ -143,7 +145,7 @@ export default class App extends Component {
                                this.inputChangeHandler
                            )}/>}/>
 
-                    <UserRoleContext.Provider value={userDetails.role}>
+                    <UserRoleContext.Provider value={role}>
                         <RouteWrapper path={PathService.home()} exact
                                       roles={PathService.roles().home()}>
                             <DashboardPage title="Главная"/>
@@ -157,6 +159,7 @@ export default class App extends Component {
                                              all: CoursePageService.modes.all,
                                              my: CoursePageService.modes.my,
                                          }}
+                                         isShowToggle={CoursePageService.isShowToggle(role)}
                                          isActiveMode={currentMode =>
                                              CoursePageService.isActiveMode(coursesPageMode, currentMode)}
                                          onModeChange={this.onCoursesPageModeChange}
