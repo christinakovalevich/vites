@@ -1,0 +1,5 @@
+.toggle-mode-container {
+    color: var(--main-m-grey-color);
+    text-align: right;
+    cursor: pointer;
+}

@@ -63,9 +63,5 @@ export default {
             password: '',
             role: null
         }
-    },
-
-    sortCoursesByDate(courses) {
-        return [...courses].sort((a, b) => (a.startDate > b.startDate) ? 1 : -1)
     }
 }

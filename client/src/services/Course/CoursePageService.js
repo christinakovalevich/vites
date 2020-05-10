@@ -22,6 +22,10 @@ export default {
             _MODES.MY.value,
     },
 
+    sortCoursesByDate(courses) {
+        return [...courses].sort((a, b) => (a.startDate > b.startDate) ? 1 : -1)
+    },
+
     getLabelForMode: mode => {
         if (_isCourseModeValid(mode)) {
             return Object.values(_MODES)

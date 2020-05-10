@@ -1,0 +1,9 @@
+.toggle-mode-item {
+
+}
+
+.toggle-mode-item.active {
+    color: var(--main-color-7);
+    font-weight: bold;
+    transition-duration: var(--main-transition-durirtion);
+}

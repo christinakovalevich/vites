@@ -20,6 +20,7 @@ import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorPage from "../Pages/MentorPage/MentorPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import {UserRoleContext} from "../../contexts/UserRoleContext"
+import {ShowToggleContext} from "../../contexts/ShowToggleContext";
 
 export default class App extends Component {
     state = {
@@ -153,18 +154,20 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.courses()} exact
                                       roles={PathService.roles().courses()}>
-                            <CoursesPage title="Курсы и стажировки"
-                                         sort={AppService.sortCoursesByDate}
-                                         modes={{
-                                             all: CoursePageService.modes.all,
-                                             my: CoursePageService.modes.my,
-                                         }}
-                                         isShowToggle={CoursePageService.isShowToggle(role)}
-                                         isActiveMode={currentMode =>
-                                             CoursePageService.isActiveMode(coursesPageMode, currentMode)}
-                                         onModeChange={this.onCoursesPageModeChange}
-                                         getLabelForMode={CoursePageService.getLabelForMode}
-                                         getCourses={AppService.getCoursesPageFetchFunction(coursesPageMode)}/>
+                            <ShowToggleContext.Provider value={CoursePageService.isShowToggle(role)}>
+                                <CoursesPage title="Курсы и стажировки"
+                                             sortCourses={CoursePageService.sortCoursesByDate}
+                                             modes={{
+                                                 all: CoursePageService.modes.all,
+                                                 my: CoursePageService.modes.my,
+                                             }}
+                                             isActiveMode={currentMode =>
+                                                 CoursePageService.isActiveMode(coursesPageMode, currentMode)}
+                                             onModeChange={this.onCoursesPageModeChange}
+                                             getLabelForMode={CoursePageService.getLabelForMode}
+                                             getCourses={AppService
+                                                 .getCoursesPageFetchFunction(coursesPageMode)}/>
+                            </ShowToggleContext.Provider>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.course()}

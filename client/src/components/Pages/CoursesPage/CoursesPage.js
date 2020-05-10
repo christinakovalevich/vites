@@ -2,12 +2,11 @@ import React, {useEffect, useState} from "react";
 import "./CoursesPage.css"
 import PropTypes from "prop-types";
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
-import {Col, Row} from "react-bootstrap";
-import CourseCard from "../../CourseCard/CourseCard";
 import Loader from "../../Common/Loader/Loader";
-import classNames from "classnames";
+import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
+import RowDataTransformer from "../../Common/RowDataContainer/RowDataTransformer";
 
-const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLabelForMode, modes, isShowToggle}) => {
+const CoursesPage = ({title, modes, getCourses, sortCourses, isActiveMode, onModeChange, getLabelForMode}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
@@ -26,55 +25,6 @@ const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLa
             })
     }, [getCourses])
 
-    const reshapeCourses = (courses) => {
-        let arr = [];
-
-        if (Array.isArray(courses)) {
-            let coursesCopy = [...courses]
-            while (coursesCopy.length) {
-                arr.push(coursesCopy.splice(0, 3))
-            }
-        }
-
-        return arr;
-    }
-
-    const transformCourses = (courses) => {
-        return reshapeCourses(sort(courses)).map((row, i) => (
-            <Row key={i}>
-                {
-                    row.map((col, i) => (
-                        <Col key={i} lg={4}>
-                            <CourseCard key={col.id} {...col}/>
-                        </Col>
-                    ))
-                }
-            </Row>
-        ))
-    };
-
-    const getClassForModeToggle = (modeValue) => {
-        return classNames({
-            'active': isActiveMode(modeValue)
-        })
-    }
-
-    const getCourseToggle = () => {
-        if (isShowToggle) {
-            return (
-                <div className="courses-toggle">
-                    <h6 className="d-inline">Показать: </h6>
-                    <span className={getClassForModeToggle(modes.all())}
-                          onClick={() => onModeChange(modes.all())}> {getLabelForMode(modes.all())} </span>
-                    |
-                    <span className={getClassForModeToggle(modes.my())}
-                          onClick={() => onModeChange(modes.my())}> {getLabelForMode(modes.my())} </span>
-                </div>
-            )
-        }
-        return null
-    }
-
     return (
         <div className="courses-page">
             <DefaultPage>
@@ -82,13 +32,16 @@ const CoursesPage = ({title, getCourses, sort, isActiveMode, onModeChange, getLa
                 <div className="title">
                     <h1>{title}</h1>
                 </div>
-                {
-                    getCourseToggle()
-                }
+
+                <ToggleModeContainer modes={modes}
+                                     isActiveMode={isActiveMode}
+                                     getLabelForMode={getLabelForMode}
+                                     onModeChange={onModeChange}/>
+
                 {
                     hasLoaded ?
                         !hasError || courses.length > 0 ?
-                            transformCourses(courses) : null : <Loader/>
+                            <RowDataTransformer dataArr={sortCourses(courses)}/> : null : <Loader/>
                 }
             </DefaultPage>
         </div>
@@ -100,5 +53,5 @@ export default CoursesPage
 CoursesPage.propTypes = {
     title: PropTypes.string,
     getCourses: PropTypes.func,
-    sort: PropTypes.func,
+    sortCourses: PropTypes.func,
 }
