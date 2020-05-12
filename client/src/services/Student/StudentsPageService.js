@@ -1,16 +1,16 @@
 import RoleService from "../Role/RoleService";
 
-const _isMentorModeValid = mode =>
+const _isStudentsModeValid = mode =>
     Object.values(_MODES).some(it => it.value === mode);
 
 const _MODES = {
     ALL: {
         value: 'MODE_ALL',
-        label: 'Всех преподавателей',
+        label: 'Всех студентов',
     },
     MY: {
         value: 'MODE_MY',
-        label: 'Моих преподавателей',
+        label: 'Моих студентов',
     },
 }
 
@@ -22,12 +22,12 @@ export default {
             _MODES.MY.value,
     },
 
-    sortMentors(mentors) {
-        return [...mentors]
+    sortStudents(students) {
+        return [...students]
     },
 
     getLabelForMode: mode => {
-        if (_isMentorModeValid(mode)) {
+        if (_isStudentsModeValid(mode)) {
             return Object.values(_MODES)
                 .find(it => it.value === mode).label;
         } else {
@@ -36,9 +36,10 @@ export default {
         }
     },
 
-    isModeValid: _isMentorModeValid,
+    isModeValid: _isStudentsModeValid,
 
     isActiveMode: (activeMode, currentMode) => activeMode === currentMode,
 
-    isShowToggle: (userRole) => [RoleService.student()].includes(userRole)
-}
+    isShowToggle: (userRole) => [RoleService.mentor()].includes(userRole)
+
+};

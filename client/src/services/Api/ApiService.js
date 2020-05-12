@@ -59,6 +59,18 @@ export default {
         return _getResource(buildUri(`/api/mentor/${id}`))
     },
 
+    fetchStudents() {
+        return _getResource(buildUri('/api/student'))
+    },
+
+    fetchMyStudents() {
+        return _getResource(buildUri('/api/myStudent'))
+    },
+
+    fetchStudent(id) {
+        return _getResource(buildUri(`/api/student/${id}`))
+    },
+
     pathNames() {
         return {
             login: '/api/login',

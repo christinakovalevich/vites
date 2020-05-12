@@ -73,6 +73,21 @@ export default {
         }
     },
 
+    getStudentsFetchFunction(studentsPageMode) {
+        if (MentorPageService.isModeValid(studentsPageMode)) {
+            switch (studentsPageMode) {
+                case MentorPageService.modes.all():
+                    return ApiService.fetchStudents
+                case MentorPageService.modes.my():
+                    return ApiService.fetchMyStudents
+                default:
+                    return () => []
+            }
+        } else {
+            console.error('Unknown studentsPageMode:', studentsPageMode)
+        }
+    },
+
     getInitialUserDetails() {
         return {
             username: '',

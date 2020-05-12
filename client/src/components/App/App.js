@@ -22,6 +22,7 @@ import RatingPage from "../Pages/RatingPage/RatingPage";
 import {UserRoleContext} from "../../contexts/UserRoleContext"
 import {ShowToggleContext} from "../../contexts/ShowToggleContext";
 import MentorPageService from "../../services/Mentor/MentorPageService";
+import StudentsPageService from "../../services/Student/StudentsPageService";
 
 export default class App extends Component {
     state = {
@@ -36,6 +37,7 @@ export default class App extends Component {
         userDetails: AppService.getInitialUserDetails(),
         coursesPageMode: CoursePageService.modes.all(),
         mentorsPageMode: MentorPageService.modes.all(),
+        studentsPageMode: StudentsPageService.modes.all(),
     };
 
     componentDidMount() {
@@ -113,6 +115,14 @@ export default class App extends Component {
         }
     };
 
+    onStudentsPageModeChange = (studentsPageMode) => {
+        if (CoursePageService.isModeValid(studentsPageMode)) {
+            this.setState({studentsPageMode});
+        } else {
+            console.error('Unknown studentsPageMode:', studentsPageMode);
+        }
+    };
+
     render() {
         const {
             isConnected,
@@ -121,6 +131,7 @@ export default class App extends Component {
             userDetails,
             coursesPageMode,
             mentorsPageMode,
+            studentsPageMode,
             appInfo
         } = this.state;
 
@@ -190,7 +201,23 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.students()}
                                       roles={PathService.roles().students()}>
-                            <StudentsPage title="Студенты"/>
+                            <ShowToggleContext.Provider value={StudentsPageService.isShowToggle(role)}>
+                                <StudentsPage title="Студенты"
+                                              getStudents={AppService
+                                                  .getStudentsFetchFunction(studentsPageMode)}
+                                              sortStudents={StudentsPageService.sortStudents}
+                                              toggleModeContainerProps={{
+                                                  modes: {
+                                                      all: StudentsPageService.modes.all,
+                                                      my: StudentsPageService.modes.my,
+                                                  },
+                                                  isActiveMode: (studentMode) => StudentsPageService
+                                                      .isActiveMode(studentsPageMode, studentMode),
+                                                  onModeChange: this.onStudentsPageModeChange,
+                                                  getLabelForMode: StudentsPageService.getLabelForMode,
+                                              }}
+                                />
+                            </ShowToggleContext.Provider>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.mentors()}
