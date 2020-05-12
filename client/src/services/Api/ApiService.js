@@ -52,7 +52,7 @@ export default {
     },
 
     fetchMyMentors() {
-        return _getResource(buildUri('/api/myMentor'))
+        return _getResource(buildUri('/api/myMentors'))
     },
 
     fetchMentor(id) {
@@ -64,7 +64,7 @@ export default {
     },
 
     fetchMyStudents() {
-        return _getResource(buildUri('/api/myStudent'))
+        return _getResource(buildUri('/api/myStudents'))
     },
 
     fetchStudent(id) {

@@ -22,6 +22,8 @@ class UrlMappings {
         "404"(view: '/notFound')
 
         "/api/myCourses"(controller: "course", action: "myCourses")
+        "/api/myMentors"(controller: "mentor", action: "myMentors")
+        "/api/myStudents"(controller: "student", action: "myStudents")
 
         "/api/testConnection"(controller: 'application', action: 'testConnection')
         "/api/checkAuth"(controller: 'application', action: 'checkIsAuthenticated')

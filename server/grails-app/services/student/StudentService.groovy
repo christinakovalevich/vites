@@ -21,6 +21,16 @@ interface IStudentService {
 @Service(Student)
 abstract class StudentService implements IStudentService {
 
+    Student getAuthenticatedStudent() {
+        def currentUser = Holders.applicationContext.springSecurityService.currentUser
+
+        if (currentUser) {
+            return Student.findByUser(currentUser)
+        }
+
+        return null
+    }
+
     float getAverageRating(Student student) {
         def studentRatingList = StudentRating.findAllByStudent(student)
         return Holders.applicationContext.ratingUtilService.getAverageRating(studentRatingList)
