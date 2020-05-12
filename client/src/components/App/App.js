@@ -17,10 +17,11 @@ import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
-import MentorPage from "../Pages/MentorPage/MentorPage";
+import MentorsPage from "../Pages/MentorsPage/MentorsPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import {UserRoleContext} from "../../contexts/UserRoleContext"
 import {ShowToggleContext} from "../../contexts/ShowToggleContext";
+import MentorPageService from "../../services/Mentor/MentorPageService";
 
 export default class App extends Component {
     state = {
@@ -34,6 +35,7 @@ export default class App extends Component {
         isShowLoader: false,
         userDetails: AppService.getInitialUserDetails(),
         coursesPageMode: CoursePageService.modes.all(),
+        mentorsPageMode: MentorPageService.modes.all(),
     };
 
     componentDidMount() {
@@ -103,6 +105,14 @@ export default class App extends Component {
         }
     };
 
+    onMentorsPageModeChange = (mentorsPageMode) => {
+        if (CoursePageService.isModeValid(mentorsPageMode)) {
+            this.setState({mentorsPageMode});
+        } else {
+            console.error('Unknown mentorsPageMode:', mentorsPageMode);
+        }
+    };
+
     render() {
         const {
             isConnected,
@@ -110,6 +120,7 @@ export default class App extends Component {
             isAuthenticated,
             userDetails,
             coursesPageMode,
+            mentorsPageMode,
             appInfo
         } = this.state;
 
@@ -184,7 +195,21 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.mentors()}
                                       roles={PathService.roles().mentors()}>
-                            <MentorPage title="Преподаватели"/>
+                            <ShowToggleContext.Provider value={MentorPageService.isShowToggle(role)}>
+                                <MentorsPage title="Преподаватели"
+                                             getMentors={AppService.getMentorsFetchFunction(mentorsPageMode)}
+                                             sortMentors={MentorPageService.sortMentors}
+                                             toggleModeContainerProps={{
+                                                 modes: {
+                                                     all: MentorPageService.modes.all,
+                                                     my: MentorPageService.modes.my,
+                                                 },
+                                                 isActiveMode: (currentMode) => MentorPageService
+                                                     .isActiveMode(mentorsPageMode, currentMode),
+                                                 onModeChange: this.onMentorsPageModeChange,
+                                                 getLabelForMode: MentorPageService.getLabelForMode,
+                                             }}/>
+                            </ShowToggleContext.Provider>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.rating()}

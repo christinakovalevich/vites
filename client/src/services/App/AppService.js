@@ -4,6 +4,7 @@ import ApiService from "../Api/ApiService";
 import PathService from "../Path/PathService";
 import ToolBarService from "../ToolBar/ToolBarService";
 import CoursePageService from "../Course/CoursePageService";
+import MentorPageService from "../Mentor/MentorPageService";
 
 const toolBarService = new ToolBarService();
 
@@ -54,6 +55,21 @@ export default {
             }
         } else {
             console.error('Unknown coursesPageMode:', coursesPageMode)
+        }
+    },
+
+    getMentorsFetchFunction(mentorsPageMode) {
+        if (MentorPageService.isModeValid(mentorsPageMode)) {
+            switch (mentorsPageMode) {
+                case MentorPageService.modes.all():
+                    return ApiService.fetchMentors
+                case MentorPageService.modes.my():
+                    return ApiService.fetchMyMentors
+                default:
+                    return () => []
+            }
+        } else {
+            console.error('Unknown mentorsPageMode:', mentorsPageMode)
         }
     },
 
