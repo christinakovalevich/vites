@@ -4,7 +4,6 @@ import grails.gorm.services.Service
 import grails.util.Holders
 import groovy.time.TimeCategory
 import rating.CourseRating
-import rating.CourseRatingService
 
 interface ICourseService {
     Course get(Serializable id)
@@ -21,9 +20,21 @@ interface ICourseService {
 @Service(Course)
 abstract class CourseService implements ICourseService {
 
-    List<Course> listCoursesByStudent(Serializable studentId) {
-        return Course.executeQuery("from Course c join c.students s where s.id = :studentId",
-                [studentId: studentId])
+    Set<Course> getMyCourses() {
+        def myCourses = [] as Set<Course>
+        def currentStudent = Holders.applicationContext.studentService.authenticatedStudent
+
+        if (currentStudent && currentStudent.courses) {
+            myCourses.addAll(currentStudent.courses)
+        } else {
+            def currentMentor = Holders.applicationContext.mentorService.authenticatedMentor
+
+            if (currentMentor && currentMentor.courses) {
+                myCourses.addAll(currentMentor.courses)
+            }
+        }
+
+        return myCourses
     }
 
     def getDays(Course course) {

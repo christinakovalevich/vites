@@ -1,11 +1,8 @@
 package course
 
-
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
-import security.User
-import student.Student
 
 import static org.springframework.http.HttpStatus.*
 
@@ -18,14 +15,7 @@ class CourseController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def myCourses() {
-        def student = Student.findByUser(authenticatedUser as User)
-        def courseList = []
-
-        if (student) {
-            courseList.addAll(student.courses)
-        }
-
-        render(view: 'index', model: [courseList: courseList, courseService: courseService])
+        render(view: 'index', model: [courseList: courseService.myCourses as List<Course>, courseService: courseService])
     }
 
     def index() {

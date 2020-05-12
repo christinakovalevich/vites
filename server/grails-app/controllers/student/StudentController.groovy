@@ -3,6 +3,7 @@ package student
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import mentor.MentorService
 
 import static org.springframework.http.HttpStatus.*
 
@@ -10,12 +11,24 @@ import static org.springframework.http.HttpStatus.*
 class StudentController {
 
     StudentService studentService
+    MentorService mentorService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
         respond studentService.list()
+    }
+
+    def myStudents() {
+        def authenticatedMentor = mentorService.authenticatedMentor
+        def studentList = []
+
+        if (authenticatedMentor) {
+            studentList = studentService.getStudentsByMentor(authenticatedMentor)
+        }
+
+        respond studentList
     }
 
     def show(Long id) {

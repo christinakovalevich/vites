@@ -22,6 +22,16 @@ interface IMentorService {
 @Service(Mentor)
 abstract class MentorService implements IMentorService {
 
+    Mentor getAuthenticatedMentor() {
+        def currentUser = Holders.applicationContext.springSecurityService.currentUser
+
+        if (currentUser) {
+            return Mentor.findByUser(currentUser)
+        }
+
+        return null
+    }
+
 
     float getAverageRating(Mentor mentor) {
         def courseRatingList = MentorRating.findAllByMentor(mentor)

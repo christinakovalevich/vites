@@ -2,6 +2,7 @@ package student
 
 import grails.gorm.services.Service
 import grails.util.Holders
+import mentor.Mentor
 import rating.StudentRating
 
 interface IStudentService {
@@ -20,6 +21,18 @@ interface IStudentService {
 
 @Service(Student)
 abstract class StudentService implements IStudentService {
+
+    Set<Student> getStudentsByMentor(Mentor mentor) {
+        def students = [] as Set<Student>
+
+        if (mentor.courses) {
+            mentor.courses.each {
+                students.addAll(it.students)
+            }
+        }
+
+        return students
+    }
 
     Student getAuthenticatedStudent() {
         def currentUser = Holders.applicationContext.springSecurityService.currentUser
