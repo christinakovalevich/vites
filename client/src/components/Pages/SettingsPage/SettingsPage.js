@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./SettingsPage.css";
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {Form} from "reactstrap";
-import {Button, FormLabel, InputGroup} from "react-bootstrap";
+import {Button, InputGroup} from "react-bootstrap";
 import FormControl from "react-bootstrap/FormControl";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
