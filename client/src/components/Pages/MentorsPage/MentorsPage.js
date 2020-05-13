@@ -1,19 +1,18 @@
 import React, {useEffect, useState} from "react";
-
-import "./StudentsPage.css"
+import "./MentorsPage.css"
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
 
-const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProps}) => {
+const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
-    const [students, setStudents] = useState([]);
+    const [courses, setMentors] = useState([]);
 
     useEffect(() => {
-        getStudents()
-            .then(students => {
-                setStudents(students);
+        getMentors()
+            .then(courses => {
+                setMentors(courses);
                 setLoaded(true);
             })
             .catch(error => {
@@ -21,17 +20,18 @@ const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProp
                 setLoaded(true);
                 console.error(error);
             })
-    }, [getStudents])
+    }, [getMentors])
 
     return (
-        <div className="students-page">
+        <div className="mentors-page">
             <DefaultPage>
                 <h1>{title}</h1>
 
                 <ToggleModeContainer {...toggleModeContainerProps}/>
+
             </DefaultPage>
         </div>
     )
 };
 
-export default StudentsPage;
+export default MentorsPage

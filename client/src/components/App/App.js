@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./App.css";
-import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
+import {APP_NAME, CLIENT_VERSION, REACT_VERSION, SERVER_URL} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
@@ -17,10 +17,13 @@ import DashboardPage from "../Pages/DashboardPage/DashboardPage";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
-import MentorPage from "../Pages/MentorPage/MentorPage";
+import MentorsPage from "../Pages/MentorsPage/MentorsPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import {UserRoleContext} from "../../contexts/UserRoleContext"
 import {ShowToggleContext} from "../../contexts/ShowToggleContext";
+import MentorPageService from "../../services/Mentor/MentorPageService";
+import StudentsPageService from "../../services/Student/StudentsPageService";
+import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 
 export default class App extends Component {
     state = {
@@ -29,11 +32,16 @@ export default class App extends Component {
             version: CLIENT_VERSION,
             react: REACT_VERSION
         },
+        serverInfo: {
+            url: SERVER_URL
+        },
         isConnected: false,
         isAuthenticated: false,
         isShowLoader: false,
         userDetails: AppService.getInitialUserDetails(),
         coursesPageMode: CoursePageService.modes.all(),
+        mentorsPageMode: MentorPageService.modes.all(),
+        studentsPageMode: StudentsPageService.modes.all(),
     };
 
     componentDidMount() {
@@ -103,6 +111,22 @@ export default class App extends Component {
         }
     };
 
+    onMentorsPageModeChange = (mentorsPageMode) => {
+        if (CoursePageService.isModeValid(mentorsPageMode)) {
+            this.setState({mentorsPageMode});
+        } else {
+            console.error('Unknown mentorsPageMode:', mentorsPageMode);
+        }
+    };
+
+    onStudentsPageModeChange = (studentsPageMode) => {
+        if (CoursePageService.isModeValid(studentsPageMode)) {
+            this.setState({studentsPageMode});
+        } else {
+            console.error('Unknown studentsPageMode:', studentsPageMode);
+        }
+    };
+
     render() {
         const {
             isConnected,
@@ -110,7 +134,10 @@ export default class App extends Component {
             isAuthenticated,
             userDetails,
             coursesPageMode,
-            appInfo
+            mentorsPageMode,
+            studentsPageMode,
+            appInfo,
+            serverInfo
         } = this.state;
 
         const {role} = userDetails;
@@ -179,12 +206,42 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.students()}
                                       roles={PathService.roles().students()}>
-                            <StudentsPage title="Студенты"/>
+                            <ShowToggleContext.Provider value={StudentsPageService.isShowToggle(role)}>
+                                <StudentsPage title="Студенты"
+                                              getStudents={AppService
+                                                  .getStudentsFetchFunction(studentsPageMode)}
+                                              sortStudents={StudentsPageService.sortStudents}
+                                              toggleModeContainerProps={{
+                                                  modes: {
+                                                      all: StudentsPageService.modes.all,
+                                                      my: StudentsPageService.modes.my,
+                                                  },
+                                                  isActiveMode: (studentMode) => StudentsPageService
+                                                      .isActiveMode(studentsPageMode, studentMode),
+                                                  onModeChange: this.onStudentsPageModeChange,
+                                                  getLabelForMode: StudentsPageService.getLabelForMode,
+                                              }}
+                                />
+                            </ShowToggleContext.Provider>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.mentors()}
                                       roles={PathService.roles().mentors()}>
-                            <MentorPage title="Преподаватели"/>
+                            <ShowToggleContext.Provider value={MentorPageService.isShowToggle(role)}>
+                                <MentorsPage title="Преподаватели"
+                                             getMentors={AppService.getMentorsFetchFunction(mentorsPageMode)}
+                                             sortMentors={MentorPageService.sortMentors}
+                                             toggleModeContainerProps={{
+                                                 modes: {
+                                                     all: MentorPageService.modes.all,
+                                                     my: MentorPageService.modes.my,
+                                                 },
+                                                 isActiveMode: (currentMode) => MentorPageService
+                                                     .isActiveMode(mentorsPageMode, currentMode),
+                                                 onModeChange: this.onMentorsPageModeChange,
+                                                 getLabelForMode: MentorPageService.getLabelForMode,
+                                             }}/>
+                            </ShowToggleContext.Provider>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.rating()}
@@ -194,11 +251,20 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.settings()}
                                       roles={PathService.roles().settings()}>
+                            <SettingsPage
+                                title="Системные настройки"
+                                serverInfo={serverInfo}
+                                onServerUrlChange={() => {}}
+                                onServerUrlSubmit={() => {}}
+                            />
                         </RouteWrapper>
                     </UserRoleContext.Provider>
                 </Switch>
             )
         };
+
+        const isShowNotConnectedPage = (isConnected, currentPathName) =>
+            isConnected || currentPathName === PathService.settings()
 
         return (
             <div className="App">
@@ -217,7 +283,7 @@ export default class App extends Component {
                             isShowLoader ? <Loader/> : null
                         }
                         {
-                            isConnected ?
+                            isShowNotConnectedPage(isConnected, window.location.pathname) ?
                                 getContentForConnected() : getContentForNotConnected()
                         }
                     </Panel>
