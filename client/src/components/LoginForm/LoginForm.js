@@ -35,7 +35,7 @@ const LoginForm = ({userDetails, error, inputChangeHandler, onSubmit}) => {
                                         placeholder="Введите имя пользователя"/>
                                 </Form.Group>
 
-                                <Form.Group controlId="formBasicPassword">
+                                <Form.Group controlId="password">
                                     <Form.Label>Пароль:</Form.Label>
                                     <Form.Control
                                         type="password"

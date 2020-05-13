@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./App.css";
-import {APP_NAME, CLIENT_VERSION, REACT_VERSION} from '../../config/config';
+import {APP_NAME, CLIENT_VERSION, REACT_VERSION, SERVER_URL} from '../../config/config';
 import ToolBar from "../Common/ToolBar/ToolBar/ToolBar";
 import Panel from "../Common/Panel/Panel";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
@@ -23,6 +23,7 @@ import {UserRoleContext} from "../../contexts/UserRoleContext"
 import {ShowToggleContext} from "../../contexts/ShowToggleContext";
 import MentorPageService from "../../services/Mentor/MentorPageService";
 import StudentsPageService from "../../services/Student/StudentsPageService";
+import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 
 export default class App extends Component {
     state = {
@@ -30,6 +31,9 @@ export default class App extends Component {
             name: APP_NAME,
             version: CLIENT_VERSION,
             react: REACT_VERSION
+        },
+        serverInfo: {
+            url: SERVER_URL
         },
         isConnected: false,
         isAuthenticated: false,
@@ -132,7 +136,8 @@ export default class App extends Component {
             coursesPageMode,
             mentorsPageMode,
             studentsPageMode,
-            appInfo
+            appInfo,
+            serverInfo
         } = this.state;
 
         const {role} = userDetails;
@@ -246,11 +251,20 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.settings()}
                                       roles={PathService.roles().settings()}>
+                            <SettingsPage
+                                title="Системные настройки"
+                                serverInfo={serverInfo}
+                                onServerUrlChange={() => {}}
+                                onServerUrlSubmit={() => {}}
+                            />
                         </RouteWrapper>
                     </UserRoleContext.Provider>
                 </Switch>
             )
         };
+
+        const isShowNotConnectedPage = (isConnected, currentPathName) =>
+            isConnected || currentPathName === PathService.settings()
 
         return (
             <div className="App">
@@ -269,7 +283,7 @@ export default class App extends Component {
                             isShowLoader ? <Loader/> : null
                         }
                         {
-                            isConnected ?
+                            isShowNotConnectedPage(isConnected, window.location.pathname) ?
                                 getContentForConnected() : getContentForNotConnected()
                         }
                     </Panel>
