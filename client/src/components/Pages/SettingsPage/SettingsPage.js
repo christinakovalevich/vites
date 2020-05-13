@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./SettingsPage.css";
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {Form} from "reactstrap";
-import {Button, FormLabel} from "react-bootstrap";
+import {Button, FormLabel, InputGroup} from "react-bootstrap";
 import FormControl from "react-bootstrap/FormControl";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -25,20 +25,23 @@ const SettingsPage = ({title, serverInfo, onServerUrlSubmit}) => {
 
                 <div className="server-info-form">
                     <Form onSubmit={onServerUrlSubmit}>
-                        <FormLabel>URL сервера:</FormLabel>
-                        <FormControl
-                            type="url"
-                            name="url"
-                            value={serverUrl}
-                            onChange={onServerUrlChange}
-                            placeholder="http://127.0.0.1:8080"
-                            disabled={isUrlDisabled}
-                        />
-                        <br/>
-                        <Button variant={"light"}
-                                onClick={() => setUrlDisabled(!isUrlDisabled)}
-                        ><FontAwesomeIcon icon={faPen}/> Редактировать</Button>
-                        <Button variant={"light"}><FontAwesomeIcon icon={faSave}/> Сохранить</Button>
+                        <InputGroup>
+                            <FormControl
+                                type="url"
+                                name="url"
+                                value={serverUrl}
+                                onChange={onServerUrlChange}
+                                placeholder="http://127.0.0.1:8080"
+                                disabled={isUrlDisabled}
+                            />
+                            <InputGroup.Append>
+                                <Button variant="outline-secondary"
+                                        onClick={() => setUrlDisabled(!isUrlDisabled)}
+                                ><FontAwesomeIcon icon={faPen}/></Button>
+                                <Button variant="outline-secondary"
+                                ><FontAwesomeIcon icon={faSave}/></Button>
+                            </InputGroup.Append>
+                        </InputGroup>
                     </Form>
                 </div>
             </DefaultPage>
