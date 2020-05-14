@@ -15,10 +15,8 @@ json {
     id course.id
     version course.version
     name course.name
-
     startDate course.startDate
     endDate course.endDate
-
     difficulty course.difficulty
     totalPlacesCount course.totalPlacesCount
     availablePlacesCount course.availablePlacesCount

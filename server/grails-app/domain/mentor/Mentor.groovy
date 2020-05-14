@@ -14,8 +14,6 @@ class Mentor {
 
     Date birthDate
 
-    float rating
-
     User user
     int experienceYears
 
@@ -32,7 +30,6 @@ class Mentor {
         lastName shared: "name"
         fatherName shared: "name"
         birthDate shared: "birthDate"
-        rating shared: "ratable"
         experienceYears min: 0, max: 99
     }
 }

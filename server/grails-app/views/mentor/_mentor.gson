@@ -1,7 +1,26 @@
+import grails.util.Holders
 import mentor.Mentor
+import rating.RatingUtilService
 
 model {
     Mentor mentor
 }
 
-json g.render(mentor, [resolveTemplate: false])
+def ratingUtilService = Holders
+        .grailsApplication
+        .mainContext
+        .getBean('ratingUtilService') as RatingUtilService
+
+json {
+    id mentor.id
+    name mentor.name
+    lastName mentor.lastName
+    fatherName mentor.fatherName
+    fullname mentor.lastName + ' ' + mentor.name + ' ' + mentor.fatherName
+    birthDate mentor.birthDate
+    experienceYears mentor.experienceYears
+    dateCreated mentor.dateCreated
+    lastUpdated mentor.lastUpdated
+    disabled mentor.disabled
+    rating ratingUtilService.getAverageRating(mentor)
+}
