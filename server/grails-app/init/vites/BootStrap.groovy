@@ -17,7 +17,6 @@ import student.Student
 class BootStrap {
 
     def dateTimeService
-    CourseService courseService
 
     private final static FAIL_ON_ERROR = [failOnError: true]
 
@@ -40,11 +39,8 @@ class BootStrap {
         log.info firstCourse.students.toString()
 
         log.info 'Available: ' + firstCourse.availablePlacesCount
-
-        log.info 'CourseRating: ' + courseService.getAverageRating(firstCourse)
-        log.info 'CourseRating: ' + courseService.getAverageRating(Course.last())
-
     }
+
     def destroy = {
     }
 

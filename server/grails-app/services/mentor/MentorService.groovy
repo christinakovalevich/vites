@@ -2,7 +2,6 @@ package mentor
 
 import grails.gorm.services.Service
 import grails.util.Holders
-import rating.MentorRating
 import student.Student
 
 interface IMentorService {
@@ -30,12 +29,6 @@ abstract class MentorService implements IMentorService {
         }
 
         return null
-    }
-
-
-    float getAverageRating(Mentor mentor) {
-        def courseRatingList = MentorRating.findAllByMentor(mentor)
-        return Holders.applicationContext.ratingUtilService.getAverageRating(courseRatingList)
     }
 
     Set<Mentor> getMentorsByStudent(Student student) {

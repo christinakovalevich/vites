@@ -1,7 +1,7 @@
 import student.Student
 
 model {
-	Student student
+    Student student
 }
 
 json tmpl.student(student)

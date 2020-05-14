@@ -3,7 +3,6 @@ package student
 import grails.gorm.services.Service
 import grails.util.Holders
 import mentor.Mentor
-import rating.StudentRating
 
 interface IStudentService {
 
@@ -42,11 +41,6 @@ abstract class StudentService implements IStudentService {
         }
 
         return null
-    }
-
-    float getAverageRating(Student student) {
-        def studentRatingList = StudentRating.findAllByStudent(student)
-        return Holders.applicationContext.ratingUtilService.getAverageRating(studentRatingList)
     }
 
 }

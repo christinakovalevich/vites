@@ -1,7 +1,7 @@
 import mentor.Mentor
 
 model {
-	Iterable<Mentor> mentorList
+    Iterable<Mentor> mentorList
 }
 
 json tmpl.mentor(mentorList ?: [])

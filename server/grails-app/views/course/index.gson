@@ -1,7 +1,7 @@
 import course.Course
 
 model {
-	Iterable<Course> courseList
+    Iterable<Course> courseList
 }
 
 json tmpl.course(courseList ?: [])

@@ -1,7 +1,7 @@
 import course.Course
 
 model {
-	Course course
+    Course course
 }
 
 json tmpl.course(course)

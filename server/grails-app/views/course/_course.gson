@@ -1,8 +1,15 @@
 import course.Course
+import grails.util.Holders
+import rating.RatingUtilService
 
 model {
-	Course course
+    Course course
 }
+
+def ratingUtilService = Holders
+        .grailsApplication
+        .mainContext
+        .getBean('ratingUtilService') as RatingUtilService
 
 json {
     id course.id
@@ -13,7 +20,7 @@ json {
     endDate course.endDate
 
     difficulty course.difficulty
-//    popularity courseService.getAverageRating(course)
     totalPlacesCount course.totalPlacesCount
     availablePlacesCount course.availablePlacesCount
+    popularity ratingUtilService.getAverageRating(course)
 }

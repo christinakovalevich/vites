@@ -1,7 +1,7 @@
 import mentor.Mentor
 
 model {
-	Mentor mentor
+    Mentor mentor
 }
 
 json g.render(mentor, [resolveTemplate: false])
