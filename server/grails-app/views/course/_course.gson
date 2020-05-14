@@ -1,9 +1,7 @@
 import course.Course
-import course.CourseService
 
 model {
-    Course course
-    CourseService courseService
+	Course course
 }
 
 json {
@@ -15,7 +13,7 @@ json {
     endDate course.endDate
 
     difficulty course.difficulty
-    popularity courseService.getAverageRating(course)
+//    popularity courseService.getAverageRating(course)
     totalPlacesCount course.totalPlacesCount
     availablePlacesCount course.availablePlacesCount
 }

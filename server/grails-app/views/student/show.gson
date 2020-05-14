@@ -1,0 +1,7 @@
+import student.Student
+
+model {
+	Student student
+}
+
+json tmpl.student(student)
