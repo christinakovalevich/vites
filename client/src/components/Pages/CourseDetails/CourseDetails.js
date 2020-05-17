@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import Stars from "../../Common/Rating/Stars/Stars";
 import {formatDate} from "../../../utils/utils";
 import Button from "../../Common/Button/Button";
+import GoBackButton from "../../Common/GoBackButton/GoBackButton";
+import {Col, Container, Row} from "react-bootstrap";
 
 const CourseDetails = ({getCourse}) => {
     const [course, setCourse] = useState({});
@@ -20,7 +22,16 @@ const CourseDetails = ({getCourse}) => {
     return (
         <div className="course-details">
             <DefaultPage>
-                <h1>{course.name}</h1>
+                <Container fluid>
+                    <Row>
+                        <Col className="p-0" md={1}>
+                            <GoBackButton/>
+                        </Col>
+                        <Col>
+                            <h1 className="d-inline">{course.name}</h1>
+                        </Col>
+                    </Row>
+                </Container>
 
                 <div className="short-info">
                     <div className="rating line">

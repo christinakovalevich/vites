@@ -1,0 +1,19 @@
+span.go-back-button {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.4rem;
+    height: 3rem;
+    width: 3rem;
+    margin-right: 2rem;
+    border-radius: 50%;
+    background: var(--main-color-5);
+    opacity: 0.5;
+    color: var(--main-color-7) !important;
+    cursor: pointer;
+    transition-duration: var(--main-transition-durirtion);
+}
+
+span.go-back-button:hover {
+    opacity: 1;
+}
