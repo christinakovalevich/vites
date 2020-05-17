@@ -1,0 +1,15 @@
+.mentor-card {
+    margin: 2rem 0;
+    padding: 2rem;
+    transition-duration: var(--main-transition-durirtion);
+    border-radius: var(--main-border-radius-d);
+    cursor: pointer;
+}
+
+.mentor-card .body {
+    margin-bottom: 2rem;
+}
+
+.mentor-card:last-child {
+    margin-bottom: 0;
+}
