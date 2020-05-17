@@ -6,8 +6,9 @@ import Loader from "../../Common/Loader/Loader";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
 import RowDataTransformer from "../../Common/RowDataContainer/RowDataTransformer";
 import AlertError from "../../Common/Alert/AlertError/AlertError";
+import CourseCard from "../../CourseCard/CourseCard";
 
-const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps}) => {
+const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps, getCardButton}) => {
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
@@ -45,11 +46,10 @@ const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps})
 
                 <ToggleModeContainer {...toggleModeContainerProps}/>
 
-                {
-                    hasLoaded ?
-                        !hasError || courses.length > 0 ?
-                            <RowDataTransformer dataArr={sortCourses(courses)}/> : null : <Loader/>
-                }
+                <RowDataTransformer
+                    dataArr={sortCourses(courses)}
+                    CardComponent={CourseCard}/>
+
             </DefaultPage>
         </div>
     )

@@ -4,6 +4,8 @@ import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
 import Loader from "../../Common/Loader/Loader";
 import AlertError from "../../Common/Alert/AlertError/AlertError";
+import RowDataTransformer from "../../Common/RowDataContainer/RowDataTransformer";
+import MentorCard from "../../MentorCard/MentorCard";
 
 const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps}) => {
 
@@ -39,6 +41,8 @@ const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps})
                 <h1>{title}</h1>
 
                 <ToggleModeContainer {...toggleModeContainerProps}/>
+
+                <RowDataTransformer dataArr={mentors} CardComponent={MentorCard}/>
 
             </DefaultPage>
         </div>

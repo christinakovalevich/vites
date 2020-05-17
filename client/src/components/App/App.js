@@ -14,16 +14,19 @@ import AppService from "../../services/App/AppService";
 import RouteWrapper from "../RouteWrapper/RouteWrapper";
 import PathService from "../../services/Path/PathService";
 import DashboardPage from "../Pages/DashboardPage/DashboardPage";
-import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import StudentsPage from "../Pages/StudentsPage/StudentsPage";
 import MentorsPage from "../Pages/MentorsPage/MentorsPage";
 import RatingPage from "../Pages/RatingPage/RatingPage";
 import {UserRoleContext} from "../../contexts/UserRoleContext"
 import {ShowToggleContext} from "../../contexts/ShowToggleContext";
+import {GetCardButtonContext} from "../../contexts/GetCardButtonContext"
 import MentorPageService from "../../services/Mentor/MentorPageService";
 import StudentsPageService from "../../services/Student/StudentsPageService";
 import SettingsPage from "../Pages/SettingsPage/SettingsPage";
+import Button from "../Common/Button/Button";
+import CoursesPage from "../Pages/CoursesPage/CoursesPage";
+import TooltipWrapper from "../Common/ToolTipWrapper/ToolTipWrapper";
 
 export default class App extends Component {
     state = {
@@ -153,6 +156,59 @@ export default class App extends Component {
             />
         );
 
+        const getCardButtonForCourse = (id) => {
+            switch (coursesPageMode) {
+                case CoursePageService.modes.all(): {
+                    return (
+                        <TooltipWrapper label="Записаться на курс">
+                            <div>
+                                <Button label="Оставить заявку"
+                                        onClick={() => {
+                                        }}
+                                        className="w-100"/>
+                            </div>
+                        </TooltipWrapper>
+
+                    )
+                }
+                case CoursePageService.modes.my(): {
+                    return (
+                        <TooltipWrapper label="Оценить курс">
+                            <div>
+                                <Button label="Оценить курс"
+                                        onClick={() => {
+                                            console.log(id)
+                                        }}
+                                        className="w-100"/>
+                            </div>
+                        </TooltipWrapper>
+                    )
+                }
+                default:
+                    return null
+            }
+        };
+
+        const getCardButtonForMentor = (id) => {
+            switch (mentorsPageMode) {
+                case CoursePageService.modes.my(): {
+                    return (
+                        <TooltipWrapper label="Оценить преподавателя">
+                            <div>
+                                <Button label="Оценить преподавателя"
+                                        onClick={() => {
+                                            console.log(id)
+                                        }}
+                                        className="w-100"/>
+                            </div>
+                        </TooltipWrapper>
+                    )
+                }
+                default:
+                    return null
+            }
+        }
+
         const getContentForConnected = () => {
             if (!isAuthenticated) {
                 return <LoginForm {...AppService.getLoginFormProps(
@@ -182,20 +238,22 @@ export default class App extends Component {
                         <RouteWrapper path={PathService.courses()} exact
                                       roles={PathService.roles().courses()}>
                             <ShowToggleContext.Provider value={CoursePageService.isShowToggle(role)}>
-                                <CoursesPage title="Курсы и стажировки"
-                                             getCourses={AppService
-                                                 .getCoursesPageFetchFunction(coursesPageMode)}
-                                             sortCourses={CoursePageService.sortCoursesByDate}
-                                             toggleModeContainerProps={{
-                                                 modes: {
-                                                     all: CoursePageService.modes.all,
-                                                     my: CoursePageService.modes.my,
-                                                 },
-                                                 isActiveMode: (currentMode) => CoursePageService
-                                                     .isActiveMode(coursesPageMode, currentMode),
-                                                 onModeChange: this.onCoursesPageModeChange,
-                                                 getLabelForMode: CoursePageService.getLabelForMode,
-                                             }}/>
+                                <GetCardButtonContext.Provider value={getCardButtonForCourse}>
+                                    <CoursesPage title="Курсы и стажировки"
+                                                 getCourses={AppService
+                                                     .getCoursesPageFetchFunction(coursesPageMode)}
+                                                 sortCourses={CoursePageService.sortCoursesByDate}
+                                                 toggleModeContainerProps={{
+                                                     modes: {
+                                                         all: CoursePageService.modes.all,
+                                                         my: CoursePageService.modes.my,
+                                                     },
+                                                     isActiveMode: (currentMode) => CoursePageService
+                                                         .isActiveMode(coursesPageMode, currentMode),
+                                                     onModeChange: this.onCoursesPageModeChange,
+                                                     getLabelForMode: CoursePageService.getLabelForMode,
+                                                 }}/>
+                                </GetCardButtonContext.Provider>
                             </ShowToggleContext.Provider>
                         </RouteWrapper>
 
@@ -228,19 +286,23 @@ export default class App extends Component {
                         <RouteWrapper path={PathService.mentors()}
                                       roles={PathService.roles().mentors()}>
                             <ShowToggleContext.Provider value={MentorPageService.isShowToggle(role)}>
-                                <MentorsPage title="Преподаватели"
-                                             getMentors={AppService.getMentorsFetchFunction(mentorsPageMode)}
-                                             sortMentors={MentorPageService.sortMentors}
-                                             toggleModeContainerProps={{
-                                                 modes: {
-                                                     all: MentorPageService.modes.all,
-                                                     my: MentorPageService.modes.my,
-                                                 },
-                                                 isActiveMode: (currentMode) => MentorPageService
-                                                     .isActiveMode(mentorsPageMode, currentMode),
-                                                 onModeChange: this.onMentorsPageModeChange,
-                                                 getLabelForMode: MentorPageService.getLabelForMode,
-                                             }}/>
+                                <GetCardButtonContext.Provider value={getCardButtonForMentor}>
+                                    <MentorsPage title="Преподаватели"
+                                                 getMentors={AppService
+                                                     .getMentorsFetchFunction(mentorsPageMode)}
+                                                 sortMentors={MentorPageService.sortMentors}
+                                                 toggleModeContainerProps={{
+                                                     modes: {
+                                                         all: MentorPageService.modes.all,
+                                                         my: MentorPageService.modes.my,
+                                                     },
+                                                     isActiveMode: (currentMode) => MentorPageService
+                                                         .isActiveMode(mentorsPageMode, currentMode),
+                                                     onModeChange: this.onMentorsPageModeChange,
+                                                     getLabelForMode: MentorPageService.getLabelForMode,
+                                                 }}/>
+                                </GetCardButtonContext.Provider>
+
                             </ShowToggleContext.Provider>
                         </RouteWrapper>
 

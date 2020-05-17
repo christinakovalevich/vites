@@ -1,29 +1,33 @@
-import React from "react";
+import React, {useContext} from "react";
 import Stars from "../Common/Rating/Stars/Stars";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
-import Button from "../Common/Button/Button";
 import {Col, Row} from "react-bootstrap";
 import {withRouter} from "react-router-dom";
 
 import "./CourseCard.css"
 import {formatDate} from "../../utils/utils";
 import TooltipWrapper from "../Common/ToolTipWrapper/ToolTipWrapper";
+import {GetCardButtonContext} from "../../contexts/GetCardButtonContext";
 
-const CourseCard = ({
-                        id,
-                        name,
-                        difficulty,
-                        popularity,
-                        totalPlacesCount,
-                        availablePlacesCount,
-                        startDate,
-                        endDate,
-                        history
-                    }) => {
+const CourseCard = (props) => {
+
+    const {
+        id,
+        name,
+        difficulty,
+        popularity,
+        totalPlacesCount,
+        availablePlacesCount,
+        startDate,
+        endDate,
+        history
+    } = props;
 
     const showCourse = () => {
         history.push(`${id}`)
     }
+
+    const getCardButton = useContext(GetCardButtonContext);
 
     return (
         <div className="course-card shadow-m">
@@ -76,14 +80,9 @@ const CourseCard = ({
                     Осталось свободных мест: <span className="font-weight-bold">{availablePlacesCount}</span>
                 </div>
             </div>
-
-            <TooltipWrapper label="Перейти к курсу">
-                <div>
-                    <Button label="Подробнее"
-                            onClick={showCourse}
-                            className="w-100"/>
-                </div>
-            </TooltipWrapper>
+            {
+                getCardButton(id)
+            }
         </div>
     )
 };
