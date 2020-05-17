@@ -27,6 +27,7 @@ import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 import Button from "../Common/Button/Button";
 import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import TooltipWrapper from "../Common/ToolTipWrapper/ToolTipWrapper";
+import RoleService from "../../services/Role/RoleService";
 
 export default class App extends Component {
     state = {
@@ -157,58 +158,68 @@ export default class App extends Component {
         );
 
         const getCardButtonForCourse = (id) => {
-            switch (coursesPageMode) {
-                case CoursePageService.modes.all(): {
-                    return (
-                        <TooltipWrapper label="Записаться на курс">
-                            <div>
-                                <Button label="Оставить заявку"
-                                        onClick={() => {
-                                        }}
-                                        className="w-100"/>
-                            </div>
-                        </TooltipWrapper>
-
-                    )
-                }
-                case CoursePageService.modes.my(): {
-                    return (
-                        <TooltipWrapper label="Оценить курс">
-                            <div>
-                                <Button label="Оценить курс"
-                                        onClick={() => {
-                                            console.log(id)
-                                        }}
-                                        className="w-100"/>
-                            </div>
-                        </TooltipWrapper>
-                    )
-                }
-                default:
-                    return null
-            }
-        };
-
-        const getCardButtonForMentor = (id) => {
-            switch (mentorsPageMode) {
-                case CoursePageService.modes.my(): {
-                    return (
-                        <div className="button-wrapper">
-                            <TooltipWrapper label="Оценить преподавателя">
+            if (role === RoleService.student()) {
+                switch (coursesPageMode) {
+                    case CoursePageService.modes.all(): {
+                        return (
+                            <TooltipWrapper label="Записаться на курс">
                                 <div>
-                                    <Button label="Оценить преподавателя"
+                                    <Button label="Оставить заявку"
+                                            onClick={() => {
+                                            }}
+                                            className="w-100"/>
+                                </div>
+                            </TooltipWrapper>
+
+                        )
+                    }
+                    case CoursePageService.modes.my(): {
+                        return (
+                            <TooltipWrapper label="Оценить курс">
+                                <div>
+                                    <Button label="Оценить курс"
                                             onClick={() => {
                                                 console.log(id)
                                             }}
                                             className="w-100"/>
                                 </div>
                             </TooltipWrapper>
-                        </div>
-                    )
+                        )
+                    }
+                    default:
+                        return null
                 }
-                default:
-                    return null
+            } else {
+                return null
             }
+        };
+
+        const getCardButtonForMentor = (id) => {
+            if (role === RoleService.student()) {
+                switch (mentorsPageMode) {
+                    case CoursePageService.modes.my(): {
+
+                        return (
+                            <div className="button-wrapper">
+                                <TooltipWrapper label="Оценить преподавателя">
+                                    <div>
+                                        <Button label="Оценить преподавателя"
+                                                onClick={() => {
+                                                    console.log(id)
+                                                }}
+                                                className="w-100"/>
+                                    </div>
+                                </TooltipWrapper>
+                            </div>
+                        )
+                    }
+                    default:
+                        return null
+                }
+            } else {
+                return null
+            }
+
         }
 
         const getContentForConnected = () => {

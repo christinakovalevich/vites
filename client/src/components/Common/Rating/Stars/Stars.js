@@ -5,7 +5,7 @@ import TooltipWrapper from "../../ToolTipWrapper/ToolTipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 
-const Stars = ({value, highestRate = 5, toolTipPlacement='top'}) => {
+const Stars = ({value, highestRate = 5, toolTipPlacement = 'top'}) => {
 
     const getToolTipLabel = (value) =>
         value > 0 ? value : 'Недостаточное кол-во оценок.';

@@ -17,6 +17,7 @@
 .mentor-card a {
     color: var(--main-color-7);
 }
+
 .mentor-card a:hover {
     color: var(--main-color-7);
     text-decoration: none;
