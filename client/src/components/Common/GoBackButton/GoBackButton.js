@@ -9,9 +9,9 @@ import TooltipWrapper from "../ToolTipWrapper/ToolTipWrapper";
 const GoBackButton = ({history, toolTipLabel = 'Вернуться назад'}) => {
     return (
         <TooltipWrapper label={toolTipLabel}>
-            <span className="go-back-button" onClick={history.goBack}>
+            <button className="go-back-button" onClick={history.goBack}>
                 <FontAwesomeIcon icon={faLongArrowAltLeft}/>
-            </span>
+            </button>
         </TooltipWrapper>
     )
 }

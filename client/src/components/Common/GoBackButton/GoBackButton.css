@@ -1,4 +1,4 @@
-span.go-back-button {
+.go-back-button {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -6,6 +6,7 @@ span.go-back-button {
     height: 3rem;
     width: 3rem;
     margin-right: 2rem;
+    border: none;
     border-radius: 50%;
     background: var(--main-color-5);
     opacity: 0.5;
@@ -14,6 +15,11 @@ span.go-back-button {
     transition-duration: var(--main-transition-durirtion);
 }
 
-span.go-back-button:hover {
+.go-back-button:hover {
     opacity: 1;
+}
+
+.go-back-button:focus {
+    opacity: 1;
+    outline: none;
 }
