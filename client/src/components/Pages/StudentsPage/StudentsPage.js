@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import "./StudentsPage.css"
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
+import Loader from "../../Common/Loader/Loader";
+import AlertError from "../../Common/Alert/AlertError/AlertError";
 
 const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProps}) => {
 
@@ -14,6 +16,7 @@ const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProp
         getStudents()
             .then(students => {
                 setStudents(students);
+                setError(false);
                 setLoaded(true);
             })
             .catch(error => {
@@ -21,7 +24,15 @@ const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProp
                 setLoaded(true);
                 console.error(error);
             })
-    }, [getStudents])
+    }, [getStudents]);
+
+    if (!hasLoaded) {
+        return <Loader/>
+    }
+
+    if (hasError) {
+        return <AlertError/>
+    }
 
     return (
         <div className="students-page">

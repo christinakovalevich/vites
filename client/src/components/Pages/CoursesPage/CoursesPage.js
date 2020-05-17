@@ -5,6 +5,7 @@ import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import Loader from "../../Common/Loader/Loader";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
 import RowDataTransformer from "../../Common/RowDataContainer/RowDataTransformer";
+import AlertError from "../../Common/Alert/AlertError/AlertError";
 
 const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps}) => {
 
@@ -15,8 +16,9 @@ const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps})
     useEffect(() => {
         getCourses()
             .then(courses => {
-                setCourses(courses);
+                setError(false);
                 setLoaded(true);
+                setCourses(courses);
             })
             .catch(error => {
                 setError(true);
@@ -24,6 +26,14 @@ const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps})
                 console.error(error);
             })
     }, [getCourses])
+
+    if (!hasLoaded) {
+        return <Loader/>
+    }
+
+    if (hasError) {
+        return <AlertError/>
+    }
 
     return (
         <div className="courses-page">
@@ -45,7 +55,7 @@ const CoursesPage = ({title, getCourses, sortCourses, toggleModeContainerProps})
     )
 };
 
-export default CoursesPage
+export default CoursesPage;
 
 CoursesPage.propTypes = {
     title: PropTypes.string,

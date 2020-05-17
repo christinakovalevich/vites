@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import "./MentorsPage.css"
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
+import Loader from "../../Common/Loader/Loader";
+import AlertError from "../../Common/Alert/AlertError/AlertError";
 
 const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps}) => {
 
@@ -13,6 +15,7 @@ const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps})
         getMentors()
             .then(courses => {
                 setMentors(courses);
+                setError(false);
                 setLoaded(true);
             })
             .catch(error => {
@@ -20,7 +23,15 @@ const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps})
                 setLoaded(true);
                 console.error(error);
             })
-    }, [getMentors])
+    }, [getMentors]);
+
+    if (!hasLoaded) {
+        return <Loader/>
+    }
+
+    if (hasError) {
+        return <AlertError/>
+    }
 
     return (
         <div className="mentors-page">
@@ -34,4 +45,4 @@ const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps})
     )
 };
 
-export default MentorsPage
+export default MentorsPage;

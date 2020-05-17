@@ -8,16 +8,37 @@ import {formatDate} from "../../../utils/utils";
 import Button from "../../Common/Button/Button";
 import GoBackButton from "../../Common/GoBackButton/GoBackButton";
 import {Col, Container, Row} from "react-bootstrap";
+import Loader from "../../Common/Loader/Loader";
+import AlertError from "../../Common/Alert/AlertError/AlertError";
 
 const CourseDetails = ({getCourse}) => {
     const [course, setCourse] = useState({});
+    const [hasError, setError] = useState(false);
+    const [hasLoaded, setLoaded] = useState(false);
+
     const {id} = useParams();
 
     useEffect(() => {
         getCourse(id)
-            .then(setCourse)
-            .catch(console.error)
+            .then(course => {
+                setLoaded(true);
+                setError(false);
+                setCourse(course);
+            })
+            .catch(error => {
+                setLoaded(true);
+                setError(true);
+                console.error(error);
+            })
     }, [getCourse, id])
+
+    if (!hasLoaded) {
+        return <Loader/>
+    }
+
+    if (hasError) {
+        return <AlertError/>
+    }
 
     return (
         <div className="course-details">
@@ -30,15 +51,18 @@ const CourseDetails = ({getCourse}) => {
                         <Col>
                             <h1 className="d-inline">{course.name}</h1>
                         </Col>
+                        <Col className="text-right">
+                            <h4>
+                                <Stars value={course.popularity}
+                                       toolTipPlacement="bottom"/> ({course.popularity})
+                            </h4>
+                        </Col>
                     </Row>
                 </Container>
 
+                <hr/>
+
                 <div className="short-info">
-                    <div className="rating line">
-                        <span className="label">Средняя оценка курса: </span>
-                        <Stars value={course.popularity}/>
-                        <span> ({course.popularity})</span>
-                    </div>
                     <div className="dates line">
                         <div>
                             <span className="label">
