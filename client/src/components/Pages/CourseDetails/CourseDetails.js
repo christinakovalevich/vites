@@ -3,7 +3,7 @@ import "./CourseDetails.css"
 import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
-import Stars from "../../Common/Stars/Stars";
+import Stars from "../../Common/Rating/Stars/Stars";
 import {formatDate} from "../../../utils/utils";
 import Button from "../../Common/Button/Button";
 

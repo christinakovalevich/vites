@@ -1,5 +1,5 @@
 import React from "react";
-import Stars from "../Common/Stars/Stars";
+import Stars from "../Common/Rating/Stars/Stars";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 import Button from "../Common/Button/Button";
 import {Col, Row} from "react-bootstrap";

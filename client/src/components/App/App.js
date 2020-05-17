@@ -254,8 +254,10 @@ export default class App extends Component {
                             <SettingsPage
                                 title="Системные настройки"
                                 serverInfo={serverInfo}
-                                onServerUrlChange={() => {}}
-                                onServerUrlSubmit={() => {}}
+                                onServerUrlChange={() => {
+                                }}
+                                onServerUrlSubmit={() => {
+                                }}
                             />
                         </RouteWrapper>
                     </UserRoleContext.Provider>

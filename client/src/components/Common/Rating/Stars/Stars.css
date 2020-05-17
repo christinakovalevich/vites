@@ -6,6 +6,4 @@
 
 .stars .muted {
     color: var(--main-color-5);
-    cursor: pointer;
-    display: inline-block;
 }
