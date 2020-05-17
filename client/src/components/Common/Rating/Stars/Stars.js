@@ -5,7 +5,7 @@ import TooltipWrapper from "../../ToolTipWrapper/ToolTipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 
-const Stars = (props) => {
+const Stars = ({value, highestRate = 5}) => {
 
     const getToolTipLabel = (value) =>
         value > 0 ? value : 'Недостаточное кол-во оценок.';
@@ -42,8 +42,6 @@ const Stars = (props) => {
             </Fragment>
         )
     }
-
-    const {value, highestRate = 5} = props
 
     return (
         <div className="stars noselect">
