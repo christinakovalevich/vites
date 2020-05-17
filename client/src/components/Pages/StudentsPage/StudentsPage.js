@@ -5,6 +5,8 @@ import DefaultPage from "../../Common/DefaultPage/DefaultPage";
 import ToggleModeContainer from "../../Common/ToggleMode/ToggleModeContainer/ToggleModeContainer";
 import Loader from "../../Common/Loader/Loader";
 import AlertError from "../../Common/Alert/AlertError/AlertError";
+import RowDataTransformer from "../../Common/RowDataContainer/RowDataTransformer";
+import StudentCard from "../../StudentCard/StudentCard";
 
 const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProps}) => {
 
@@ -40,6 +42,8 @@ const StudentsPage = ({title, getStudents, sortStudents, toggleModeContainerProp
                 <h1>{title}</h1>
 
                 <ToggleModeContainer {...toggleModeContainerProps}/>
+
+                <RowDataTransformer dataArr={students} CardComponent={StudentCard}/>
             </DefaultPage>
         </div>
     )

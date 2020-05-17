@@ -159,9 +159,9 @@ export default class App extends Component {
 
         const getCardButtonForCourse = (id) => {
             if (role === RoleService.student()) {
-                switch (coursesPageMode) {
-                    case CoursePageService.modes.all(): {
-                        return (
+                if (coursesPageMode === CoursePageService.modes.all()) {
+                    return (
+                        <div className="button-wrapper">
                             <TooltipWrapper label="Записаться на курс">
                                 <div>
                                     <Button label="Оставить заявку"
@@ -170,11 +170,11 @@ export default class App extends Component {
                                             className="w-100"/>
                                 </div>
                             </TooltipWrapper>
-
-                        )
-                    }
-                    case CoursePageService.modes.my(): {
-                        return (
+                        </div>
+                    )
+                } else if (coursesPageMode === CoursePageService.modes.my()) {
+                    return (
+                        <div className="button-wrapper">
                             <TooltipWrapper label="Оценить курс">
                                 <div>
                                     <Button label="Оценить курс"
@@ -184,42 +184,54 @@ export default class App extends Component {
                                             className="w-100"/>
                                 </div>
                             </TooltipWrapper>
-                        )
-                    }
-                    default:
-                        return null
+                        </div>
+                    )
                 }
-            } else {
-                return null
             }
+
+            return null
         };
 
         const getCardButtonForMentor = (id) => {
-            if (role === RoleService.student()) {
-                switch (mentorsPageMode) {
-                    case CoursePageService.modes.my(): {
-
-                        return (
-                            <div className="button-wrapper">
-                                <TooltipWrapper label="Оценить преподавателя">
-                                    <div>
-                                        <Button label="Оценить преподавателя"
-                                                onClick={() => {
-                                                    console.log(id)
-                                                }}
-                                                className="w-100"/>
-                                    </div>
-                                </TooltipWrapper>
+            if (role === RoleService.student() &&
+                mentorsPageMode === CoursePageService.modes.my()) {
+                return (
+                    <div className="button-wrapper">
+                        <TooltipWrapper label="Оценить преподавателя">
+                            <div>
+                                <Button label="Оценить преподавателя"
+                                        onClick={() => {
+                                            console.log(id)
+                                        }}
+                                        className="w-100"/>
                             </div>
-                        )
-                    }
-                    default:
-                        return null
-                }
-            } else {
-                return null
+                        </TooltipWrapper>
+                    </div>
+                )
             }
 
+            return null
+        }
+
+        const getCardButtonForStudent = (id) => {
+            if (role === RoleService.mentor() &&
+                studentsPageMode === CoursePageService.modes.my()) {
+                return (
+                    <div className="button-wrapper">
+                        <TooltipWrapper label="Оценить студента">
+                            <div>
+                                <Button label="Оценить студента"
+                                        onClick={() => {
+                                            console.log(id)
+                                        }}
+                                        className="w-100"/>
+                            </div>
+                        </TooltipWrapper>
+                    </div>
+                )
+            }
+
+            return null
         }
 
         const getContentForConnected = () => {
@@ -278,21 +290,23 @@ export default class App extends Component {
                         <RouteWrapper path={PathService.students()}
                                       roles={PathService.roles().students()}>
                             <ShowToggleContext.Provider value={StudentsPageService.isShowToggle(role)}>
-                                <StudentsPage title="Студенты"
-                                              getStudents={AppService
-                                                  .getStudentsFetchFunction(studentsPageMode)}
-                                              sortStudents={StudentsPageService.sortStudents}
-                                              toggleModeContainerProps={{
-                                                  modes: {
-                                                      all: StudentsPageService.modes.all,
-                                                      my: StudentsPageService.modes.my,
-                                                  },
-                                                  isActiveMode: (studentMode) => StudentsPageService
-                                                      .isActiveMode(studentsPageMode, studentMode),
-                                                  onModeChange: this.onStudentsPageModeChange,
-                                                  getLabelForMode: StudentsPageService.getLabelForMode,
-                                              }}
-                                />
+                                <GetCardButtonContext.Provider value={getCardButtonForStudent}>
+                                    <StudentsPage title="Студенты"
+                                                  getStudents={AppService
+                                                      .getStudentsFetchFunction(studentsPageMode)}
+                                                  sortStudents={StudentsPageService.sortStudents}
+                                                  toggleModeContainerProps={{
+                                                      modes: {
+                                                          all: StudentsPageService.modes.all,
+                                                          my: StudentsPageService.modes.my,
+                                                      },
+                                                      isActiveMode: (studentMode) => StudentsPageService
+                                                          .isActiveMode(studentsPageMode, studentMode),
+                                                      onModeChange: this.onStudentsPageModeChange,
+                                                      getLabelForMode: StudentsPageService.getLabelForMode,
+                                                  }}
+                                    />
+                                </GetCardButtonContext.Provider>
                             </ShowToggleContext.Provider>
                         </RouteWrapper>
 

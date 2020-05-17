@@ -1,0 +1,24 @@
+.student-card {
+    margin: 2rem 0;
+    padding: 2rem;
+    transition-duration: var(--main-transition-durirtion);
+    border-radius: var(--main-border-radius-d);
+    cursor: pointer;
+}
+
+.student-card .button-wrapper {
+    margin-top: 1rem;
+}
+
+.student-card:last-child {
+    margin-bottom: 0;
+}
+
+.student-card a {
+    color: var(--main-color-7);
+}
+
+.student-card a:hover {
+    color: var(--main-color-7);
+    text-decoration: none;
+}
