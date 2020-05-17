@@ -1,8 +1,7 @@
 import React, {Fragment} from "react";
 import {Col, Row} from "react-bootstrap";
-import CourseCard from "../../CourseCard/CourseCard";
 
-const RowDataTransformer = ({dataArr = []}) => {
+const RowDataTransformer = ({dataArr = [], CardComponent}) => {
 
     const reshapeDataArr = (dataArr) => {
         let resultArr = [];
@@ -23,7 +22,7 @@ const RowDataTransformer = ({dataArr = []}) => {
                 {
                     row.map((col, i) => (
                         <Col key={i} lg={4}>
-                            <CourseCard key={col.id} {...col}/>
+                            <CardComponent key={col.id} {...col}/>
                         </Col>
                     ))
                 }
