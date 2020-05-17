@@ -6,10 +6,18 @@
     cursor: pointer;
 }
 
-.mentor-card .body {
-    margin-bottom: 2rem;
+.mentor-card .button-wrapper {
+    margin-top: 1rem;
 }
 
 .mentor-card:last-child {
     margin-bottom: 0;
+}
+
+.mentor-card a {
+    color: var(--main-color-7);
+}
+.mentor-card a:hover {
+    color: var(--main-color-7);
+    text-decoration: none;
 }

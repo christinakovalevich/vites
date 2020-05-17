@@ -1,11 +1,10 @@
 import React, {useContext} from "react";
 import "./MentorCard.css";
-import {Col, Row} from "react-bootstrap";
 import Stars from "../Common/Rating/Stars/Stars";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
-import Button from "../Common/Button/Button";
-import TooltipWrapper from "../Common/ToolTipWrapper/ToolTipWrapper";
 import {GetCardButtonContext} from "../../contexts/GetCardButtonContext";
+import {formatDate} from "../../utils/utils";
+import {parsePhoneNumberFromString} from 'libphonenumber-js';
 
 const MentorCard = (props) => {
     const {
@@ -15,8 +14,7 @@ const MentorCard = (props) => {
         experienceYears,
         phone,
         email,
-        rating,
-        isShowRateButton
+        rating
     } = props;
 
     const getCardButton = useContext(GetCardButtonContext);
@@ -33,36 +31,57 @@ const MentorCard = (props) => {
 
             <hr/>
 
-            <div className="body">
-                <Row>
+            <div>
+                <div className="d-inline-block w-25">
+                    <h6>Рейтинг:</h6>
+                </div>
+                <div className="d-inline-block w-75 text-right">
+                    <Stars value={rating} faIcon={faStar}/>
+                </div>
+            </div>
 
-                </Row>
+            <div>
+                <div className="d-inline-block w-25">
+                    <h6>E-mail:</h6>
+                </div>
+                <div className="d-inline-block w-75 text-right">
+                    <a href={`mailto:${email}`}>{email}</a>
+                </div>
+            </div>
 
-                <Row>
-                    <Col>
-                        <h6>Рейтинг:</h6>
-                    </Col>
-                    <Col>
-                        <Stars value={rating} faIcon={faStar}/>
-                    </Col>
-                </Row>
+            <div>
+                <div className="d-inline-block w-25">
+                    <h6>Телефон:</h6>
+                </div>
+                <div className="d-inline-block w-75 text-right">
+                    <a href={`tel:${phone}`}>
+                        {
+                            parsePhoneNumberFromString(phone, 'BY').formatNational()
+                        }
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <div className="d-inline-block w-50">
+                    <h6>Дата рождения:</h6>
+                </div>
+                <div className="d-inline-block w-50 text-right">
+                    {formatDate(birthDate)}
+                </div>
+            </div>
+
+            <div>
+                <div className="d-inline-block w-75">
+                    <h6>Опыт менторства: </h6>
+                </div>
+                <div className="d-inline-block w-25 text-right">
+                    {experienceYears}
+                </div>
             </div>
 
             {
-                isShowRateButton ? (
-                    <TooltipWrapper label="Оценить работу преподавателя">
-                        <div>
-                            <Button label="Оценить"
-                                    onClick={() => {
-                                    }}
-                                    className="w-100"/>
-                        </div>
-                    </TooltipWrapper>
-                ) : null
-            }
-
-            {
-               getCardButton(id)
+                getCardButton(id)
             }
 
         </div>

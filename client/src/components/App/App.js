@@ -193,15 +193,17 @@ export default class App extends Component {
             switch (mentorsPageMode) {
                 case CoursePageService.modes.my(): {
                     return (
-                        <TooltipWrapper label="Оценить преподавателя">
-                            <div>
-                                <Button label="Оценить преподавателя"
-                                        onClick={() => {
-                                            console.log(id)
-                                        }}
-                                        className="w-100"/>
-                            </div>
-                        </TooltipWrapper>
+                        <div className="button-wrapper">
+                            <TooltipWrapper label="Оценить преподавателя">
+                                <div>
+                                    <Button label="Оценить преподавателя"
+                                            onClick={() => {
+                                                console.log(id)
+                                            }}
+                                            className="w-100"/>
+                                </div>
+                            </TooltipWrapper>
+                        </div>
                     )
                 }
                 default:
