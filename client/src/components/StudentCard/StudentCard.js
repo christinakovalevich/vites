@@ -89,17 +89,9 @@ const StudentCard = (props) => {
                     {educationDegree}
                 </div>
             </div>
-
             {
                 getCardButton(id)
             }
-
-        </div>
-    )
-
-    return (
-        <div className="student-card">
-
         </div>
     )
 };

@@ -52,26 +52,26 @@ const CourseCard = (props) => {
 
             <hr/>
 
-            <div className="body">
-                <Row>
-                    <Col>
-                        <h6>Сложность:</h6>
-                    </Col>
-                    <Col>
-                        <Stars value={difficulty} faIcon={faStar}/>
-                    </Col>
-                </Row>
+            <div>
+                <div className="mb-2">
+                    <Row>
+                        <Col>
+                            <h6>Сложность:</h6>
+                        </Col>
+                        <Col>
+                            <Stars value={difficulty} faIcon={faStar}/>
+                        </Col>
+                    </Row>
 
-                <Row>
-                    <Col>
-                        <h6>Популярность:</h6>
-                    </Col>
-                    <Col>
-                        <Stars value={popularity} faIcon={faStar}/>
-                    </Col>
-                </Row>
-
-                <br/>
+                    <Row>
+                        <Col>
+                            <h6>Популярность:</h6>
+                        </Col>
+                        <Col>
+                            <Stars value={popularity} faIcon={faStar}/>
+                        </Col>
+                    </Row>
+                </div>
 
                 <div>
                     Всего мест: <span className="font-weight-bold">{totalPlacesCount}</span>

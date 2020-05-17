@@ -6,8 +6,8 @@
     cursor: pointer;
 }
 
-.course-card .body {
-    margin-bottom: 2rem;
+.course-card .button-wrapper {
+    margin-top: 1rem;
 }
 
 .course-card .dates {
