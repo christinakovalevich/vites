@@ -159,13 +159,17 @@ export default class App extends Component {
 
         const getCardButtonForCourse = (id) => {
             const onAddToCourse = () => {
-                AppService.addToCourse(id)
-                    .then(() => this.setState({
-                            coursesPageMode: CoursePageService.modes.my()
-                        })
-                    )
-                    .catch(console.error)
+                const promise = AppService.addToCourse(id);
+                if (promise instanceof Promise) {
+                    promise
+                        .then(() => this.setState({
+                                coursesPageMode: CoursePageService.modes.my()
+                            })
+                        )
+                        .catch(console.error)
+                }
             }
+
             if (role === RoleService.student()) {
                 if (coursesPageMode === CoursePageService.modes.all()) {
                     return (
