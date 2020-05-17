@@ -16,9 +16,11 @@ json {
     name mentor.name
     lastName mentor.lastName
     fatherName mentor.fatherName
-    fullname mentor.lastName + ' ' + mentor.name + ' ' + mentor.fatherName
+    fullName mentor.lastName + ' ' + mentor.name + ' ' + mentor.fatherName
     birthDate mentor.birthDate
     experienceYears mentor.experienceYears
+    phone mentor.phone
+    email mentor.email
     dateCreated mentor.dateCreated
     lastUpdated mentor.lastUpdated
     disabled mentor.disabled

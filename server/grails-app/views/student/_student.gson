@@ -16,10 +16,12 @@ json {
     name student.name
     lastName student.lastName
     fatherName student.fatherName
-    fullname student.lastName + ' ' + student.name + ' ' + student.fatherName
+    fullName student.lastName + ' ' + student.name + ' ' + student.fatherName
     birthDate student.birthDate
     educationDegree student.educationDegree.value
     institutionName student.institutionName
+    phone student.phone
+    email student.email
     speciality student.speciality
     dateCreated student.dateCreated
     lastUpdated student.lastUpdated
