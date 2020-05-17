@@ -6,9 +6,15 @@ button.button {
     transition-duration: var(--main-transition-durirtion);
     min-width: 200px;
     outline: none !important;
+    opacity: 0.75;
 }
 
 button.button:hover {
+    opacity: 1;
+}
+
+button.button:focus {
+    opacity: 1;
     background-color: var(--main-white-color);
     border-color: #142FBC !important;
     outline: 0 !important;

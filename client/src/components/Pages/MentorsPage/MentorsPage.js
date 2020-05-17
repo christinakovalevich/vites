@@ -7,7 +7,7 @@ const MentorsPage = ({title, getMentors, sortMentors, toggleModeContainerProps})
 
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
-    const [courses, setMentors] = useState([]);
+    const [mentors, setMentors] = useState([]);
 
     useEffect(() => {
         getMentors()

@@ -8,7 +8,7 @@
     border: none;
     border-radius: 50%;
     background: var(--main-color-5);
-    opacity: 0.5;
+    opacity: 0.75;
     color: var(--main-color-7) !important;
     cursor: pointer;
     transition-duration: var(--main-transition-durirtion);
@@ -21,4 +21,6 @@
 .go-back-button:focus {
     opacity: 1;
     outline: none;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(79, 94, 164, 0.4) !important;
 }
