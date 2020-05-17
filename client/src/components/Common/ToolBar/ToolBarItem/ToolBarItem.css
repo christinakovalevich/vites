@@ -13,6 +13,13 @@
     text-decoration: none;
 }
 
+.tool-bar-item:focus {
+    outline: none;
+    color: var(--main-color-7);
+    text-decoration: none;
+    background-color: var(--main-color-1);
+}
+
 .tool-bar-item svg {
     margin-right: .5rem;
 }
