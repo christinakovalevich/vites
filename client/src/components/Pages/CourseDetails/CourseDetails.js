@@ -56,6 +56,7 @@ const CourseDetails = ({getCourse}) => {
                                 <Stars value={course.popularity}
                                        toolTipPlacement="bottom"/> ({course.popularity})
                             </h4>
+                            <h6>Средняя оценка курса</h6>
                         </Col>
                     </Row>
                 </Container>

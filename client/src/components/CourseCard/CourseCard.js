@@ -77,9 +77,13 @@ const CourseCard = ({
                 </div>
             </div>
 
-            <Button label="Подробнее"
-                    onClick={showCourse}
-                    className="w-100"/>
+            <TooltipWrapper label="Перейти к курсу">
+                <div>
+                    <Button label="Подробнее"
+                            onClick={showCourse}
+                            className="w-100"/>
+                </div>
+            </TooltipWrapper>
         </div>
     )
 };
