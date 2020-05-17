@@ -3,6 +3,7 @@ package course
 import grails.gorm.services.Service
 import grails.util.Holders
 import groovy.time.TimeCategory
+import student.Student
 
 interface ICourseService {
     Course get(Serializable id)
@@ -40,6 +41,11 @@ abstract class CourseService implements ICourseService {
         use(TimeCategory) {
             return (course.endDate - course.startDate).days
         }
+    }
+
+    def addToStudents(Course course, Student student) {
+        course.addToStudents(student)
+        return save(course)
     }
 
 }

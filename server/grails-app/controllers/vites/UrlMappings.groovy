@@ -21,6 +21,7 @@ class UrlMappings {
         "500"(view: '/error')
         "404"(view: '/notFound')
 
+        "/api/addToCourse"(controller: "course", action: "addToCourse")
         "/api/myCourses"(controller: "course", action: "myCourses")
         "/api/myMentors"(controller: "mentor", action: "myMentors")
         "/api/myStudents"(controller: "student", action: "myStudents")

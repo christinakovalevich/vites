@@ -78,6 +78,16 @@ export default {
         }
     },
 
+    addToCourse(courseId) {
+        return fetch(buildUri('/api/addToCourse'), {
+            method: 'post',
+            headers: headers(),
+            body: JSON.stringify({
+                courseId
+            })
+        })
+    }
+
 };
 
 export const buildUri = (path, serverUrl = SERVER_URL) => {

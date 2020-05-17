@@ -5,6 +5,7 @@ import PathService from "../Path/PathService";
 import ToolBarService from "../ToolBar/ToolBarService";
 import CoursePageService from "../Course/CoursePageService";
 import MentorPageService from "../Mentor/MentorPageService";
+import {checkResponseStatus} from "../../handlers/responseHandlers";
 
 const toolBarService = new ToolBarService();
 
@@ -93,6 +94,13 @@ export default {
             username: '',
             password: '',
             role: null
+        }
+    },
+
+    addToCourse(courseId) {
+        if (window.confirm('Вы действительно хотите записаться на выбранный курс?')) {
+            return ApiService.addToCourse(courseId)
+                .then(checkResponseStatus)
         }
     }
 }

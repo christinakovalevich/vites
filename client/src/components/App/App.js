@@ -158,6 +158,14 @@ export default class App extends Component {
         );
 
         const getCardButtonForCourse = (id) => {
+            const onAddToCourse = () => {
+                AppService.addToCourse(id)
+                    .then(() => this.setState({
+                            coursesPageMode: CoursePageService.modes.my()
+                        })
+                    )
+                    .catch(console.error)
+            }
             if (role === RoleService.student()) {
                 if (coursesPageMode === CoursePageService.modes.all()) {
                     return (
@@ -165,8 +173,7 @@ export default class App extends Component {
                             <TooltipWrapper label="Записаться на курс">
                                 <div>
                                     <Button label="Оставить заявку"
-                                            onClick={() => {
-                                            }}
+                                            onClick={onAddToCourse}
                                             className="w-100"/>
                                 </div>
                             </TooltipWrapper>
