@@ -20,6 +20,9 @@ class Student {
     String institutionName
     String speciality
 
+    String email
+    String phone
+
     Date dateCreated
     Date lastUpdated
     User createdBy
@@ -33,5 +36,7 @@ class Student {
         lastName shared: "name"
         fatherName shared: "name"
         birthDate shared: "birthDate"
+        email shared: "email"
+        phone shared: "phone"
     }
 }

@@ -14,6 +14,9 @@ class Mentor {
 
     Date birthDate
 
+    String email
+    String phone
+
     User user
     int experienceYears
 
@@ -31,5 +34,7 @@ class Mentor {
         fatherName shared: "name"
         birthDate shared: "birthDate"
         experienceYears min: 0, max: 99
+        email shared: "email"
+        phone shared: "phone"
     }
 }

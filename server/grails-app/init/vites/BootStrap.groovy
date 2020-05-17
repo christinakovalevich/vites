@@ -174,6 +174,8 @@ class BootStrap {
                 user: User.findByUsername('student'),
                 institutionName: 'BSUIR',
                 educationDegree: EducationDegree.BACHELOR,
+                phone: '80295667328',
+                email: 'mogaceg295@jupiterm.com',
                 speciality: 'Software engineer')
 
         setDefaultFields(student)
@@ -195,6 +197,8 @@ class BootStrap {
                 user: User.findByUsername('mentor'),
                 institutionName: 'BSUIR',
                 educationDegree: EducationDegree.BACHELOR,
+                phone: '80293450897',
+                email: 'givaxop563@inbov03.com',
                 speciality: 'Software engineer')
 
         setDefaultFields(mentor)
