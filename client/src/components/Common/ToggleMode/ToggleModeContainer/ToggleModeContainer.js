@@ -24,7 +24,7 @@ const ToggleModeContainer = ({modes, getLabelForMode, isActiveMode, onModeChange
         <div className="toggle-mode-container">
             <h6 className="d-inline">Показать: </h6>
             <ToggleModeItem {...getToggleModeItemProps(modes.all())}/>
-            <span> | </span>
+            |
             <ToggleModeItem {...getToggleModeItemProps(modes.my())}/>
         </div>
     )

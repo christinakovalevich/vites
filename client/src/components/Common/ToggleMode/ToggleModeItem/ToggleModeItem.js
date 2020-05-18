@@ -2,6 +2,7 @@ import React from "react";
 import "./ToggleModeItem.css"
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import TooltipWrapper from "../../ToolTipWrapper/ToolTipWrapper";
 
 const ToggleModeItem = ({label, isActiveMode, onClick}) => {
     const className = classNames('toggle-mode-item', {
@@ -9,8 +10,10 @@ const ToggleModeItem = ({label, isActiveMode, onClick}) => {
     });
 
     return (
-        <span className={className}
-              onClick={onClick}> {label} </span>
+        <TooltipWrapper label={`Показать ${label.toLowerCase()}.`}>
+            <button className={className}
+                    onClick={onClick}> {label} </button>
+        </TooltipWrapper>
     )
 }
 

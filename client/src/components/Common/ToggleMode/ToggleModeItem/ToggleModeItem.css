@@ -1,5 +1,12 @@
 .toggle-mode-item {
+    background: none;
+    border: none;
+}
 
+.toggle-mode-item:focus {
+    outline: none;
+    color: var(--main-color-7);
+    font-weight: bold;
 }
 
 .toggle-mode-item.active {
