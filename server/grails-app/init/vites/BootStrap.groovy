@@ -195,11 +195,9 @@ class BootStrap {
                 fatherName: 'Петрович',
                 birthDate: dateTimeService.buildDateFrom(1985, Calendar.MAY, 12),
                 user: User.findByUsername('mentor'),
-                institutionName: 'BSUIR',
-                educationDegree: EducationDegree.BACHELOR,
+                experienceYears: 5,
                 phone: '80293450897',
-                email: 'givaxop563@inbov03.com',
-                speciality: 'Software engineer')
+                email: 'givaxop563@inbov03.com')
 
         setDefaultFields(mentor)
         mentor.addToCourses(Course.first())
