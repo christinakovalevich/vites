@@ -1,5 +1,4 @@
 import appIcon from "../../components/App/app-icon-white-blue.png";
-import RoleService from "../Role/RoleService";
 import ApiService from "../Api/ApiService";
 import PathService from "../Path/PathService";
 import ToolBarService from "../ToolBar/ToolBarService";
@@ -10,7 +9,7 @@ import {checkResponseStatus} from "../../handlers/responseHandlers";
 const toolBarService = new ToolBarService();
 
 export default {
-    getToolBarProps(isConnected, isAuthenticated, userDetails, appInfo, logoutHandler, setConnected, showLoader) {
+    getToolBarProps(isConnected, isAuthenticated, userDetails, appInfo, logoutHandler) {
         const topItems = toolBarService.getTopToolBarItems(userDetails.role)
         const bottomItems = toolBarService.getBottomToolBarItems(userDetails.role)
         const logOutItemProps = toolBarService.getToolBarLogOutItemProps(logoutHandler)
@@ -24,13 +23,6 @@ export default {
             topItems,
             bottomItems,
             isAuthenticated,
-            statusBarProps: {
-                showReloadButton: !isConnected || userDetails.role === RoleService.admin(),
-                onConnectionReload: () =>
-                    ApiService.testConnection(setConnected, showLoader, 500),
-                appInfo,
-                icon: RoleService.getUserIcon(userDetails.role)
-            },
             isPathActive: PathService.isPathActive
         }
     },

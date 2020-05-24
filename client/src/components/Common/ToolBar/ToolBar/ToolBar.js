@@ -5,12 +5,10 @@ import ToolBarItem from "../ToolBarItem/ToolBarItem";
 import ToolBarBrandItem from "../ToolBarBrandItem/ToolBarBrandItem";
 import ToolBarLogOutItem from "../ToolBarLogOutItem/ToolBarLogOutItem";
 import {useLocation} from "react-router-dom";
-import StatusBar from "../../StatusBar/StatusBar";
 
 const ToolBar = ({
                      brandItemProps,
                      logOutItemProps,
-                     statusBarProps,
                      topItems,
                      bottomItems,
                      isAuthenticated,
@@ -38,7 +36,6 @@ const ToolBar = ({
                 {
                     isAuthenticated ? <ToolBarLogOutItem {...logOutItemProps}/> : null
                 }
-                <StatusBar {...statusBarProps}/>
             </div>
         </div>
     );

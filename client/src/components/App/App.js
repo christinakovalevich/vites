@@ -376,9 +376,7 @@ export default class App extends Component {
                         isAuthenticated,
                         userDetails,
                         appInfo,
-                        this.logoutHandler,
-                        this.setConnected,
-                        this.showLoader
+                        this.logoutHandler
                     )}/>
                     <Panel>
                         {

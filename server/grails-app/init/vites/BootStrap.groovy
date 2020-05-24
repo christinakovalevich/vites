@@ -1,7 +1,6 @@
 package vites
 
 import course.Course
-import course.CourseService
 import enums.security.RoleType
 import enums.security.UserType
 import enums.student.EducationDegree

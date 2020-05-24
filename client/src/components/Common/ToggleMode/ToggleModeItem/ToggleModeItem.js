@@ -15,13 +15,12 @@ const ToggleModeItem = ({label, isActiveMode, onClick}) => {
                     onClick={onClick}> {label} </button>
         </TooltipWrapper>
     )
-}
+};
 
-export default ToggleModeItem
+export default ToggleModeItem;
 
 ToggleModeItem.propTypes = {
     label: PropTypes.string,
-    modeValue: PropTypes.string,
     isActiveMode: PropTypes.bool,
     onClick: PropTypes.func,
 }
