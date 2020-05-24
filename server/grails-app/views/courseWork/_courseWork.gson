@@ -1,8 +1,7 @@
 import courseWork.CourseWork
-import student.Student
 
 model {
-	CourseWork courseWork
+    CourseWork courseWork
 }
 
 json g.render(courseWork, [resolveTemplate: false, deep: true])

@@ -77,6 +77,12 @@ export default {
         return _getResource(buildUri(uri))
     },
 
+    fetchCourseWorkByCourse(id) {
+        const uri = '/api/courseWork/byCourse' + (id ? `/${id}` : '');
+        console.log(uri)
+        return _getResource(buildUri(uri))
+    },
+
     pathNames() {
         return {
             login: '/api/login',

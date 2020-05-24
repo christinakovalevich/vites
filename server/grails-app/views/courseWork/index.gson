@@ -1,7 +1,7 @@
 import courseWork.CourseWork
 
 model {
-	Iterable<CourseWork> courseWorkList
+    Iterable<CourseWork> courseWorkList
 }
 
 json tmpl.courseWork(courseWorkList ?: [])

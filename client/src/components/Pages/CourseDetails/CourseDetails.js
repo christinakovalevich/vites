@@ -5,14 +5,15 @@ import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import Stars from "../../Common/Rating/Stars/Stars";
 import {formatDate} from "../../../utils/utils";
-import Button from "../../Common/Button/Button";
 import GoBackButton from "../../Common/GoBackButton/GoBackButton";
 import {Col, Container, Row} from "react-bootstrap";
 import Loader from "../../Common/Loader/Loader";
 import AlertError from "../../Common/Alert/AlertError/AlertError";
+import CourseWorkTable from "../../CourseWorkTable/CourseWorkTable";
 
-const CourseDetails = ({getCourse}) => {
+const CourseDetails = ({getCourse, getCourseWorks}) => {
     const [course, setCourse] = useState({});
+    const [courseWorks, setCourseWorks] = useState(null);
     const [hasError, setError] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
 
@@ -29,8 +30,23 @@ const CourseDetails = ({getCourse}) => {
                 setLoaded(true);
                 setError(true);
                 console.error(error);
-            })
-    }, [getCourse, id])
+            });
+        if (typeof getCourseWorks !== "undefined") {
+            if (!courseWorks) {
+                setLoaded(false);
+                getCourseWorks(id).then(courseWork => {
+                    setLoaded(true);
+                    setError(false);
+                    setCourseWorks(courseWork);
+                })
+                    .catch(error => {
+                        setLoaded(true);
+                        setError(true);
+                        console.error(error);
+                    });
+            }
+        }
+    }, [course, courseWorks, getCourse, getCourseWorks, id])
 
     if (!hasLoaded) {
         return <Loader/>
@@ -79,23 +95,11 @@ const CourseDetails = ({getCourse}) => {
                     </div>
                 </div>
 
-                <div>
-                    <h3>Описание:</h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deleniti, dolor est
-                    eum facere id illum, ipsum molestias nihil numquam odio, odit quos recusandae repudiandae
-                    rerum sequi tenetur unde ut.
-                </div>
-
-                <div>
-                    <h3>Требования:</h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. At atque eos eveniet inventore,
-                    odit porro possimus suscipit tempore? Aliquid consectetur debitis illum itaque sint sunt
-                    voluptate! Beatae exercitationem nisi velit!
-                </div>
-
-                <div>
-                    <Button label="Оставить заявку"/>
-                </div>
+                {
+                    courseWorks ? (
+                        <CourseWorkTable data={courseWorks}/>
+                    ) : null
+                }
 
             </DefaultPage>
         </div>
