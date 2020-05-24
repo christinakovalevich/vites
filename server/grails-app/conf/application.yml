@@ -83,11 +83,10 @@ hibernate:
 dataSource:
   pooled: true
   jmxExport: true
-  driverClassName: com.mysql.cj.jdbc.Driver
-  dialect: org.hibernate.dialect.MySQL8Dialect
+  driverClassName: org.h2.Driver
   username: sa
   password: ''
-  url: jdbc:mysql://localhost:3306/vites?autoreconnect=true&useUnicode=yes&characterEncoding=UTF-8
+  url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
 
 environments:
   development:
