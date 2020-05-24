@@ -62,7 +62,7 @@ class BootStrap {
 
         def adminUser = new User(
                 username: 'admin',
-                password: 'admin',
+                password: 'U7VZt9',
                 userType: UserType.ADMIN
         ).save(FAIL_ON_ERROR)
 
@@ -72,7 +72,7 @@ class BootStrap {
 
         def managerUser = new User(
                 username: 'manager',
-                password: 'manager',
+                password: 'yy6QSW',
                 userType: UserType.MANAGER
         ).save(FAIL_ON_ERROR)
 
@@ -82,7 +82,7 @@ class BootStrap {
 
         def mentorUser = new User(
                 username: 'mentor',
-                password: 'mentor',
+                password: 'nYr7mx',
                 userType: UserType.MENTOR
         ).save(FAIL_ON_ERROR)
 
@@ -93,7 +93,7 @@ class BootStrap {
 
         def studentUser = new User(
                 username: 'student',
-                password: 'student',
+                password: 'yn6Nxk',
                 userType: UserType.STUDENT
         ).save(FAIL_ON_ERROR)
 
