@@ -20,7 +20,7 @@ const CourseWorkForm = ({onSubmit, data}) => {
     const onSubmitWrapper = (e) => {
         e.preventDefault();
         if (isValueDifferent()) {
-            onSubmit({repositoryLink: value})
+            onSubmit(data.id, {repositoryLink: value})
         }
     }
 

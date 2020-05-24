@@ -94,14 +94,12 @@ export default {
         })
     },
 
-    updateCourseWork(data) {
+    updateCourseWork(id, data) {
         console.log("updateCourseWork", data)
-        return fetch(buildUri(`/api/courseWork/${data.id}`), {
+        return fetch(buildUri(`/api/courseWork/${id}`), {
             method: 'put',
             headers: headers(),
-            body: JSON.stringify({
-                data
-            })
+            body: JSON.stringify(data)
         })
     }
 

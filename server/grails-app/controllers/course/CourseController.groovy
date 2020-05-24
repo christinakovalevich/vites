@@ -28,11 +28,13 @@ class CourseController extends RestfulController {
         def course = courseService.get(json.courseId as Serializable)
 
         if (course && currentStudent) {
-            def savedCourse = courseService.addToStudents(course, currentStudent)
-            if (savedCourse) {
-                new CourseWork(course: savedCourse, student: currentStudent).save()
-                respond(savedCourse)
-                return
+            if (!course.students.contains(currentStudent)) {
+                def savedCourse = courseService.addToStudents(course, currentStudent)
+                if (savedCourse) {
+                    new CourseWork(course: savedCourse, student: currentStudent).save()
+                    respond(savedCourse)
+                    return
+                }
             }
         }
 

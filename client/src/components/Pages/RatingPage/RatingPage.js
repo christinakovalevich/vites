@@ -27,8 +27,8 @@ const RatingPage = ({title, getData}) => {
             })
     }, [getData]);
 
-    const onSubmit = (data) => {
-        ApiService.updateCourseWork(data)
+    const onSubmit = (id, updatedData) => {
+        ApiService.updateCourseWork(id, updatedData)
             .then(r => {
                 console.log(r)
                 getData()
