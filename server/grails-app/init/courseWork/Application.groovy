@@ -1,4 +1,4 @@
-package vites
+package courseWork
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

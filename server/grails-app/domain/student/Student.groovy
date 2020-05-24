@@ -1,6 +1,7 @@
 package student
 
 import course.Course
+import courseWork.CourseWork
 import enums.student.EducationDegree
 import grails.compiler.GrailsCompileStatic
 import rating.StudentRating
@@ -29,7 +30,7 @@ class Student {
     User lastUpdatedBy
     boolean disabled
 
-    static hasMany = [courses: Course, ratings: StudentRating]
+    static hasMany = [courses: Course, ratings: StudentRating, courseWorks: CourseWork]
 
     static constraints = {
         name shared: "name"

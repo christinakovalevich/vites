@@ -1,4 +1,4 @@
-package vites
+package courseWork
 
 import course.CourseService
 import grails.core.GrailsApplication

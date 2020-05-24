@@ -1,0 +1,7 @@
+import courseWork.CourseWork
+
+model {
+	CourseWork courseWork
+}
+
+json tmpl.courseWork(courseWork)

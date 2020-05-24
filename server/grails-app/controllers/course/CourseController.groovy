@@ -1,5 +1,6 @@
 package course
 
+import courseWork.CourseWork
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import net.minidev.json.JSONObject
@@ -29,6 +30,7 @@ class CourseController extends RestfulController {
         if (course && currentStudent) {
             def savedCourse = courseService.addToStudents(course, currentStudent)
             if (savedCourse) {
+                new CourseWork(course: savedCourse, student: currentStudent).save()
                 respond(savedCourse)
                 return
             }

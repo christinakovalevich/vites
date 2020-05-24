@@ -1,4 +1,4 @@
-package vites
+package courseWork
 
 class UrlMappings {
 
@@ -25,6 +25,8 @@ class UrlMappings {
         "/api/myCourses"(controller: "course", action: "myCourses")
         "/api/myMentors"(controller: "mentor", action: "myMentors")
         "/api/myStudents"(controller: "student", action: "myStudents")
+        "/api/courseWork/byStudent/$studentId(.$format)?"(controller: "courseWork", action: "indexByStudent")
+        "/api/courseWork/byCourse/$courseId(.$format)?"(controller: "courseWork", action: "indexByCourse")
 
         "/api/testConnection"(controller: 'application', action: 'testConnection')
         "/api/checkAuth"(controller: 'application', action: 'checkIsAuthenticated')

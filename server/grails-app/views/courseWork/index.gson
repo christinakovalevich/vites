@@ -1,0 +1,8 @@
+import courseWork.CourseWork
+
+model {
+	Iterable<CourseWork> courseWorkList
+}
+
+json tmpl.courseWork(courseWorkList ?: [])
+

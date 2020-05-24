@@ -1,4 +1,4 @@
-package vites
+package courseWork
 
 import course.Course
 import enums.security.RoleType
@@ -36,6 +36,13 @@ class BootStrap {
 
         log.info firstStudent.courses.toString()
         log.info firstCourse.students.toString()
+
+        new CourseWork(
+                course: firstCourse,
+                student: firstStudent,
+                repositoryLink: 'https://github.com/christinakovalevich/econometrics-bsuir'
+        ).save(FAIL_ON_ERROR)
+
 
         log.info 'Available: ' + firstCourse.availablePlacesCount
     }

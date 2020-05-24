@@ -1,9 +1,9 @@
-package vites
+package courseWork
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class CourseSpec extends Specification implements DomainUnitTest<Course> {
+class CourseWorkSpec extends Specification implements DomainUnitTest<CourseWork> {
 
     def setup() {
     }
@@ -12,7 +12,7 @@ class CourseSpec extends Specification implements DomainUnitTest<Course> {
     }
 
     void "test something"() {
-        expect: "fix me"
-        true == false
+        expect:"fix me"
+            true == false
     }
 }
