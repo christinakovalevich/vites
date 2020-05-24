@@ -16,17 +16,18 @@ class CourseWorkController extends RestfulController {
 
     StudentService studentService
 
-    def indexByStudent() {
-        def student =
-                Student.read(params.studentId) ?: studentService.authenticatedStudent
+    def indexByCurrentStudent() {
         respond CourseWork
-                .findAllByStudent(student)
+                .findAllByStudent(studentService.authenticatedStudent)
+    }
+
+    def indexByStudent() {
+        respond CourseWork
+                .findAllByStudent(Student.read(params.studentId))
     }
 
     def indexByCourse() {
         respond CourseWork
-                .findAllByCourse(
-                        Course.read(params.courseId)
-                )
+                .findAllByCourse(Course.read(params.courseId))
     }
 }

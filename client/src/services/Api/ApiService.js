@@ -71,6 +71,12 @@ export default {
         return _getResource(buildUri(`/api/student/${id}`))
     },
 
+    fetchCourseWorkByStudent(id) {
+        const uri = '/api/courseWork/byStudent' + (id ? `/${id}` : '');
+        console.log(uri)
+        return _getResource(buildUri(uri))
+    },
+
     pathNames() {
         return {
             login: '/api/login',
@@ -84,6 +90,17 @@ export default {
             headers: headers(),
             body: JSON.stringify({
                 courseId
+            })
+        })
+    },
+
+    updateCourseWork(data) {
+        console.log("updateCourseWork", data)
+        return fetch(buildUri(`/api/courseWork/${data.id}`), {
+            method: 'put',
+            headers: headers(),
+            body: JSON.stringify({
+                data
             })
         })
     }

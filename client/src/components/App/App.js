@@ -346,7 +346,8 @@ export default class App extends Component {
 
                         <RouteWrapper path={PathService.rating()}
                                       roles={PathService.roles().rating()}>
-                            <RatingPage title="Успеваемость"/>
+                            <RatingPage title="Успеваемость"
+                                        getData={ApiService.fetchCourseWorkByStudent}/>
                         </RouteWrapper>
 
                         <RouteWrapper path={PathService.settings()}

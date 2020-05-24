@@ -57,7 +57,7 @@ export default class ToolBarService {
             },
             {
                 id: ids.RATING,
-                label: 'Успеваемость',
+                label: 'Учеба',
                 href: PathService.rating(),
                 faIcon: faTrophy,
             },

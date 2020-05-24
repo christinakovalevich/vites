@@ -25,6 +25,7 @@ class UrlMappings {
         "/api/myCourses"(controller: "course", action: "myCourses")
         "/api/myMentors"(controller: "mentor", action: "myMentors")
         "/api/myStudents"(controller: "student", action: "myStudents")
+        "/api/courseWork/byStudent"(controller: "courseWork", action: "indexByCurrentStudent")
         "/api/courseWork/byStudent/$studentId(.$format)?"(controller: "courseWork", action: "indexByStudent")
         "/api/courseWork/byCourse/$courseId(.$format)?"(controller: "courseWork", action: "indexByCourse")
 
